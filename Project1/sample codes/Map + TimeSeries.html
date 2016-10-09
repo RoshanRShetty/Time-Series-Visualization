@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<meta charset="utf-8">
+		<script type="text/javascript" src="../d3/d3.js"> </script>
+			<style type="text/css">
+
+				/* On mouse hover, lighten state color */
+				path:hover {
+					fill-opacity: .7;
+				}
+				body { font: 12px Arial;}
+
+				path { 
+				    stroke: black;
+				    stroke-width: 1;
+				    fill: none;
+				}
+
+
+
+				.axis path,
+				.axis line {
+				    fill: none;
+				    stroke: grey;
+				    stroke-width: 1;
+				    shape-rendering: crispEdges;
+				}
+
+
+
+			</style>
+	</head>
+	<body>
+		<div id="title">
+			<h1 align="center"> Welcome to CS 5331 Class </h1>
+		</div>
+		<div id="div1"> </div>
+		<div id="div2"> </div>
+
+		<script type="text/javascript">
+
+
+		// Code for SVG..........................................................
+		
+			//Width and height of map
+			var width = 300;
+			var height = 200;
+			var allStatesJsonData;
+			var map;
+			var stateColor;
+			var border=1;
+			var bordercolor='black';
+
+
+
+			// D3 Projection
+			var projection = d3.geoAlbersUsa()
+							   .translate([width/2, height/2])    // translate to center of screen
+							   .scale([300]);          // scale things down so see entire US
+			        
+			// Define path generator
+			var path = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
+					  	 .projection(projection);  // tell path generator to use albersUsa projection
+
+					
+			// Define linear scale for output
+			var color = d3.scaleLinear()
+						  .range(["rgb(213,222,217)","rgb(69,173,168)","rgb(84,36,55)","rgb(217,91,67)"]);
+
+
+
+			//Create SVG element and append map to the SVG
+			var svg = d3.select("#div1")
+						.append("svg")
+						.attr("class","svg")
+						.attr("width", width)
+						.attr("height", height)
+						.attr("border",border);
+
+			var borderPath = svg.append("rect")
+			       			.attr("x", 0)
+			       			.attr("y", 0)
+			       			.attr("height", height)
+			       			.attr("width", width)
+			       			.style("stroke", bordercolor)
+			       			.style("fill", "none")
+			       			.style("stroke-width", border);
+
+
+
+			// Load GeoJSON data and merge with states data
+			d3.json("us-states.json", function(error, json) {	
+				allStatesJsonData = json;
+				// Bind the data to the SVG and create one path per GeoJSON feature
+				 map = svg.selectAll("path")
+							.data(allStatesJsonData.features)
+							.enter()
+							.append("path")
+								.attr("class","map")
+								.attr("id", function(d){ return d.properties.name;})	
+								.attr("d", path)
+								.style("stroke", "#fff")
+								.style("stroke-width", "1")
+								.style("fill", function(d) {		
+									return "rgb(213,222,217)";
+								})
+								// setting up the on click function
+								.on("click", function(){
+
+									// Get the color of the state that has been clicked on.
+									stateColor = d3.select(this).style("fill");
+									var stateId = d3.select(this).attr("id");
+
+								
+									// If a state has already been clicked, then it's color will be red. but in d3, red is represented as rgb(255,0,0).
+									// We use this, to identify whether a state has been clicked or not.
+									// Same concept can be used to select and de select an state 
+									if(stateColor.toString() === "rgb(255, 0, 0)")
+									{
+
+
+										d3.select(this)
+											.style("fill", function(d) {		
+												return "rgb(213,222,217)";
+												});
+
+										removeSelectedTimeSeries(stateId);
+
+
+									}
+									else
+									{
+										d3.select(this)
+											.style("fill", "red");
+										
+
+										addNewTimeSeries(stateId)
+									
+
+									}
+
+									// d3.event.stopPropogation() is to stop the changes from effecting other elements within the SVG.
+									// Since the map is a part of the svg, any click on anywhere on the map will first trigger the map.onClick() and then svg.onClick() - map and
+									//svg are class names.
+									//stopPropogation() will stop the double trigger and limit it to the one you have clicked on.
+									d3.event.stopPropagation();					
+
+								})
+							.append("svg:title")
+								.text(function(d){return d.properties.name});
+
+				
+					
+							
+
+				});
+
+			// To de-select all the selected states.
+			svg.on("click", function(d){
+
+				var className = d3.select(this).attr("class");
+				
+
+				removeAllTimeSeries();
+
+				if (className != "map")
+				{
+					d3.selectAll(".map")
+						.style("fill", function(d) {		
+							return "rgb(213,222,217)";
+							})
+					d3.event.stopPropagation();
+
+					// d3.event.stopPropogation() is to stop the changes from effecting other elements within the SVG.
+								// Since the map is a part of the svg, any click on anywhere on the map will first trigger the map.onClick() and then svg.onClick() - map and
+								//svg are class names.
+								//stopPropogation() will stop the double trigger and limit it to the one you have clicked on.
+				}
+			});
+
+
+			// To add Transition to Map
+
+			svg.on("mouseover", function(){
+
+
+				var width = 960;
+				var height = 350;
+				// D3 Projection
+				var projection = d3.geoAlbersUsa()
+							   .translate([width/2, height/2])    // translate to center of screen
+							   .scale([800]);          // scale things down so see entire US
+			        
+				// Define path generator
+				var path = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
+					  	 .projection(projection);  // tell path generator to use albersUsa projection
+
+				// change svg size
+
+				svg.transition()
+					.attr("width", width)
+					.attr("height", height);
+
+				svg.selectAll("path")
+					.transition()
+					.attr("d", path);
+
+				
+
+			});
+
+			svg.on("mouseout", function(){
+
+
+				var width = 300;
+				var height = 200;
+				// D3 Projection
+				var projection = d3.geoAlbersUsa()
+							   .translate([width/2, height/2])    // translate to center of screen
+							   .scale([300]);          // scale things down so see entire US
+			        
+				// Define path generator
+				var path = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
+					  	 .projection(projection);  // tell path generator to use albersUsa projection
+
+				// change svg size
+
+				svg.transition()
+					.attr("width", width)
+					.attr("height", height);
+
+				svg.selectAll("path")
+					.transition()
+					.attr("d", path);
+				
+
+			});
+
+
+
+		// // Code for SVG Ends here .......................................................
+
+		// // Code For SVG2 ................................................................
+
+		// var svg2Width = 960;
+		// var svg2Height = 500;
+
+		// /* decalring margin */
+		// var margin = {top: 20, left: 20, bottom: 20, right: 20};
+
+		// /* declaring padding */
+		// var padding = {top: 20, left: 20, bottom: 20, right: 20};
+
+		// /* declaring margin width and height */
+
+		// var marginWidth = margin.left + margin.right;
+		// var marginHeight = margin.top + margin.bottom;
+
+		// /*declaring padding width and height */
+		// var paddingWidth = padding.left + padding.right
+		// var paddingHeight = margin.left + margin.right
+
+		// /* declaring width and height of drawable area */
+		// var drawableAreaWidth = svg2Width - marginWidth - paddingWidth;
+		// var drawableAreaHeight = svg2Height - marginHeight - paddingHeight;
+
+
+		// // Parse the date / time
+		// var parseDate2 = d3.timeParse("%m-%Y");
+
+		// // Set the ranges
+		// var x = d3.scaleTime().range([0, drawableAreaWidth]);
+		// var y = d3.scaleLinear().range([drawableAreaHeight, 0]);
+
+		// // Define the axes
+		// var xAxis = d3.axisBottom().scale(x)
+		// 	   			.ticks(5);
+
+		// var yAxis = d3.axisLeft().scale(y)
+		// 	    		.ticks(5);
+
+		// // Define the line
+		// var valueline = d3.line()
+		// 	    		.x(function(d) { return x(d.date); })
+		// 	    		.y(function(d) { return y(d.unemployment_rate); });
+
+		// var svg2 =	d3.select("#div2")
+		// 				.append("svg")
+		// 					.attr("class","svg2")
+		// 					.attr("width", svg2Width)
+		// 					.attr("height", svg2Height);
+		// /* translating the x and y corordinates of mainSvg to move the margins */
+
+		// var marginSvg = svg2.append("g")
+		// 								.attr("transform" , "translate(" + margin.left + "," + margin.top + ")");
+
+		// var drawableSvg = marginSvg.append("g")
+		// 									.attr("transform" , "translate(" + padding.left + "," + padding.top + ")");
+
+
+		// // Scale the range of the data
+  //   	x.domain(d3.extent([parseDate2("01-1976"), parseDate2("07-2016")]));
+  //   	y.domain([0, 20.4]);
+
+  //   	// Add the X Axis
+  //   	drawableSvg.append("g")
+  //       				.attr("class", "x axis")
+  //       				.attr("transform", "translate(0," + drawableAreaHeight + ")")
+  //       				.call(xAxis);
+
+  //   	// Add the Y Axis
+  //   	drawableSvg.append("g")
+  //       				.attr("class", "y axis")
+  //       				.call(yAxis);
+
+  //       var allData;
+
+
+		// function addNewTimeSeries(stateId)
+		// {
+
+
+
+		// 	d3.csv("../data/" + stateId + ".csv", function(error,data)
+		// 	{
+		// 		allData = [];
+		// 		allData = data;
+		// 		console.log(allData);
+
+				
+		// 		allData.forEach(function(d)
+		// 					{
+	 //    						d.date = parseDate2(d.month+"-"+d.year);
+	 //   							d.unemployment_rate = +d["unemployment_rate"];
+	    						
+	 //  						});
+
+		// 		allData.sort(function(a,b)
+		// 			{
+	 //   					if (a.date<b.date)
+	 //        					return -1;
+	 //    				else if (a.date>b.date)
+	 //        					return 1;
+	 //    				else
+	 //        					return 0;
+	 //  				})
+
+				
+
+	 //    		// Add the valueline path.
+	 //    		drawableSvg.append("path")
+	 //        					.attr("class", "line")
+	 //        					.attr("id", stateId + "_path")
+	 //        					.attr("d", valueline(allData));
+
+	 //        	//var color = d3.scaleCategory20();
+
+  //       	});
+
+		// }
+
+
+
+		// function removeSelectedTimeSeries(stateId)
+		// {
+		// 	d3.select("#" + stateId + "_path").remove();
+		// }
+
+		// function removeAllTimeSeries()
+		// {
+		// 	d3.selectAll(".line").remove();
+		// }
+
+
+		
+
+		
+
+		
+
+
+		
+
+
+		
+
+		
+		// // Code for SVG2 Ends here ......................................................
+
+
+
+		</script>
+	</body>
+</html>
+
+
+
+
+

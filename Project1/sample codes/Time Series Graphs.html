@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title> Introduction to d3 page </title>
+		<script type="text/javascript" src="../d3/d3.js"> </script>
+	</head>
+	<body>
+		
+
+		<script type="text/javascript">
+
+		/* declaring global width and height variable */
+			var width = 960;
+			var height = 500;
+
+			/* decalring margin */
+			var margin = {top: 20, left: 20, bottom: 20, right: 20};
+
+			/* declaring padding */
+			var padding = {top: 60, left: 60, bottom: 60, right: 60};
+
+			/* declaring margin width and height */
+
+			var marginWidth = margin.left + margin.right;
+			var marginHeight = margin.top + margin.bottom;
+
+			/*declaring padding width and height */
+			var paddingWidth = padding.left + padding.right
+			var paddingHeight = margin.left + margin.right
+
+			/* declaring width and height of drawable area */
+			var drawableAreaWidth = width - marginWidth - paddingWidth;
+			var drawableAreaHeight = height - marginHeight - paddingHeight;
+
+
+
+
+			/* Creating an SVG */
+			var mainSvg = d3.select("body")
+								.append("svg")
+								.attr("width", width)
+								.attr("height", height);
+
+			/* translating the x and y corordinates of mainSvg to move the margins */
+
+			var marginSvg = mainSvg.append("g")
+										.attr("transform" , "translate(" + margin.left + "," + margin.top + ")");
+
+			var drawableSvg = marginSvg.append("g")
+											.attr("transform" , "translate(" + padding.left + "," + padding.top + ")");
+
+
+			/* loading data */
+
+			var objects = {};
+
+			var xScale;
+			var yScale;
+			var id;
+			var x;
+			var y;
+
+
+
+			d3.csv("\stateslived.csv", function(error,data){
+
+				objects = data;
+
+				objects[0].visited;
+
+				xScale = d3.scaleLinear()
+								.domain([0,objects.length])
+								.range([0,drawableAreaWidth]);
+
+				yScale = d3.scaleLinear()
+								.domain([0, d3.max(objects, function(d){return d.visited})]) 
+								.range([10,100]);
+
+				var rect = drawableSvg.selectAll("rect")
+											.data(objects)
+											.enter()
+											.append("rect")
+											.attr("class", "rect")
+											.attr("id", function(d){return d.state;})
+											.attr("x", function(d,i){
+												return i * (drawableAreaWidth/objects.length) + 5;
+											})
+											.attr("y", function(d){ return drawableAreaHeight- yScale(d.visited);})
+											.attr("width", function(d){
+												return drawableAreaWidth/objects.length - 1;
+											})
+											.attr("height", function(d){
+												return yScale(d.visited);
+											})
+											.on("click", function(){
+												
+												id = d3.select(this).attr("id");
+												x = d3.select(this).attr("x");
+												y = d3.select(this).attr("y");
+												d3.select(this)
+												.transition()
+												.style("fill","red");
+
+												drawableSvg.append("text")
+												.attr("x",x)
+												.attr("y", y - 100)
+												.attr("fill","black")
+												.attr("font-size","10px")
+												.selectAll("tspan")
+      												.data(id.split(""))
+  													.enter().append("tspan")
+     												 .attr("x", x)
+     												 .attr("dy", "0.8em")
+      												.text(function(d){return d;});
+												
+
+
+											})
+											.append("svg:title")
+												.text(function(d){ return d.state});
+											
+
+				
+
+				
+
+
+
+				
+											
+
+				});
+
+
+			
+
+			
+
+
+
+						
+
+			
+
+			
+
+			
+
+
+
+			
+
+		</script>
+	</body>
+</html>

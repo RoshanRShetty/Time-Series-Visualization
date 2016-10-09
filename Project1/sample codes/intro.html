@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title> Introduction to d3 page </title>
+		<script type="text/javascript" src="../d3/d3.js"> </script>
+	</head>
+	<body>
+	
+		<h1> Here we try out the various d3 functions </h1>
+		
+		<p id="para1">
+			Here we will try out the SVG properties for a circle
+			
+			<svg width="50" height="50">
+				<circle cx="25" cy="25" r="10"
+				fill="red" stroke="black" stroke-width="2"/>
+			</svg>
+			
+			
+			<script type="text/javascript">
+				var dataset = [10, 23 , 5 , 30 , 50 , 2, 23 ,45, 60, 25, 90, 12];
+				var xaxis = 50;
+				var yaxis = 60;
+				var cx = 0;
+				
+				d3.select("body")
+				.append("p")
+				.attr("id","para2")
+				.text("This is example of creating elements dynamically");
+				
+							
+				d3.select("#para2")
+				.append("p")
+				.text("selecting selected elements");
+				
+				var svgAttributes = d3.select("body")
+									.append("svg")
+									.attr("id" , "svg1")
+									.attr("width" , "500")
+									.attr("height" , "100");
+									
+				var circles = svgAttributes
+							 .selectAll("circle")
+							 .data(dataset)
+							 .enter()
+							 .append("circle");
+				
+				var circleProperties = circles
+									   .attr("cx" , function(){ 
+											cx = cx + xaxis;
+											return cx;
+									   })
+									   .attr("cy", yaxis)
+									   .attr("r", function(d)
+											{ return d})
+									   .style("fill", function(d){
+											if (d < 20) {return "green";}
+											else if (d >= 20 && d < 50) {return "red";}
+											else {return "black";}});
+											
+											
+				d3.select("body")
+						  .append("svg")
+						  .attr("id", "svg2")
+						  .attr("height", "200")
+						  .attr("width", "800")
+						  .selectAll("rect")
+						  .data(dataset)
+						  .enter()
+						  .append("rect")
+						  .attr("height" , function(d){return d;})
+						  .attr("width", function(d){return d;})
+						  .attr("x", function(){ 
+											cx = cx + xaxis;
+											return cx;
+									   })
+						  .attr("y", yaxis)
+						  .style("fill", function(d){
+											if (d < 20) {return "green";}
+											else if (d >= 20 && d < 50) {return "red";}
+											else {return "black";}});
+				
+				var h = 100;
+				var w = 500;
+				var barPadding = 1;
+				var svgg = d3.select("body")
+					.append("svg")
+					.attr("id","svg3")
+					.attr("height",h)
+					.attr("width",w)
+					.selectAll("rect")
+					.data(dataset)
+					.enter()
+					.append("rect")
+					.attr("y", function(d){
+						return h-d;} )
+					.attr("x", function(d,i){
+						return i * (w/dataset.length);})
+					.attr("width", w/dataset.length - barPadding)
+					.attr("height", function(d){return d;})
+					.style("fill", function(d){
+											if (d < 20) {return "green";}
+											else if (d >= 20 && d < 50) {return "red";}
+											else {return "black";}});
+				
+					svgg.selectAll("text")
+					.data(dataset)
+					.enter()
+					.append("text")
+					.text(function(d){ return d;})
+					.attr("x", function(d,i){
+						return i * (w/dataset.length) + 5;})
+					.attr("y", function(d){
+						return h-d + 15;} )
+					.attr("fill","white")
+					.attr("font-size","15px");
+									   
+				
+
+			</script>
+
+	</body>
+</html>

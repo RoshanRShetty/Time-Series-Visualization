@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<meta charset="utf-8">
+		<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"> </script>
+			<style type="text/css">
+
+				/* On mouse hover, lighten state color */
+				path:hover {
+					fill-opacity: .7;
+				}
+				body { font: 12px Arial;}
+
+				path { 
+				    stroke: black;
+				    stroke-width: 1;
+				    fill: none;
+				}
+
+
+
+				.axis path,
+				.axis line {
+				    fill: none;
+				    stroke: grey;
+				    stroke-width: 1;
+				    shape-rendering: crispEdges;
+				}
+
+
+
+			</style>
+	</head>
+	<body>
+		<div id="title">
+			<h3 align="center"> Welcome to CS 5331 Class </h3>
+		</div>
+		<div id="div1"> </div>
+		<div id="div2"> </div>
+
+		<script type="text/javascript">
+
+
+		// Code for SVG..........................................................
+		
+			//Width and height of map
+			var width = 300;
+			var height = 200;
+			var allStatesJsonData;
+			var map;
+			var stateColor;
+			var border=1;
+			var bordercolor='black';
+
+
+
+			// D3 Projection
+			var projection = d3.geo.albersUsa()
+							   .translate([width/2, height/2])    // translate to center of screen
+							   .scale([300]);          // scale things down so see entire US
+			        
+			// Define path generator
+			var path = d3.geo.path()               // path generator that will convert GeoJSON to SVG paths
+					  	 .projection(projection);  // tell path generator to use albersUsa projection
+
+					
+			// Define linear scale for output
+			var color = d3.scale.linear()
+						  .range(["rgb(213,222,217)","rgb(69,173,168)","rgb(84,36,55)","rgb(217,91,67)"]);
+
+
+
+			//Create SVG element and append map to the SVG
+			var svg = d3.select("#div1")
+						.append("svg")
+						.attr("class","svg")
+						.attr("width", width)
+						.attr("height", height)
+						.attr("border",border);
+
+			var borderPath = svg.append("rect")
+			       			.attr("x", 0)
+			       			.attr("y", 0)
+			       			.attr("height", height)
+			       			.attr("width", width)
+			       			.style("stroke", bordercolor)
+			       			.style("fill", "none")
+			       			.style("stroke-width", border);
+
+
+
+			// Load GeoJSON data and merge with states data
+			d3.json("us-states.json", function(error, json) {	
+				allStatesJsonData = json;
+				// Bind the data to the SVG and create one path per GeoJSON feature
+				 map = svg.selectAll("path")
+							.data(allStatesJsonData.features)
+							.enter()
+							.append("path")
+								.attr("class","map")
+								.attr("id", function(d){ return d.properties.name.split(' ').join('_');})	
+								.attr("d", path)
+								.style("stroke", "#fff")
+								.style("stroke-width", "1")
+								.style("fill", function(d) {		
+									return "rgb(213,222,217)";
+								})
+								// setting up the on click function
+								.on("click", function(){
+
+									// Get the color of the state that has been clicked on.
+									stateColor = d3.select(this).style("fill");
+									var stateId = d3.select(this).attr("id");
+
+								
+									// If a state has already been clicked, then it's color will be red. but in d3, red is represented as rgb(255,0,0).
+									// We use this, to identify whether a state has been clicked or not.
+									// Same concept can be used to select and de select an state 
+									if(stateColor.toString() === "rgb(255, 0, 0)")
+									{
+
+
+										d3.select(this)
+											.style("fill", function(d) {		
+												return "rgb(213,222,217)";
+												});
+
+										removeSelectedTimeSeries(stateId);
+
+
+									}
+									else
+									{
+										d3.select(this)
+											.style("fill", "red");
+										
+
+										addNewTimeSeries(stateId)
+									
+
+									}
+
+									// d3.event.stopPropogation() is to stop the changes from effecting other elements within the SVG.
+									// Since the map is a part of the svg, any click on anywhere on the map will first trigger the map.onClick() and then svg.onClick() - map and
+									//svg are class names.
+									//stopPropogation() will stop the double trigger and limit it to the one you have clicked on.
+									d3.event.stopPropagation();					
+
+								})
+							.append("svg:title")
+								.text(function(d){return d.properties.name});
+
+				
+					
+							
+
+				});
+
+			// To de-select all the selected states.
+			svg.on("click", function(d){
+
+				var className = d3.select(this).attr("class");
+				
+
+				removeAllTimeSeries();
+
+				if (className != "map")
+				{
+					d3.selectAll(".map")
+						.style("fill", function(d) {		
+							return "rgb(213,222,217)";
+							})
+					d3.event.stopPropagation();
+
+					// d3.event.stopPropogation() is to stop the changes from effecting other elements within the SVG.
+								// Since the map is a part of the svg, any click on anywhere on the map will first trigger the map.onClick() and then svg.onClick() - map and
+								//svg are class names.
+								//stopPropogation() will stop the double trigger and limit it to the one you have clicked on.
+				}
+			});
+
+
+			// To add Transition to Map
+
+			svg.on("mouseover", function(){
+
+
+				var width = 960;
+				var height = 350;
+				// D3 Projection
+				var projection = d3.geo.albersUsa()
+							   .translate([width/2, height/2])    // translate to center of screen
+							   .scale([800]);          // scale things down so see entire US
+			        
+				// Define path generator
+				var path = d3.geo.path()               // path generator that will convert GeoJSON to SVG paths
+					  	 .projection(projection);  // tell path generator to use albersUsa projection
+
+				// change svg size
+
+				svg.transition()
+					.attr("width", width)
+					.attr("height", height);
+
+				svg.selectAll("path")
+					.transition()
+					.attr("d", path);
+
+				
+
+			});
+
+			svg.on("mouseout", function(){
+
+
+				var width = 300;
+				var height = 200;
+				// D3 Projection
+				var projection = d3.geo.albersUsa()
+							   .translate([width/2, height/2])    // translate to center of screen
+							   .scale([300]);          // scale things down so see entire US
+			        
+				// Define path generator
+				var path = d3.geo.path()               // path generator that will convert GeoJSON to SVG paths
+					  	 .projection(projection);  // tell path generator to use albersUsa projection
+
+				// change svg size
+
+				svg.transition()
+					.attr("width", width)
+					.attr("height", height);
+
+				svg.selectAll("path")
+					.transition()
+					.attr("d", path);
+				
+
+			});
+
+
+
+		// Code for SVG Ends here .......................................................
+
+		// Code For SVG2 ................................................................
+
+		var lineCounter = 0;
+		var svg2Width = 790;
+		var svg2Height = 450;
+
+		/* decalring margin */
+		var margin = {top: 20, left: 20, bottom: 20, right: 20};
+
+		/* declaring padding */
+		var padding = {top: 20, left: 20, bottom: 20, right: 10};
+
+		/* declaring margin width and height */
+
+		var marginWidth = margin.left + margin.right;
+		var marginHeight = margin.top + margin.bottom;
+
+		/*declaring padding width and height */
+		var paddingWidth = padding.left + padding.right
+		var paddingHeight = margin.left + margin.right
+
+		/* declaring width and height of drawable area */
+		var drawableAreaWidth = svg2Width - marginWidth - paddingWidth;
+		var drawableAreaHeight = svg2Height - marginHeight - paddingHeight;
+
+
+		// Parse the date / time
+		var parseDate2 = d3.time.format("%m-%Y").parse;
+
+		// Set the ranges
+		var x = d3.time.scale().range([0, drawableAreaWidth]);
+		var y = d3.scale.linear().range([drawableAreaHeight, 0]);
+
+		// Define the axes
+		var xAxis = d3.svg.axis().scale(x).orient("bottom")
+			   			.ticks(5);
+
+		var yAxis = d3.svg.axis().scale(y).orient("left")
+			    		.ticks(5);
+
+		// Define the line
+		var valueline = d3.svg.line()
+			    		.x(function(d) { return x(d.date); })
+			    		.y(function(d) { return y(d.unemployment_rate); });
+
+		var svg2 =	d3.select("#div2")
+						.append("svg")
+							.attr("class","svg2")
+							.attr("width", svg2Width)
+							.attr("height", svg2Height);
+
+		/* translating the x and y corordinates of mainSvg to move the margins */
+
+		var marginSvg = svg2.append("g")
+										.attr("transform" , "translate(" + margin.left + "," + margin.top + ")");
+
+		var drawableSvg = marginSvg.append("g")
+											.attr("transform" , "translate(" + padding.left + "," + padding.top + ")");
+
+		var svg3 = d3.select("#div2")
+						.append("svg")
+							.attr("class","svg3")
+							.attr("width", 270)
+							.attr("height", svg2Height);
+
+
+		// Scale the range of the data
+    	x.domain(d3.extent([parseDate2("01-1976"), parseDate2("07-2016")]));
+    	y.domain([0, 20.4]);
+
+    	// Add the X Axis
+    	drawableSvg.append("g")
+        				.attr("class", "x axis")
+        				.attr("transform", "translate(0," + drawableAreaHeight + ")")
+        				.call(xAxis);
+
+    	// Add the Y Axis
+    	drawableSvg.append("g")
+        				.attr("class", "y axis")
+        				.call(yAxis);
+
+        var allData;
+
+        var colorSchemeUsed;
+
+        var colorRange;
+
+        var legendTracker = [];
+
+        var legend1XValue;
+	    var legend1YValue;
+	    var legend1;
+	    var legend1Rect;
+	    var legend1RectText;
+	    var legendClickedId;
+	    var legendClickedTracker = [];
+	    var clickedYesOrNo = "NO";
+
+
+
+		function addNewTimeSeries(stateId)
+		{
+
+			lineCounter = lineCounter + 1;
+
+			
+
+			if (lineCounter > 0 && lineCounter <= 10)
+			{
+				colorSchemeUsed = d3.scale.category10();
+			}
+			else if (lineCounter > 10 && lineCounter <= 20)
+			{
+				colorSchemeUsed = d3.scale.category20();
+			}
+			else if (lineCounter > 20 && lineCounter <= 40)
+			{
+				colorSchemeUsed = d3.scale.category20b();
+			}
+			else
+			{
+				colorSchemeUsed = d3.scale.category20c();
+
+			}
+
+			colorRange = colorSchemeUsed;
+
+			// setting the domain
+
+			for (var i = 1; i <= 50; i++) {
+   					 colorRange(i)
+				}
+
+			d3.csv("../data/" + stateId.split('_').join(' ') + ".csv", function(error,data)
+			{
+				allData = [];
+				allData = data;
+				
+
+				
+				allData.forEach(function(d)
+							{
+	    						d.date = parseDate2(d.month+"-"+d.year);
+	   							d.unemployment_rate = +d["unemployment_rate"];
+	    						
+	  						});
+
+				allData.sort(function(a,b)
+					{
+	   					if (a.date<b.date)
+	        					return -1;
+	    				else if (a.date>b.date)
+	        					return 1;
+	    				else
+	        					return 0;
+	  				})
+
+				
+
+	    		// Add the valueline path.
+	    		drawableSvg.append("path")
+	        					.attr("class", "line")
+	        					.attr("id", stateId + "_path")
+	        					.attr("d", valueline(allData))
+	        					.style("stroke", function(d){return colorRange(lineCounter);})
+	        					.style("stroke-opacity",1);
+
+
+	        				
+
+	        	// declaring Legend
+
+	        	
+
+	        	if (lineCounter < 26)
+	        	{
+	        		legend1XValue = 0
+	        		legend1YValue = 15 * lineCounter; 
+	        	}
+	        	else
+	        	{
+	        		legend1XValue = 100
+	        		legend1YValue = (15 * (lineCounter % 25)); 
+
+	        	}
+
+	        	
+
+
+	        	legend1 = svg3.append("g")
+	        								.attr("class", "legend1")
+	        								.attr("id", stateId + "_legend1")
+	        								.attr("transform","translate(" + legend1XValue + "," +legend1YValue+")")
+	        								.on("click",function(d){
+
+	        									legendClickedId = d3.select(this).attr("id");
+	        									var opacity = d3.select(this).style("stroke-opacity");
+
+	        									if (legendClickedTracker.length === 0)
+	        									{
+	        										legendClickedTracker.push(legendClickedId);
+	        									}
+	        									else
+	        									{
+	        										for (var counter=0 ; counter<legendClickedTracker.length; counter++)
+	        										{
+	        											if(legendClickedTracker[counter] === legendClickedId )
+	        											{
+	        												legendClickedTracker.splice(counter,1);
+	        												clickedYesOrNo = "YES";
+	        												//console.log("here");
+	        											}
+	        											else if (opacity === 1 )
+	        											{
+	        												console.log("here");
+	        												clickedYesOrNo = "YES";
+	        											}
+	        											
+	        										}
+
+	        										if (clickedYesOrNo === "NO")
+	        										{
+	        											legendClickedTracker.push(legendClickedId);
+	        										}
+	        										else
+	        										{
+	        											clickedYesOrNo = "NO";
+	        										}
+
+	        									}
+
+
+
+
+	        									
+
+	        									
+
+	        									drawableSvg.selectAll(".line")
+	        													.transition()
+	        													.style("stroke-opacity", 0);
+
+	        									
+	        									for (var counter=0 ; counter<legendClickedTracker.length; counter++)
+	        									{
+	        										drawableSvg.select("#" + legendClickedTracker[counter].replace("_legend1","_path"))
+	        												.transition()
+	        												.style("stroke-opacity", 1);
+
+	        									} 
+
+	        										// drawableSvg.select("#" + legendClickedId.replace("_legend1","_path"))
+	        										// 		.transition()
+	        										// 		.style("stroke-opacity", 1);
+
+	        									
+
+	        									
+	        									
+	        								});
+
+	        	legend1Rect = legend1.append("rect")
+	        								.attr("height", 15)
+	        								.attr("width", 15)
+	        								.style("fill", function(d){return colorRange(lineCounter);});
+	        								
+
+	        	legend1RectText = legend1.append("text")
+	        										.attr("x", 15)
+	        										.attr("y", 10)
+	        										.style("font-size","12px")
+	        										.text(stateId.split('_').join(' '));
+
+	        	legendTracker.push(stateId + "_legend1");
+
+	        	
+
+        	});
+
+		}
+
+
+
+		function removeSelectedTimeSeries(stateId)
+		{
+
+			var legend1XValueChanged;
+			var legend1YValueChanged;
+			var changeStartCounter;
+			
+			console.log(lineCounter);
+
+			for(var counter = 0; counter < legendTracker.length; counter++)
+			{
+				if ("#" + stateId + "_legend1" === "#"+legendTracker[counter])
+				{
+					legendTracker.splice(counter,1);
+				}
+			}
+
+			console.log(legendTracker);
+
+			lineCounter = 1;
+
+			d3.select("#" + stateId + "_path").remove();
+						d3.select("#" + stateId + "_legend1").remove();
+
+
+
+			for(var counter = 0; counter < legendTracker.length; counter++)
+			{
+
+				if (lineCounter < 26)
+				{
+				    legend1XValue = 0
+				    legend1YValue = 15 * lineCounter; 
+				        		
+				}
+				else
+				{
+				    legend1XValue = 100
+				     legend1YValue = (15 * (lineCounter % 25)); 
+
+				}
+
+				svg3.select("#"+legendTracker[counter])
+				        		.transition()
+								.attr("transform","translate(" + legend1XValue + "," +legend1YValue +")");
+
+				svg3.select("#"+legendTracker[counter])
+						.select("rect")
+							.style("fill", function(d){return colorRange(lineCounter);});
+
+
+				drawableSvg.select("#"+legendTracker[counter].replace("_legend1","_path"))
+	        					.transition()
+	        					.style("stroke", function(d){return colorRange(lineCounter);});
+
+				lineCounter = lineCounter + 1;
+			}
+
+			lineCounter = lineCounter - 1;
+
+		}
+
+		function removeAllTimeSeries()
+		{
+			lineCounter = 0;
+			d3.selectAll(".line").remove();
+			d3.selectAll(".legend1").remove();
+		}
+
+
+		
+
+
+		
+		
+
+		
+
+		
+
+
+		
+
+
+		
+
+		
+		// Code for SVG2 Ends here ......................................................
+
+
+
+		</script>
+	</body>
+</html>
+
+
+
+
+

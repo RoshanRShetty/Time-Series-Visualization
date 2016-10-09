@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<style type="text/css">
+
+/* On mouse hover, lighten state color */
+path:hover {
+	fill-opacity: .7;
+}
+
+</style>
+</head>
+<body>
+<script type="text/javascript">
+		
+//Width and height of map
+var width = 960;
+var height = 500;
+var allStatesJsonData;
+var map;
+var stateColor;
+
+
+
+// D3 Projection
+var projection = d3.geo.albersUsa()
+				   .translate([width/2, height/2])    // translate to center of screen
+				   .scale([1000]);          // scale things down so see entire US
+        
+// Define path generator
+var path = d3.geo.path()               // path generator that will convert GeoJSON to SVG paths
+		  	 .projection(projection);  // tell path generator to use albersUsa projection
+
+		
+// Define linear scale for output
+var color = d3.scale.linear()
+			  .range(["rgb(213,222,217)","rgb(69,173,168)","rgb(84,36,55)","rgb(217,91,67)"]);
+
+
+
+//Create SVG element and append map to the SVG
+var svg = d3.select("body")
+			.append("svg")
+			.attr("class","svg")
+			.attr("width", width)
+			.attr("height", height);
+
+
+// Load GeoJSON data and merge with states data
+d3.json("us-states.json", function(error, json) {	
+	allStatesJsonData = json;
+	// Bind the data to the SVG and create one path per GeoJSON feature
+	 map = svg.selectAll("path")
+				.data(allStatesJsonData.features)
+				.enter()
+				.append("path")
+				.attr("class","map")
+				.attr("id", function(d){ return d.properties.name;})	
+				.attr("d", path)
+				.style("stroke", "#fff")
+				.style("stroke-width", "1")
+				.style("fill", function(d) {		
+				return "rgb(213,222,217)";
+				})
+				// setting up the on click function
+				.on("click", function(){
+
+					// Get the color of the state that has been clicked on.
+					stateColor = d3.select(this).style("fill");
+
+					
+					// If a state has already been clicked, then it's color will be red. but in d3, red is represented as rgb(255,0,0).
+					// We use this, to identify whether a state has been clicked or not.
+					// Same concept can be used to select and de select an state 
+					if(stateColor.toString() === "rgb(255, 0, 0)")
+					{
+						d3.select(this)
+							.style("fill", function(d) {		
+								return "rgb(213,222,217)";
+								});
+
+
+					}
+					else
+					{
+						d3.select(this)
+							.style("fill", "red");
+						
+
+					}
+
+					// d3.event.stopPropogation() is to stop the changes from effecting other elements within the SVG.
+					// Since the map is a part of the svg, any click on anywhere on the map will first trigger the map.onClick() and then svg.onClick() - map and
+					//svg are class names.
+					//stopPropogation() will stop the double trigger and limit it to the one you have clicked on.
+					d3.event.stopPropagation();					
+
+				});
+
+	});
+
+// To de-select all the selected states.
+svg.on("click", function(d){
+
+	var className = d3.select(this).attr("class");
+
+	if (className != "map")
+	{
+		map.style("fill", function(d) {		
+				return "rgb(213,222,217)";
+				})
+		d3.event.stopPropagation();
+
+		// d3.event.stopPropogation() is to stop the changes from effecting other elements within the SVG.
+					// Since the map is a part of the svg, any click on anywhere on the map will first trigger the map.onClick() and then svg.onClick() - map and
+					//svg are class names.
+					//stopPropogation() will stop the double trigger and limit it to the one you have clicked on.
+	}
+
+	
+})
+
+
+
+   
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+

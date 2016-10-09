@@ -1,0 +1,29 @@
+div {
+    display: block;
+}
+
+#wrapper {
+    width: 400px;
+    height: 400px;
+}
+
+#div1 {
+    float:left;
+    width: 33%;
+    height: 100%;
+    background: red;
+}
+
+#div2 {
+    float:left;
+    width: 67%;
+    height: 30%;
+    background: green;
+}
+
+#div3 {
+    float:left;
+    width: 67%;
+    height: 750%;
+    background: blue;
+}
