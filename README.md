@@ -56,6 +56,19 @@ The data avaialble had to be reformatted to be used for the visualization. The d
 
 ### Intresting Findings
 
+Some of the interesting findings that were visible with are visualization are as follows:
+
+**1. Two Major Unemployment Peaks**
+The two major unemployment peaks between 1980-1985 and 2008-2012 are the most prominent in the visualization. The former was during the 'Great Depression' of the 1980s and the later was during the latest 'Great Recession'.
+
+**2. Not all states were affected the same**
+
+The effect of the 'Great Recession' was not uniform throughout US. Some states were affected more as compared to the other states.
+
+**3. The Housing Market Crash was a major reason for the spike in unemployment rate during the recession**
+
+The 5 most affected states during the great recession were Nevada, Michigan, California, Florida and Rhodes Island. All 5 were amongst the top losers during the Hosuing Bubble Crash.
+
 
 
 
