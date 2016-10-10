@@ -5,13 +5,13 @@ Please click to watch the overview video.
 
 [![ScreenShot](http://roshanrshetty.github.io/Project1/Project1.PNG)](http://roshanrshetty.github.io/Project1/Project1.mp4)
 
-** Visualization Link: ** http://roshanrshetty.github.io
+**Visualization Link:** http://roshanrshetty.github.io
 
 ### Data Description
 
-Data Collection 
+**Data Collection** 
 
-** Data Preprocessing **
+**Data Preprocessing**
 
 ### Intresting Findings
 
