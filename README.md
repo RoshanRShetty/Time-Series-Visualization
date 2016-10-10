@@ -15,9 +15,9 @@ The data set used for visualization are:
  
 The ***state wise unemployment rates*** dataset has been downloaded from https://piazza.com/class/issa77pf63o6oc?cid=12. The ***national unemployment rate*** dataset has been downloaded from http://data.bls.gov/timeseries/LNU04000000. The time range for both the above data sets is from 1st January 1976 to 31st July 2016 provided by the *Bureau of Labor Statistics*. A snapshot of the data is as follows:
 
-[![ScreenShot](http://roshanrshetty.github.io/Project1/State wise unemployment rate.PNG)]
+![ScreenShot](http://roshanrshetty.github.io/Project1/State wise unemployment rate.PNG)
 
-[![ScreenShot](http://roshanrshetty.github.io/Project1/National Unemployment rate.PNG)]
+![ScreenShot](http://roshanrshetty.github.io/Project1/National Unemployment rate.PNG)
 
 
 
