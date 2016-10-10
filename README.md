@@ -63,7 +63,7 @@ The two major unemployment peaks between 1980-1985 and 2008-2012 are the most pr
 
 **2. Not all states were affected the same**
 
-The effect of the 'Great Recession' was not uniform throughout US. Some states were affected more as compared to the other states.
+The effect of the 'Great Recession' was not uniform throughout US. Some states were affected more as compared to the other states. As shown in the image below, unemployment rate increased drastically in California as compared to Texas. The major industry of the state played a major role during the recession. States that were majorly dependent on Construction, Manufacturing and Automobiles were hit badly by the recession. 
 
 **3. The Housing Market Crash was a major reason for the spike in unemployment rate during the recession**
 
