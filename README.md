@@ -17,7 +17,7 @@ The ***state wise unemployment rates*** dataset has been downloaded from https:/
 [![ScreenShot]()]
 
 
-##Data Preprocessing##
+###Data Preprocessing###
 
 The data avaialble had to be reformatted to be used for the visualization. The data was processed as follows:
 
@@ -27,26 +27,28 @@ The data avaialble had to be reformatted to be used for the visualization. The d
 
 2. The next step was to sort the dataset according to the ascending order of the year and months. This was done using the 'sort' functionality provided by Microsoft Excel.
 
-3. The next steps was to seprate all the data for different states to different sheets in excel. This was done using 'Kutools' software.
+***- Data Sepration***
 
-4. Finally the seprate sheets were stored as different .csv files. I have used the following tutorial to do the same: https://www.youtube.com/watch?v=hnsL_01bHbU. The code for the macro is as follows:
+1. The next steps was to seprate all the data for different states to different sheets in excel. This was done using 'Kutools' software.
 
-```
+2. Finally the seprate sheets were stored as different .csv files. I have used the following tutorial to do the same: https://www.youtube.com/watch?v=hnsL_01bHbU. The code for the macro is as follows:
 
-Sub Splitbook()
-MyPath = ThisWorkbook.Path
-For Each sht In ThisWorkbook.Sheets
-sht.Copy
-ActiveSheet.Cells.Copy
-ActiveSheet.Cells.PasteSpecial Paste:=xlPasteValues
-ActiveSheet.Cells.PasteSpecial Paste:=xlPasteFormats
-ActiveWorkbook.SaveAs _
-Filename:=MyPath & "\" & sht.Name & ".xls" & FileFormat:=xlCSV
-ActiveWorkbook.Close savechanges:=False
-Next sht
-End Sub
+  ```
 
-```
+    Sub Splitbook()
+    MyPath = ThisWorkbook.Path
+    For Each sht In ThisWorkbook.Sheets
+    sht.Copy
+    ActiveSheet.Cells.Copy
+    ActiveSheet.Cells.PasteSpecial Paste:=xlPasteValues
+    ActiveSheet.Cells.PasteSpecial Paste:=xlPasteFormats
+    ActiveWorkbook.SaveAs _
+    Filename:=MyPath & "\" & sht.Name & ".xls" & FileFormat:=xlCSV
+    ActiveWorkbook.Close savechanges:=False
+    Next sht
+    End Sub
+
+  ```
 
 ### Intresting Findings
 
