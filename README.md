@@ -9,7 +9,7 @@ Please click to watch the overview video.
 
 ### Data Description
 
-** Data Collection **
+Data Collection 
 
 ** Data Preprocessing **
 
