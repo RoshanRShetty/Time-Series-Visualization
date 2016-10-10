@@ -61,9 +61,13 @@ Some of the interesting findings that were visible with are visualization are as
 **1. Two Major Unemployment Peaks**
 The two major unemployment peaks between 1980-1985 and 2008-2012 are the most prominent in the visualization. The former was during the 'Great Depression' of the 1980s and the later was during the latest 'Great Recession'.
 
+![ScreenShot](http://roshanrshetty.github.io/Project1/finding1.PNG)
+
 **2. Not all states were affected the same**
 
 The effect of the 'Great Recession' was not uniform throughout US. Some states were affected more as compared to the other states. As shown in the image below, unemployment rate increased drastically in California as compared to Texas. The major industry of the state played a major role during the recession. States that were majorly dependent on Construction, Manufacturing and Automobiles were hit badly by the recession. 
+
+![ScreenShot](http://roshanrshetty.github.io/Project1/finding2.PNG)
 
 **3. The Housing Market Crash was a major reason for the spike in unemployment rate during the recession**
 
