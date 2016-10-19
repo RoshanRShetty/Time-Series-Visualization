@@ -9,3 +9,12 @@ A very good read regarding drawbacks of word clouds.
 
 
 Jason Davies explanation for the word cloud generator (https://www.jasondavies.com/wordcloud/about/)
+
+Tag cloud with slider examples: 
+http://chir.ag/tags/
+http://chir.ag/projects/preztags/
+
+Words Relationship:
+
+Tool  for finding the relationship between words:
+https://code.google.com/archive/p/word2vec/
