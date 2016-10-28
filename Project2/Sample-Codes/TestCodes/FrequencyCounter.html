@@ -31,6 +31,7 @@
 			var category;
 			var missc;
 			var parseLocation;
+			var modYear = 2004;
 
 			
 			//Initializing time and date parsers for handling date.
@@ -77,16 +78,20 @@
 				parseLocation.forEach(function(eachLocation)
 				{
 
-					var count = getMapValue(allLocations,eachLocation)
+					var isLocationPresent = getMapValue(allLocations,eachLocation)
 
-					if (count === undefined)
+
+					if (isLocationPresent === undefined)
 					{
-						allLocations[eachLocation] = 1
+						allLocations[eachLocation] = {"Total":1, "monthlyFrequency": []}
+
+						processMonthlyFrequency(allLocations,eachLocation,d.time)
 						
 					}
 					else
 					{
-						allLocations[eachLocation] = count + 1
+						allLocations[eachLocation].Total = allLocations[eachLocation].Total + 1
+						processMonthlyFrequency(allLocations,eachLocation,d.time)
 					}
 
 
@@ -101,16 +106,18 @@
 
 				parseName.forEach(function(eachPerson){
 
-					var count = getMapValue(allPersons,eachPerson)
+					var isPersonPresent = getMapValue(allPersons,eachPerson)
 
-					if (count === undefined)
+					if (isPersonPresent === undefined)
 					{
-						allPersons[eachPerson] = 1
+						allPersons[eachPerson] = {"Total":1, "monthlyFrequency": []}
+						processMonthlyFrequency(allPersons,eachPerson,d.time)
 							
 					}
 					else
 					{
-						allPersons[eachPerson] = count + 1
+						allPersons[eachPerson].Total = allPersons[eachPerson].Total + 1
+						processMonthlyFrequency(allPersons,eachPerson,d.time)
 					}
 
 				})
@@ -125,16 +132,20 @@
 				parseOrganization.forEach(function(eachOrganization)
 				{
 
-					var count = getMapValue(allOrganization,eachOrganization)
+					var isOrganizationPresent = getMapValue(allOrganization,eachOrganization)
 
-					if (count === undefined)
+					if (isOrganizationPresent === undefined)
 					{
-						allOrganization[eachOrganization] = 1
+						console.log(eachOrganization + "here")
+						allOrganization[eachOrganization] = {"Total":1, "monthlyFrequency": []}
+						processMonthlyFrequency(allOrganization,eachOrganization,d.time)
 							
 					}
 					else
 					{
-						allOrganization[eachOrganization] = count + 1
+						console.log(eachOrganization + "here2")
+						allOrganization[eachOrganization].Total = allOrganization[eachOrganization].Total + 1
+						processMonthlyFrequency(allOrganization,eachOrganization,d.time)
 					}
 
 				})
@@ -148,16 +159,18 @@
 				parseMiss.forEach(function(eachMiss)
 				{
 
-					var count = getMapValue(allMiss,eachMiss)
+					var isMissPresent = getMapValue(allMiss,eachMiss)
 
-					if (count === undefined)
+					if (isMissPresent === undefined)
 					{
-						allMiss[eachMiss] = 1
-							
+						allMiss[eachMiss] = {"Total":1, "monthlyFrequency": []}
+						processMonthlyFrequency(allMiss,eachMiss,d.time)
+						
 					}
 					else
 					{
-						allMiss[eachMiss] = count + 1
+						allMiss[eachMiss].Total = allMiss[eachMiss].Total + 1
+						processMonthlyFrequency(allMiss,eachMiss,d.time)
 					}
 
 				})
@@ -183,7 +196,40 @@
 			function getMapValue(theMap,theValue)
 			{			
 				
-				return theMap[theValue];
+				return theMap[theValue]
+
+
+			}
+
+
+			function processMonthlyFrequency(theMap,theValue,theTime)
+			{
+
+				var year = theTime.substring(0,4);
+				var month = theTime.substring(5,7);
+
+
+				//console.log(year + " " + month)
+
+				var arrayIndex = ( ( (year % modYear) * 12) - 10 ) + (month - 1)
+
+				//console.log(arrayIndex);
+
+
+
+				var arrayValue = theMap[theValue].monthlyFrequency
+
+				if ( arrayValue[arrayIndex] === undefined )
+				{
+					arrayValue[arrayIndex] = 1;
+
+				}
+				else
+				{
+					arrayValue[arrayIndex] = arrayValue[arrayIndex] + 1;
+
+				}
+
 
 
 			}
@@ -191,7 +237,7 @@
 
 
 			
-			
+		
 
 			
 
