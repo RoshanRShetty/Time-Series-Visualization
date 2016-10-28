@@ -6,6 +6,12 @@
 		<script src="https://d3js.org/d3-dsv.v1.min.js"></script>
 	</head>
 	<body>
+	Hi
+
+	<a href='#' onclick='downloadCSV({ filename: "allPersons.csv" });'>Download Person-Data</a></br>
+	<a href='#' onclick='downloadCSV({ filename: "allLocation.csv" });'>Download Location-Data</a></br>
+	<a href='#' onclick='downloadCSV({ filename: "allOrganization.csv" });'>Download Organization-Data</a></br>
+	<a href='#' onclick='downloadCSV({ filename: "allMiss.csv" });'>Download Miscellaneous-Data</a></br>
 
 		<script type="text/javascript">
 
@@ -16,6 +22,8 @@
 			var allPersons = new Map();
 			var allOrganization = new Map();
 			var allMiss	= new Map();
+
+			var tempArray = [];
 
 
 
@@ -39,7 +47,32 @@
 			formatDate = d3.time.format("%b-%Y");
 
 			
-			
+			// var stockData = [
+	  //       {
+	  //           location:"brazil|president|china",	
+			// 	miscellaneous:"brazilian federal district|technology|brazilian",
+			// 	organization:"'' granja|agriculture|economy|people 's republic|petrobras|exterior relations|energy",	
+			// 	person:"eduardo campos|mines|luiz inácio lula da silva|antonio palocci|hu jintao|torto ''|vale|roberto rodrigues|science|luiz fernando furlan|rio doce|roger agnelli|dilma rousseff|celso amorim|eduardo dutra",
+			// 	source:"",
+			// 	time:"2004-11-13 00:00:00"
+	  //       },
+	  //       {
+	  //           location:"brazil|president|china",
+			// 	miscellaneous:"brazilian federal district|technology|brazilian",
+			// 	organization:"'' granja|agriculture|economy|people 's republic|petrobras|exterior relations|energy",
+			// 	person:"eduardo campos|mines|luiz inácio lula da silva|antonio palocci|hu jintao|torto ''|vale|roberto rodrigues|science|luiz fernando furlan|rio doce|roger agnelli|dilma rousseff|celso amorim|eduardo dutra",
+			// 	source:"",
+			// 	time:"2004-11-13 00:00:00"
+	  //       },
+	  //       {
+	  //           location:"brazil|president|china",
+			// 	miscellaneous:"brazilian federal district|technology|brazilian",
+			// 	organization:"'' granja|agriculture|economy|people 's republic|petrobras|exterior relations|energy",
+			// 	person:"eduardo campos|mines|luiz inácio lula da silva|antonio palocci|hu jintao|torto ''|vale|roberto rodrigues|science|luiz fernando furlan|rio doce|roger agnelli|dilma rousseff|celso amorim|eduardo dutra",
+			// 	source:"",
+			// 	time:"2004-11-13 00:00:00"
+	  //       },
+	  //   ];
 
 			
 
@@ -59,6 +92,9 @@
 					processOrganization(d);
 					processMiss(d);
 
+
+					
+
 					
 
 					
@@ -67,7 +103,9 @@
 
 			}) // end of d3.tsv
 
-
+			//console.log(allLocations)
+			
+			
 
 			//function for processing all locations
 			function processLocation(d)
@@ -83,7 +121,7 @@
 
 					if (isLocationPresent === undefined)
 					{
-						allLocations[eachLocation] = {"Total":1, "monthlyFrequency": []}
+						allLocations[eachLocation] = { "Word":eachLocation,"Total":1, "monthlyFrequency": []}
 
 						processMonthlyFrequency(allLocations,eachLocation,d.time)
 						
@@ -97,6 +135,12 @@
 
 
 				})
+
+
+				
+
+
+
 			}
 
 
@@ -110,7 +154,7 @@
 
 					if (isPersonPresent === undefined)
 					{
-						allPersons[eachPerson] = {"Total":1, "monthlyFrequency": []}
+						allPersons[eachPerson] = { "Word":eachPerson, "Total":1, "monthlyFrequency": []}
 						processMonthlyFrequency(allPersons,eachPerson,d.time)
 							
 					}
@@ -136,16 +180,16 @@
 
 					if (isOrganizationPresent === undefined)
 					{
-						console.log(eachOrganization + "here")
-						allOrganization[eachOrganization] = {"Total":1, "monthlyFrequency": []}
-						processMonthlyFrequency(allOrganization,eachOrganization,d.time)
+						//console.log(eachOrganization + "here")
+						allOrganization[eachOrganization] = { "Word":eachOrganization,"Total":1, "monthlyFrequency": []}
+						//processMonthlyFrequency(allOrganization,eachOrganization,d.time)
 							
 					}
 					else
 					{
-						console.log(eachOrganization + "here2")
+						//console.log(eachOrganization + "here2")
 						allOrganization[eachOrganization].Total = allOrganization[eachOrganization].Total + 1
-						processMonthlyFrequency(allOrganization,eachOrganization,d.time)
+						//processMonthlyFrequency(allOrganization,eachOrganization,d.time)
 					}
 
 				})
@@ -163,7 +207,7 @@
 
 					if (isMissPresent === undefined)
 					{
-						allMiss[eachMiss] = {"Total":1, "monthlyFrequency": []}
+						allMiss[eachMiss] = { "Word":eachMiss,"Total":1, "monthlyFrequency": []}
 						processMonthlyFrequency(allMiss,eachMiss,d.time)
 						
 					}
@@ -235,8 +279,134 @@
 			}
 
 
+			// var textFile = null;
 
 			
+
+
+   
+			
+
+
+			function convertArrayOfObjectsToCSV(args) {
+		        var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+		        data = args.data || null;
+		        if (data == null || !data.length) {
+		            return null;
+		        }
+
+		        columnDelimiter = args.columnDelimiter || ',';
+		        lineDelimiter = args.lineDelimiter || '\n';
+
+		        keys = Object.keys(data[0]);
+
+		        result = '';
+		        result += keys.join(columnDelimiter);
+		        result += lineDelimiter;
+
+		        data.forEach(function(item) {
+		            ctr = 0;
+		            keys.forEach(function(key) {
+		                if (ctr > 0) result += columnDelimiter;
+
+		                result += item[key];
+		                ctr++;
+		            });
+		            result += lineDelimiter;
+		        });
+
+		        return result;
+		    }
+
+
+    		function downloadCSV(args) {
+		        var data, filename, link;
+
+		        console.log(args.filename);
+		       // ConvertMapToArray(allPersons);
+
+		        if (args.filename === "allPersons.csv")
+		        {
+		        	 console.log(1)
+		        	ConvertMapToArray(allPersons);
+		        }
+		        else if (args.filename === "allLocations.csv")
+		        {
+		        	console.log(2)
+		        	ConvertMapToArray(allLocations);
+		        }
+		        else if (args.filename === "allOrganization.csv")
+		        {
+		        	console.log(3)
+		        	ConvertMapToArray(allOrganization);
+		        }
+		        else
+		        {
+		        	console.log(4)
+		        	ConvertMapToArray(allMiss);
+		        }
+
+		        
+
+		        var csv = convertArrayOfObjectsToCSV({
+		            data: tempArray
+		        });
+		        if (csv == null) return;
+
+
+
+
+		        filename = args.filename || 'export.csv';
+
+		        if (!csv.match(/^data:text\/csv/i)) {
+		            csv = 'data:text/csv;charset=utf-8,' + csv;
+		        }
+		        // data = encodeURI(csv);
+
+
+		        csvData = new Blob([csv], { type: 'text/csv' });
+		        var csvUrl = URL.createObjectURL(csvData);
+
+		        link = document.createElement('a');
+		        link.setAttribute('href', csvUrl);
+		        link.setAttribute('download', filename);
+		        link.click();
+    		}
+
+
+
+    		function ConvertMapToArray(data)
+    		{
+    						
+
+    			tempArray.splice(0);
+
+
+    			console.log(data)
+
+    			Object.keys(data).forEach( function(key){
+
+    				
+
+
+    				tempArray.push(
+
+    				{
+    					"Word": 		data[key].Word ,
+    					"Total": 		data[key].Total ,
+    					"monthValue": 	data[key].monthlyFrequency.join(",")  
+    				});
+
+    				
+
+    			})
+
+    				
+
+    			
+
+    		}
 		
 
 			
