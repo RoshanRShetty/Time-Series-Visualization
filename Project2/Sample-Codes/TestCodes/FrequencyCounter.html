@@ -9,7 +9,7 @@
 	Hi
 
 	<a href='#' onclick='downloadCSV({ filename: "allPersons.csv" });'>Download Person-Data</a></br>
-	<a href='#' onclick='downloadCSV({ filename: "allLocation.csv" });'>Download Location-Data</a></br>
+	<a href='#' onclick='downloadCSV({ filename: "allLocations.csv" });'>Download Location-Data</a></br>
 	<a href='#' onclick='downloadCSV({ filename: "allOrganization.csv" });'>Download Organization-Data</a></br>
 	<a href='#' onclick='downloadCSV({ filename: "allMiss.csv" });'>Download Miscellaneous-Data</a></br>
 
@@ -47,33 +47,6 @@
 			formatDate = d3.time.format("%b-%Y");
 
 			
-			// var stockData = [
-	  //       {
-	  //           location:"brazil|president|china",	
-			// 	miscellaneous:"brazilian federal district|technology|brazilian",
-			// 	organization:"'' granja|agriculture|economy|people 's republic|petrobras|exterior relations|energy",	
-			// 	person:"eduardo campos|mines|luiz inácio lula da silva|antonio palocci|hu jintao|torto ''|vale|roberto rodrigues|science|luiz fernando furlan|rio doce|roger agnelli|dilma rousseff|celso amorim|eduardo dutra",
-			// 	source:"",
-			// 	time:"2004-11-13 00:00:00"
-	  //       },
-	  //       {
-	  //           location:"brazil|president|china",
-			// 	miscellaneous:"brazilian federal district|technology|brazilian",
-			// 	organization:"'' granja|agriculture|economy|people 's republic|petrobras|exterior relations|energy",
-			// 	person:"eduardo campos|mines|luiz inácio lula da silva|antonio palocci|hu jintao|torto ''|vale|roberto rodrigues|science|luiz fernando furlan|rio doce|roger agnelli|dilma rousseff|celso amorim|eduardo dutra",
-			// 	source:"",
-			// 	time:"2004-11-13 00:00:00"
-	  //       },
-	  //       {
-	  //           location:"brazil|president|china",
-			// 	miscellaneous:"brazilian federal district|technology|brazilian",
-			// 	organization:"'' granja|agriculture|economy|people 's republic|petrobras|exterior relations|energy",
-			// 	person:"eduardo campos|mines|luiz inácio lula da silva|antonio palocci|hu jintao|torto ''|vale|roberto rodrigues|science|luiz fernando furlan|rio doce|roger agnelli|dilma rousseff|celso amorim|eduardo dutra",
-			// 	source:"",
-			// 	time:"2004-11-13 00:00:00"
-	  //       },
-	  //   ];
-
 			
 
 			
@@ -118,7 +91,7 @@
 
 					var isLocationPresent = getMapValue(allLocations,eachLocation)
 
-
+					//console.log(isLocationPresent + "location")
 					if (isLocationPresent === undefined)
 					{
 						allLocations[eachLocation] = { "Word":eachLocation,"Total":1, "monthlyFrequency": []}
@@ -176,20 +149,29 @@
 				parseOrganization.forEach(function(eachOrganization)
 				{
 
+					if (eachOrganization === "keys")
+					{
+						eachOrganization = "'keyss'"
+					}
+
+
 					var isOrganizationPresent = getMapValue(allOrganization,eachOrganization)
+					//console.log(isOrganizationPresent + " " + eachOrganization)
+
+					
 
 					if (isOrganizationPresent === undefined)
 					{
 						//console.log(eachOrganization + "here")
 						allOrganization[eachOrganization] = { "Word":eachOrganization,"Total":1, "monthlyFrequency": []}
-						//processMonthlyFrequency(allOrganization,eachOrganization,d.time)
+						processMonthlyFrequency(allOrganization,eachOrganization,d.time)
 							
 					}
 					else
 					{
 						//console.log(eachOrganization + "here2")
 						allOrganization[eachOrganization].Total = allOrganization[eachOrganization].Total + 1
-						//processMonthlyFrequency(allOrganization,eachOrganization,d.time)
+						processMonthlyFrequency(allOrganization,eachOrganization,d.time)
 					}
 
 				})
@@ -323,27 +305,27 @@
     		function downloadCSV(args) {
 		        var data, filename, link;
 
-		        console.log(args.filename);
+		        //console.log(args.filename);
 		       // ConvertMapToArray(allPersons);
 
 		        if (args.filename === "allPersons.csv")
 		        {
-		        	 console.log(1)
+		        	//console.log(1)
 		        	ConvertMapToArray(allPersons);
 		        }
 		        else if (args.filename === "allLocations.csv")
 		        {
-		        	console.log(2)
+		        	//console.log(2)
 		        	ConvertMapToArray(allLocations);
 		        }
 		        else if (args.filename === "allOrganization.csv")
 		        {
-		        	console.log(3)
+		        	//console.log(3)
 		        	ConvertMapToArray(allOrganization);
 		        }
 		        else
 		        {
-		        	console.log(4)
+		        	//console.log(4)
 		        	ConvertMapToArray(allMiss);
 		        }
 
@@ -383,7 +365,7 @@
     			tempArray.splice(0);
 
 
-    			console.log(data)
+    			//console.log(data)
 
     			Object.keys(data).forEach( function(key){
 
