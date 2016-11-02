@@ -11,12 +11,17 @@ path {
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script>
-var width = 960,
-    height = 500;
+
+
+//Test variables
+
+var allData;
+var width = 1960,
+    height = 1500;
 
 var projection = d3.geo.mercator()
-    .center([0, 5 ])
-    .scale(900)
+    .center([100, 5])
+    .scale(100)
     .rotate([-180,0]);
 
 var svg = d3.select("body").append("svg")
@@ -29,10 +34,13 @@ var path = d3.geo.path()
 var g = svg.append("g");
 
 // load and display the World
-d3.json("https://gist.github.com/d3noob/5193723/raw/world-110m2.json", function(error, topology) {
-    g.selectAll("path")
-      .data(topojson.feature(topology, topology.objects.countries).features)
+d3.json("worldcoordinates.json", function(error, topology) {
 
+	allData = topology;
+	
+    g.selectAll("path")      
+	  //.data(topojson.object(topology, topology.objects.countries).geometrics)
+	  .data(topojson.feature(topology, topology.objects.countries).features)
 	  .enter()
       .append("path")
       .attr("d", path)
