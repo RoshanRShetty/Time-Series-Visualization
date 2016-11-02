@@ -19,6 +19,19 @@
     .bld {
         font-weight: bold;
     }
+
+    div.tooltip {
+        position: absolute;
+        text-align: center;
+        padding: 5px;
+        font: 12px sans-serif;
+        background: black;
+        color: white;
+        border: 1px;
+        border-radius: 4px;
+        pointer-events: none;
+    }
+
 </style>
 <body>
 
@@ -26,63 +39,138 @@
 <script>
 
 
-    // Here we would replace the frequency list with a list generated from the csv files
-    // The 'weight' of the words would have to be counted by a parsing program
-    // Every unique word would have a list of corresponding words from the entire data set
 
-    //var frequency_list = [{"text":"study","size":40},{"text":"motion","size":15},{"text":"forces","size":10},{"text":"electricity","size":15},{"text":"movement","size":10},{"text":"relation","size":5},{"text":"things","size":10},{"text":"force","size":5},{"text":"ad","size":5},{"text":"energy","size":85},{"text":"living","size":5},{"text":"nonliving","size":5},{"text":"laws","size":15},{"text":"speed","size":45},{"text":"velocity","size":30},{"text":"define","size":5},{"text":"constraints","size":5},{"text":"universe","size":10},{"text":"physics","size":120},{"text":"describing","size":5},{"text":"matter","size":90},{"text":"physics-the","size":5},{"text":"world","size":10},{"text":"works","size":10},{"text":"science","size":70},{"text":"interactions","size":30},{"text":"studies","size":5},{"text":"properties","size":45},{"text":"nature","size":40},{"text":"branch","size":30},{"text":"concerned","size":25},{"text":"source","size":40},{"text":"google","size":10},{"text":"defintions","size":5},{"text":"two","size":15},{"text":"grouped","size":15},{"text":"traditional","size":15},{"text":"fields","size":15},{"text":"acoustics","size":15},{"text":"optics","size":15},{"text":"mechanics","size":20},{"text":"thermodynamics","size":15},{"text":"electromagnetism","size":15},{"text":"modern","size":15},{"text":"extensions","size":15},{"text":"thefreedictionary","size":15},{"text":"interaction","size":15},{"text":"org","size":25},{"text":"answers","size":5},{"text":"natural","size":15},{"text":"objects","size":5},{"text":"treats","size":10},{"text":"acting","size":5},{"text":"department","size":5},{"text":"gravitation","size":5},{"text":"heat","size":10},{"text":"light","size":10},{"text":"magnetism","size":10},{"text":"modify","size":5},{"text":"general","size":10},{"text":"bodies","size":5},{"text":"philosophy","size":5},{"text":"brainyquote","size":5},{"text":"words","size":5},{"text":"ph","size":5},{"text":"html","size":5},{"text":"lrl","size":5},{"text":"zgzmeylfwuy","size":5},{"text":"subject","size":5},{"text":"distinguished","size":5},{"text":"chemistry","size":5},{"text":"biology","size":5},{"text":"includes","size":5},{"text":"radiation","size":5},{"text":"sound","size":5},{"text":"structure","size":5},{"text":"atoms","size":5},{"text":"including","size":10},{"text":"atomic","size":10},{"text":"nuclear","size":10},{"text":"cryogenics","size":10},{"text":"solid-state","size":10},{"text":"particle","size":10},{"text":"plasma","size":10},{"text":"deals","size":5},{"text":"merriam-webster","size":5},{"text":"dictionary","size":10},{"text":"analysis","size":5},{"text":"conducted","size":5},{"text":"order","size":5},{"text":"understand","size":5},{"text":"behaves","size":5},{"text":"en","size":5},{"text":"wikipedia","size":5},{"text":"wiki","size":5},{"text":"physics-","size":5},{"text":"physical","size":5},{"text":"behaviour","size":5},{"text":"collinsdictionary","size":5},{"text":"english","size":5},{"text":"time","size":35},{"text":"distance","size":35},{"text":"wheels","size":5},{"text":"revelations","size":5},{"text":"minute","size":5},{"text":"acceleration","size":20},{"text":"torque","size":5},{"text":"wheel","size":5},{"text":"rotations","size":5},{"text":"resistance","size":5},{"text":"momentum","size":5},{"text":"measure","size":10},{"text":"direction","size":10},{"text":"car","size":5},{"text":"add","size":5},{"text":"traveled","size":5},{"text":"weight","size":5},{"text":"electrical","size":5},{"text":"power","size":5}];
+/*General Comments
+
+    1. Any element that has an 'id' attribute cannot have a value with a space in it. E.g. someElement.attr("id", "North Dakota")
+        such id's with spaces in them wont get recognized. so to handle this, we are using the String.split(" ").join("_")
+        This will convert 'North Dakota' to 'North_Dakota' 
+
+*/
+    var div = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+
+    //initializing the wordList array
+    var wordList =  [],
+                    width = 1600,
+                    height = 800;
+
+    //initializing a scale to scale the frequencies of the words
+    var wordSizeScale = d3.scale.linear()
+                        .range([0,100]);
+     wordSizeScale.domain([0,393]); 
+
+    //initializing variables to set the scale
+    var maxSize;
+    var minSize;
+
+    //initializing allData to hold contents of csv file
+
+
+    d3.csv("topPersons.csv", function(error,data){
+
+        //Logic to get scale of the words
+
+        allData = data;
+
+        // maxSize = d3.max(allData,function(d){
+        //     return d.total
+        // })
+
+        // minSize = d3.min(allData,function(d){
+        //     console.log(d.total)
+        //     return d.total
+        // })
+
+        
+
+        allData.forEach(function(d){
+             //populationg the wordList array,with the text and total values foe each record of the .csv file.
+             wordList.push({"text":d.text, "size":d.total})           
+            
+        });
+
+        d3.layout.cloud().size([1600, 800])
+            .words(wordList.map(function(d){                
+                return {text: d.text, size: d.size}; // the wordlist.map is important else, the code for wordle wont work
+            }))
+            .rotate(0)
+            .fontSize(function(d) { return wordSizeScale(d.size); })
+            .on("end", draw)
+            .start();
+
+
+
+     });
+
+
 
 
     var color = d3.scale.linear()
             .domain([0,1,2,3,4,5,6,10,15,20,100])
             .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
 
-
-    persons = [];
-
     
-    //Processing the input
-    d3.csv("topPersons.csv", function(d) {
-        return {
-            text : d.text,
-            total : +d.total
-        };
-    }, function(data) {
-        persons = data;
-        console.log(data[0]);
-        //debugger;
-    });
-
-    //Cant get this function to run
-    d3.layout.cloud().size([1200, 450])
-            .words(persons)
-            .rotate(0)
-            .fontSize(function(d) {
-                console.log("d3layoutcloud test");
-                return d.total; })
-            .on("end", draw)
-            .start();
 
     function draw(words) {
-        d3.select("body").append("svg")
-                .attr("width", 850)
-                .attr("height", 350)
-                .attr("class", "wordcloud")
-                .append("g")
+        d3.select("body")
+                .append("svg")
+                    .attr("width", 1600)
+                    .attr("height", 800)
+                     .attr("class", "wordcloud")
+                .append("g")    
                 // without the transform, words words would get cutoff to the left and top, they would
                 // appear outside of the SVG area
-                .attr("transform", "translate(320,200)")
-                .selectAll("text")
-                .data(words)
-                .enter().append("text")
-                .style("font-size", function(d) { return d.total + "px"; })
-                .style("fill", function(d, i) { return color(i); })
-                .attr("transform", function(d) {
-                    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-                })
-                .text(function(d) { return d.text; });
+                    .attr("transform", "translate(500,250)")
+                    .selectAll("text")
+                    .data(words)
+                    .enter()
+                    .append("text")
+                        .attr("class","wordle")
+                        .attr("id", function(d){return (d.text.split(" ").join("_") + "_wordle");}) // this step is to assign unique id's to each word
+                        .style("font-size", function(d) { return d.size + "px"; })
+                        .style("fill", function(d, i) { return color(i); })
+                        .attr("transform", function(d) {
+                            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                        })
+                        .text(function(d) { return d.text; })
+                        .on("mouseover", function(d){
+                            div.transition()
+                                    .style("opacity", 1);
+                            div	.html("<u><span>" + d.text + "</span></u><br>" +
+                                    "frequency: <span>" + d.size + "</span>")
+                                    .style("left", (d3.event.pageX) + "px")
+                                    .style("top", (d3.event.pageY - 28) + "px");
+                            var wordID = d3.select(this).attr("id");
+                            d3.selectAll(".wordle").style("opacity",0.2);
+                            d3.select("#" + wordID).style("opacity",1);
+                        })
+                        .on("mouseout", function(d) {
+                            div.transition()
+                                    .style("opacity", 0);
+                            d3.selectAll(".wordle").style("opacity",1);
+                        })
     }
+
+
+
+    
+
+
+    
+                        
+
+
 </script>
+
+<div style="width: 40%;">
+    <div class="legend">
+        Commonly used words are larger and slightly faded in color.  Less common words are smaller and darker.
+    </div>
+
+</div>
 
 
 </html>
