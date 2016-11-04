@@ -15,6 +15,7 @@
         font-size: 0.8em;
         margin: 10px;
         padding: 8px;
+        width: 20%;
     }
     .bld {
         font-weight: bold;
@@ -34,7 +35,15 @@
 
 </style>
 <body>
-
+<div>
+    <div class="legend">
+        Commonly used words are larger and slightly faded in color.  Less common words are smaller and darker.<br><br>
+        <button onclick="callFile('allPersons.csv')">Add Persons</button><br>
+        <button onclick="callFile('allLocations.csv')">Add Location</button><br>
+        <button onclick="callFile('allOrganization.csv')">Add Organization</button><br>
+        <button onclick="callFile('allMiss.csv')">Add Miscellaneous</button>
+    </div>
+</div>
 </body>
 <script>
 
@@ -57,28 +66,27 @@
                     width = 1600,
                     height = 800;
 
+
+    var thisArg;
     //initializing a scale to scale the frequencies of the words
-    var wordSizeScale = d3.scale.linear()
-                        .range([0,75])
-                        .domain([0,500]);
 
     //initializing variables to set the scale
     var maxSize;
     var minSize;
 
-    d3.layout.cloud().size([800, 300])
-        .words(wordList.map(function (d) {
-            return {text: d.text, size: d.size}; // the wordlist.map is important else, the code for wordle wont work
-        }))
-        .rotate(0)
-        .fontSize(function (d) {
-            return wordSizeScale(d.size);
-        })
-        .on("end", draw)
-        .start();
+    //var for svg ids
+
+    var svgIDs;
+
 
     //initializing allData to hold contents of csv file
     function callFile(passedArg) {
+        thisArg=passedArg;
+        svgIDs = passedArg.replace(".csv","");
+        wordList.splice(0);
+
+        d3.selectAll(".wordcloud").remove();
+
         d3.csv(passedArg, function (error, data) {
 
             //Logic to get scale of the words
@@ -94,11 +102,20 @@
             //     return d.total
             // })
 
-            allData.forEach(function (d) {
-                //populationg the wordList array,with the text and total values foe each record of the .csv file.
-                wordList.push({"text": d.text, "size": d.total})
 
-            });
+            var wordSizeScale = d3.scale.linear()
+                    .domain([d3.min(data, function(d) {
+                        return d.total;
+                    }), d3.max(data, function(d) {
+                        return d.total*2.5;
+                    })])
+                    .range([10,100]);
+
+            for(var i=0;i<50;i++){
+                wordList.push({"text": allData[i].text, "size": allData[i].total});
+                console.log(allData[i].total);
+            }
+
 
             d3.layout.cloud().size([800, 300])
                     .words(wordList.map(function (d) {
@@ -118,16 +135,18 @@
 
 
     var color = d3.scale.linear()
-            .domain([0,1,2,3,4,5,6,10,15,20,100])
+            .domain([1,2,3,4,5,6,10,15,20,100])
             .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
 
     
 
     function draw(words) {
+
         d3.select("body")
                 .append("svg")
-                    .attr("width", 850)
-                    .attr("height", 350)
+                .attr("id", svgIDs)
+                    .attr("width", 900)
+                    .attr("height", 400)
                      .attr("class", "wordcloud")
                 .append("g")    
                 // without the transform, words words would get cutoff to the left and top, they would
@@ -150,7 +169,7 @@
                                     .style("opacity", 1);
                             div.html("<u><span>" + d.text + "</span></u><br>" +
                                     "frequency: <span>" + d.size + "</span>")
-                                    .style("left", (d3.event.pageX) + "px")
+                                    .style("left", (d3.event.pageX+30) + "px")
                                     .style("top", (d3.event.pageY - 28) + "px");
                             var wordID = d3.select(this).attr("id");
                             d3.selectAll(".wordle").style("opacity",0.2);
@@ -163,25 +182,6 @@
                         })
     }
 
-
-
-    
-
-
-    
-                        
-
-
 </script>
-<!--
-<div style="width: 40%;">
-    <div class="legend">
-        Commonly used words are larger and slightly faded in color.  Less common words are smaller and darker.
-    </div>
-
-</div>
--->
-<button onclick="callFile('topOrganization.csv')">Press to organization</button>
-<button onclick="callFile('topPersons.csv')">Press to add persons</button>
 
 </html>
