@@ -83,6 +83,7 @@
     function callFile(passedArg) {
         thisArg=passedArg;
         svgIDs = passedArg.replace(".csv","");
+        console.log(svgIDs);
         wordList.splice(0);
 
         d3.selectAll(".wordcloud").remove();
@@ -107,13 +108,12 @@
                     .domain([d3.min(data, function(d) {
                         return d.total;
                     }), d3.max(data, function(d) {
-                        return d.total*2.5;
+                        return d.total;
                     })])
                     .range([10,100]);
 
             for(var i=0;i<50;i++){
                 wordList.push({"text": allData[i].text, "size": allData[i].total});
-                console.log(allData[i].total);
             }
 
 
@@ -122,9 +122,7 @@
                         return {text: d.text, size: d.size}; // the wordlist.map is important else, the code for wordle wont work
                     }))
                     .rotate(0)
-                    .fontSize(function (d) {
-                        return wordSizeScale(d.size);
-                    })
+                    .fontSize(function (d) {return wordSizeScale(d.size);})
                     .on("end", draw)
                     .start();
 
@@ -134,11 +132,19 @@
 
 
 
-    var color = d3.scale.linear()
-            .domain([1,2,3,4,5,6,10,15,20,100])
-            .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
+    var color1 = d3.scale.linear()
+            .domain([0,1,2,3,4,5,6,10,15,20,100])
+            .range(["#e5ecf6","#ccdaee","#b2c7e5","#99b5dd","#7fa3d5","#6690cc","#4c7ec4","#326bbb","#1959b3","#0047ab"]);
+    var color2 = d3.scale.linear()
+            .domain([0,1,2,3,4,5,6,10,15,20,100])
+            .range(["#e7f5ee","#cfebdd","#b7e1cc","#9fd7bc","#87ceab","#6fc49","#57ba8a","#3eb079","#26a668","#0f9d58"]);
+    var color3 = d3.scale.linear()
+            .domain([0,1,2,3,4,5,6,10,15,20,100])
+            .range(["#f7e9e5","#f0d3cc","#e9bdb2","#e2a899","#db9280","#d47c66","#cd674d","#c65133","#bf3b1a","#b82601"]);
+    var color4 = d3.scale.linear()
+        .domain([0,1,2,3,4,5,6,10,15,20,100])
+        .range(["#fee7f2","#fdd0e6","#fcb9da","#fca2cd","#fb8bc1","#fa74b5","#fa5da8","#f9469c","#f82f90","#f81884"]);
 
-    
 
     function draw(words) {
 
@@ -159,7 +165,24 @@
                         .attr("class","wordle")
                         .attr("id", function(d){return (d.text.split(" ").join("_") + "_wordle");}) // this step is to assign unique id's to each word
                         .style("font-size", function(d) { return d.size + "px"; })
-                        .style("fill", function(d, i) { return color(i); })
+                        .style("fill", function(d, i) {
+                            if (svgIDs == 'allPersons') {
+                                return color1(i);
+                            }
+                            else if (svgIDs == 'allLocations') {
+                                return color2(i);
+                            }
+                            else if (svgIDs == 'allOrganization') {
+                                return color3(i);
+                            }
+                            else if (svgIDs == 'allMiss') {
+                                return color4(i);
+                            }
+                            else {
+                                console.log("hi");
+                                return color1(i);
+                            }
+                        })
                         .attr("transform", function(d) {
                             return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
                         })
