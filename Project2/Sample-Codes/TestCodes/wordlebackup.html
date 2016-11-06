@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title> Dynamic Wordle </title>
+		<script type="text/javascript" src="https://d3js.org/d3.v3.min.js"> </script>
+		<script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+	</head>
+	<body>
+
+		<script type="text/javascript">
+
+			var allData = [];
+			var parseData = [];
+
+			var personsInBlog = [];
+			var personCount = [];
+
+			var locationsInBlog = [];
+			var locationCount =[];
+
+			var orgInBlog = [];
+			var orgCount =[];
+
+			var misInBlog = [];
+			var misCount=[];
+
+
+			// variables to parse date
+
+			parseDate = d3.time.format("%Y-%m-%d").parse;
+			
+
+			d3.tsv("../Data/huffington.tsv", function(error,data)
+			{
+				if (error) {return error;}
+
+
+				allData = data;
+
+
+				allData.forEach(function(d){
+
+
+					d.time = d.time.substring(0,10);
+
+
+					if (parseDate(d.time) > new Date("12/31/2006") && parseDate(d.time) < new Date("12/31/2007"))
+					{
+						//console.log("here")
+
+						parsePerson = d.person.split("|");
+						processCount(personsInBlog,parsePerson,personCount);
+
+						parseLocation = d.location.split("|");
+						processCount(locationsInBlog,parseLocation,locationCount);
+
+						parseOrg = d.organization.split("|");
+						processCount(orgInBlog,parseOrg,orgCount);
+
+						parseMis = d.miscellaneous.split("|");
+						processCount(misInBlog,parseMis,misCount)
+
+
+						
+
+						
+						
+
+					}
+				})
+
+				console.log(d3.max(personCount,function(d){return d;}))
+				
+
+			});
+
+
+
+			function processCount(theArray,theData, theCount)
+			{
+				theData.forEach(function(d){
+
+					//console.log(d);
+
+					var indexValue = theArray.indexOf(d)
+
+					//console.log(indexValue)
+
+					if(indexValue === -1)
+					{
+						theArray.push(d);
+						theCount.push(1);
+						
+					}
+					else
+					{
+						theCount[indexValue] = theCount[indexValue] + 1;
+					}
+
+
+				})
+
+			}
+
+
+
+
+			
+
+			
+
+
+
+		</script>
+
+
+
+
+
+	</body>
+</html>

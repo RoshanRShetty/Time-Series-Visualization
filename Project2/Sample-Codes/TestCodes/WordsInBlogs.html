@@ -46,7 +46,7 @@
 			
 
 			//Loading the wikinews data file and processing it
-			d3.tsv("../Data/wikinews.tsv", function(error,data)
+			d3.tsv("../Data/huffington.tsv", function(error,data)
 			{
 				allData = data
 				if (error) throw error;
@@ -78,23 +78,38 @@
 			function processLocation(d,i)
 			{
 
-				parseLocation = d.location.replace("\"","").split("|");
+				parseLocation = d.location.replace("\"","").replace(",","-").split("|");
+				parseLocation = 
 
 				parseLocation.forEach(function(eachLocation)
 				{
+
+					if (eachLocation === "keys" )
+					{
+						eachLocation = "'keyss'"
+					}
+					else if (eachLocation === "set")
+					{
+						eachLocation = "'sets'"
+					}
+					else if (eachLocation === "values" )
+					{
+						eachLocation = "'valuess'"
+					}
 
 					var isLocationPresent = getMapValue(eachLocation)
 
 					
 					if (isLocationPresent === undefined)
 					{
-						allWords[eachLocation] = { "Word":eachLocation, "inBlog": []}
+						allWords[eachLocation] = { "Word":eachLocation, "Total":1, "inBlog": []}
 
 						allWords[eachLocation].inBlog.push(i);
 						
 					}
 					else
 					{
+						allWords[eachLocation].Total = allWords[eachLocation].Total + 1
 						allWords[eachLocation].inBlog.push(i);
 						
 					}
@@ -113,15 +128,30 @@
 
 			function processName(d,i)
 			{
-				parseName = d.person.replace("\"","").split("|");
+				parseName = d.person.replace("\"","").replace(",","-").split("|");
 
 				parseName.forEach(function(eachPerson){
 
+					if (eachPerson === "keys" )
+					{
+						eachPerson = "'keyss'"
+					}
+					else if (eachPerson === "set")
+					{
+						eachPerson = "'sets'"
+					}
+					else if (eachPerson === "values" )
+					{
+						eachPerson = "'valuess'"
+					}
+
 					var isPersonPresent = getMapValue(eachPerson)
+
+					//console.log(eachPerson)
 
 					if (isPersonPresent === undefined)
 					{
-						allWords[eachPerson] = { "Word":eachPerson, "inBlog": []}
+						allWords[eachPerson] = { "Word":eachPerson, "Total":1, "inBlog": []}
 
 						allWords[eachPerson].inBlog.push(i);
 						
@@ -129,6 +159,7 @@
 					}
 					else
 					{
+						allWords[eachPerson].Total = allWords[eachPerson].Total + 1
 						allWords[eachPerson].inBlog.push(i);
 					}
 
@@ -139,14 +170,22 @@
 			function processOrganization(d,i)
 			{
 
-				parseOrganization = d.organization.replace("\"","").split("|");
+				parseOrganization = d.organization.replace("\"","").replace(",","-").split("|");
 
 				parseOrganization.forEach(function(eachOrganization)
 				{
 
-					if (eachOrganization === "keys")
+					if (eachOrganization === "keys" )
 					{
 						eachOrganization = "'keyss'"
+					}
+					else if (eachOrganization === "set")
+					{
+						eachOrganization = "'sets'"
+					}
+					else if (eachOrganization === "values" )
+					{
+						eachOrganization = "'valuess'"
 					}
 
 
@@ -158,14 +197,14 @@
 					if (isOrganizationPresent === undefined)
 					{
 						
-						allWords[eachOrganization] = { "Word":eachOrganization, "inBlog": []}
+						allWords[eachOrganization] = { "Word":eachOrganization, "Total":1, "inBlog": []}
 
 						allWords[eachOrganization].inBlog.push(i);
 							
 					}
 					else
 					{
-						
+						allWords[eachOrganization].Total = allWords[eachOrganization].Total + 1
 						allWords[eachOrganization].inBlog.push(i);
 					}
 
@@ -175,22 +214,35 @@
 
 			function processMiss(d,i)
 			{
-				parseMiss = d.miscellaneous.replace("\"","").split("|");
+				parseMiss = d.miscellaneous.replace("\"","").replace(",","-").split("|");
 
 				parseMiss.forEach(function(eachMiss)
 				{
+					if (eachMiss === "keys" )
+					{
+						eachMiss = "'keyss'"
+					}
+					else if (eachMiss === "set")
+					{
+						eachMiss = "'sets'"
+					}
+					else if (eachMiss === "values" )
+					{
+						eachMiss = "'valuess'"
+					}
 
 					var isMissPresent = getMapValue(eachMiss)
 
 					if (isMissPresent === undefined)
 					{
-						allWords[eachMiss] = { "Word":eachMiss, "inBlog": []}
+						allWords[eachMiss] = { "Word":eachMiss, "Total":1, "inBlog": []}
 
 						allWords[eachMiss].inBlog.push(i);
 						
 					}
 					else
 					{
+						allWords[eachMiss].Total = allWords[eachMiss].Total + 1
 						allWords[eachMiss].inBlog.push(i);
 					}
 
@@ -281,9 +333,9 @@
 
 		        filename = args.filename || 'export.csv';
 
-		        if (!csv.match(/^data:text\/csv/i)) {
-		            csv = 'data:text/csv;charset=utf-8,' + csv;
-		        }
+		        // if (!csv.match(/^data:text\/csv/i)) {
+		        //     csv = 'data:text/csv;charset=utf-8,' + csv;
+		        // }
 		        // data = encodeURI(csv);
 
 
@@ -316,7 +368,8 @@
 
     				{
     					"Word": 		data[key].Word ,
-    					"inBlogs": 		data[key].inBlog.join(",")  
+    					"Total":  		data[key].Total,
+    					"inBlogs": 		data[key].inBlog.join("-")  
     				});
 
     				
