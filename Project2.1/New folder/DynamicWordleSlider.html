@@ -47,7 +47,7 @@ var svg = d3.select("svg"),
     margin = {right: 50, left: 50},
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height");
-
+var sliderDate;
 var parseDate = d3.timeFormat("%b-%Y");
 //var x = d3.scaleTime()
   //  .domain([0, 180])
@@ -67,7 +67,9 @@ var slider = svg.append("g")
 
 var drag = d3.behavior.drag()
         //.on("start.interrupt", function() { slider.interrupt(); })
-        .on("drag", function() { hue(x.invert(d3.event.x)); });
+        .on("drag", function() { hue(x.invert(d3.event.x));
+         })
+        .on("dragend", function() { console.log(sliderDate); }); 
 
 slider.append("line")
     .attr("class", "track")
@@ -96,6 +98,9 @@ slider.insert("g", ".track-overlay")
 var handle = slider.insert("circle", ".track-overlay")
     .attr("class", "handle")
     .attr("r", 9);
+   // .append("title")
+    //.text("hi");
+
 
 slider.transition() // Gratuitous intro!
     .duration(750)
@@ -106,7 +111,7 @@ slider.transition() // Gratuitous intro!
 
 function hue(h) {
   handle.attr("cx", x(h));
-console.log(x.invert(d3.event.x)); 
+sliderDate = x.invert(d3.event.x); 
 }
 
 
