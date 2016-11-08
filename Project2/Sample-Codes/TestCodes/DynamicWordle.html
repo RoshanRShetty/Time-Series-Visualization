@@ -26,7 +26,7 @@
 		    		width: 1300px;
 		    		height: 75px;
     			    margin: auto;
- 					/*border: 3px solid #73AD21;*/
+ 					border: 3px solid #73AD21;
  					float: left;
 
 
@@ -36,7 +36,7 @@
 		    		width: 150px;
 		    		height: 400px;
     			    margin: auto;
- 					/*border: 3px solid #73AD21;*/
+ 					border: 3px solid #73AD21;
  					float: left;
 		    }
 
@@ -44,7 +44,7 @@
 		    		width: 1150px;
 		    		height: 400px;
     			    margin: auto;
- 					/*border: 3px solid #73AD21;*/
+ 					border: 3px solid #73AD21;
  					float: left;
 		    }
 
@@ -52,7 +52,7 @@
 		    		width: 1150px;
 		    		height: 35px;
     			    margin: auto;
- 					/*border: 3px solid #73AD21;*/
+ 					border: 3px solid #73AD21;
  					float: left;
 		    }
 
@@ -190,22 +190,9 @@
 			{
 				if (error) {return error;}
 
-
 				allData = data;
-
-
-				
-				getWordsAccordingToDate("01-2007","12-2007")
-				
+				getWordsAccordingToDate("01-2007","12-2015")
 				processPerson();
-
-				
-
-
-				//drawWordle()
-
-
-
 			}); //end of d3.tsv
 
 
@@ -213,22 +200,36 @@
 			function getWordsAccordingToDate(theStartDate,theEndDate)
 			{
 
-				allData.forEach(function(d){
+				
+					// Resetting all the variables 
 
+						personsInBlog = new Map();
+						locationsInBlog = new Map();
+						orgInBlog = new Map();
+						misInBlog = new Map();
+
+						persons.splice(0);
+						locations.splice(0);
+						org.splice(0);
+						mis.splice(0);
+						top50Persons.splice(0);
+						top50Locations.splice(0);
+						top50Org.splice(0);
+						top50Mis.splice(0);
+
+						personAlreadyPlotted = "NO";
+						locationAlreadyPlotted = "NO"
+						orgAlreadyPlotted = "NO";
+						misAlreadyPlotted = "NO";
+
+				allData.forEach(function(d){
 
 					d.time = d.time.substring(0,10);
 
-
-					//startDate = "01" + 
-
-					//console.log(parseDate(d.time) > parseDate4(theStartDate) && parseDate(d.time) < parseDate4(theEndDate));
-					if (parseDate(d.time) > parseDate4(theStartDate) && parseDate(d.time) < parseDate4(theEndDate))
+					if (parseDate(d.time) >= parseDate4(theStartDate) && parseDate(d.time) < parseDate4(theEndDate))
 					{
-						//console.log("here")
-
 						parsePerson = d.person.split("|");
 						processCount(personsInBlog,parsePerson);
-
 
 						parseLocation = d.location.split("|");
 						processCount(locationsInBlog,parseLocation);
@@ -238,12 +239,10 @@
 
 						parseMis = d.miscellaneous.split("|");
 						processCount(misInBlog,parseMis)
-
-
-						
-
 					}
 				})
+
+				console.log("here3")
 
 			}
 
@@ -257,6 +256,7 @@
 
 				if(personAlreadyPlotted === "NO")
 				{
+					console.log(persons + "here2")
 					convertMaptoArrayOfObjects(personsInBlog,persons);			
 
 				}
@@ -304,14 +304,6 @@
 				{
 					drawWordle(persons,persons[persons.length-1],persons[0])
 				}
-
-				
-
-
-				
-
-
-
 			}
 
 
@@ -325,8 +317,6 @@
 					convertMaptoArrayOfObjects(locationsInBlog,locations)
 					
 				}
-				
-				
 
 				locations.sort(function(a,b)
 					{
@@ -480,11 +470,13 @@
 
 				Object.keys(theMap).forEach( function(key){
 
-					//consoleconsole.log(theMap[key]);
+					
 
-					if (theMap[key] > 100)
+					if (theMap[key] > 10)
 					{
 						//console.log(key + " " + personsInBlog[key] )
+
+						//console.log(theMap[key] + key);
 
 						theArray.push(
 							{
@@ -535,7 +527,7 @@
 			function drawWordle(theArray,min50,max50)
 			{		
 				
-				//console.log("here1" + min50.Count + "   " + max50.count + " " + theArray);
+				//console.log("here1 " + min50.Count + "   " + max50.count + " " + theArray);
 				 
 				wordSizeScale.domain([min50.Count,max50.Count]);
 
@@ -734,8 +726,38 @@
 			year = startDate.substring(3,7);
 			endDate = mon + "-" + year
 			
-			getWordsAccordingToDate(startDate,endDate);
-			processPerson();
+			getWordsAccordingToDate(startDate,endDate)
+			
+			var alreadySelected = d3.select('input[name="radio"]:checked').node().value
+
+			
+
+			if(alreadySelected === "1")
+			{
+				
+				processPerson()
+
+			}
+			else if(alreadySelected === "2")
+			{
+				processLocation()
+
+			}
+			else if (alreadySelected === "3")
+			{
+				processOrg()
+
+			}
+			else if (alreadySelected === "4")
+			{
+				processMis()
+
+			}
+
+
+			
+			
+			
 
 
 
