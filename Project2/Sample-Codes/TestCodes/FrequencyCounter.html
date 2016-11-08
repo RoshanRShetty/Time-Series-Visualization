@@ -52,7 +52,7 @@
 			
 
 			//Loading the wikinews data file and processing it
-			d3.tsv("../Data/wikinews.tsv", function(error,data)
+			d3.tsv("../Data/huffington.tsv", function(error,data)
 			{
 				allData = data
 				if (error) throw error;
@@ -84,10 +84,22 @@
 			function processLocation(d)
 			{
 
-				parseLocation = d.location.replace("\"","").split("|");
+				parseLocation = d.location.replace("\"","").replace(",","-").replace(".","").split("|");
 
 				parseLocation.forEach(function(eachLocation)
 				{
+					if (eachLocation === "keys" )
+					{
+						eachLocation = "'keyss'"
+					}
+					else if (eachLocation === "set")
+					{
+						eachLocation = "'sets'"
+					}
+					else if (eachLocation === "values" )
+					{
+						eachLocation = "'valuess'"
+					}
 
 					var isLocationPresent = getMapValue(allLocations,eachLocation)
 
@@ -119,9 +131,25 @@
 
 			function processName(d)
 			{
-				parseName = d.person.replace("\"","").split("|");
+
+				parseName = d.person.replace("\"","").replace(",","-").replace(".","").split("|");
 
 				parseName.forEach(function(eachPerson){
+
+					//console.log(eachPerson);
+
+					if (eachPerson === "keys" )
+					{
+						eachPerson = "'keyss'"
+					}
+					else if (eachPerson === "values" )
+					{
+						eachPerson = "'valuess'"
+					}
+					else if (eachPerson === "set" )
+					{
+						eachPerson = "'setss'"
+					}
 
 					var isPersonPresent = getMapValue(allPersons,eachPerson)
 
@@ -144,7 +172,7 @@
 			function processOrganization(d)
 			{
 
-				parseOrganization = d.organization.replace("\"","").split("|");
+				parseOrganization = d.organization.replace("\"","").replace(",","-").replace(".","").split("|");
 
 				parseOrganization.forEach(function(eachOrganization)
 				{
@@ -152,6 +180,14 @@
 					if (eachOrganization === "keys")
 					{
 						eachOrganization = "'keyss'"
+					}
+					else if (eachOrganization === "set")
+					{
+						eachOrganization = "'sets'"
+					}
+					else if (eachOrganization === "values")
+					{
+						eachOrganization = "'valuess'"
 					}
 
 
@@ -180,10 +216,23 @@
 
 			function processMiss(d)
 			{
-				parseMiss = d.miscellaneous.replace("\"","").split("|");
+				parseMiss = d.miscellaneous.replace("\"","").replace(",","-").replace(".","").split("|");
 
 				parseMiss.forEach(function(eachMiss)
 				{
+
+					if (eachMiss === "keys")
+					{
+						eachMiss = "'keyss'"
+					}
+					else if (eachMiss === "set")
+					{
+						eachMissn = "'sets'"
+					}
+					else if (eachMiss === "values")
+					{
+						eachMiss = "'valuess'"
+					}
 
 					var isMissPresent = getMapValue(allMiss,eachMiss)
 
@@ -241,9 +290,10 @@
 
 				//console.log(arrayIndex);
 
-
+				//console.log(theValue)
 
 				var arrayValue = theMap[theValue].monthlyFrequency
+
 
 				if ( arrayValue[arrayIndex] === undefined )
 				{
@@ -341,9 +391,9 @@
 
 		        filename = args.filename || 'export.csv';
 
-		        if (!csv.match(/^data:text\/csv/i)) {
-		            csv = 'data:text/csv;charset=utf-8,' + csv;
-		        }
+		        // if (!csv.match(/^data:text\/csv/i)) {
+		        //     csv = 'data:text/csv;charset=utf-8,' + csv;
+		        // }
 		        // data = encodeURI(csv);
 
 
@@ -377,7 +427,7 @@
     				{
     					"Word": 		data[key].Word ,
     					"Total": 		data[key].Total ,
-    					"monthValue": 	data[key].monthlyFrequency.join(",")  
+    					"monthValue": 	data[key].monthlyFrequency.join(":")  
     				});
 
     				
