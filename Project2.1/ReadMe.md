@@ -11,11 +11,18 @@ Preprocessing in various phases as explained below:
     - we read all the records avaiable in the datasets,
     - parse the extract words,
     - keep a counter for each word, that increments when the same word appears again.
-    - Then we allow the use to download the same processed data as a .csv file using the 'FrequencyCounter - huffington.html' or 'FrequencyCounter.html' pages.
+    - Then we allow the user to download the same processed data as a .csv file using the 'FrequencyCounter - huffington.html' or 'FrequencyCounter.html' pages.
     
 ![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/preprocessing1.png)
 
-![ScreenShot](http://roshanrshetty.github.io/Project1/finding2.png)
+2. **Getting All Record Numbers In Which A Word Appears** : In this phase,
+    - we read all records in the dataset row by row,
+    - for every word in the dataset, make seprate word entries with the record number.
+    - if the same word is repeated in another row, we add the new record number to the already exisitng list.
+    - then we allow the user to download the same processed data as a .csv file using the 'WordsInBlogs - huffington.html' and 'WordsInBlogs.html' pages.
+   
+![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/preprocessing2.png)    
+
 
 
 ## Visualization:
