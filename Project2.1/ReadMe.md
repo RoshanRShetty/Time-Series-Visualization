@@ -24,8 +24,9 @@ Preprocessing in various phases as explained below:
 ![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/preprocessing2.png)    
 
 
-
 ## Visualization:
+
+### Indexing
 ### Wordle
 
 ### Force Directed Graph
