@@ -57,4 +57,11 @@ A force directed graph is used to show the relationships between the nodes.
 ####Main Features of the Force Directed Graph Implemented:
 - The relationships between words for the selected categories and time intervals are implemented.
 ![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/Force directed graph.PNG)
+
 ## Findings:
+
+1. **Various Clusters Among Words Can Be Identified From The Relationship Graph** : The Force Directed graphs allows us to see patterns or clusters among words. These clusters can be used for 'Topic Analysis'
+
+![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/corelation.PNG)
+
+
