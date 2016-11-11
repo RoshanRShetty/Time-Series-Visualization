@@ -1082,7 +1082,7 @@
 			        //.on("start.interrupt", function() { slider.interrupt(); })
 			        .on("drag", function() { hue(x.invert(d3.event.x));
 			         })
-			        .on("dragend", function() { console.log(sliderDate);
+			        .on("dragend", function() { //console.log(sliderDate);
 
 			        		changeWordle(sliderDate);
 			         }); 
@@ -1737,7 +1737,7 @@
 			//Important, each row is one "signal"
 
 	         if(argData.indexOf(inText)!=-1){
-	            console.log("TRUE");
+	            //console.log("TRUE");
 	            newData.splice(argData.indexOf(inText),1);
 	            argData.splice(argData.indexOf(inText),1);
 	         }
@@ -1769,11 +1769,11 @@
 
 
 
-	            console.log(newData);
-	            console.log(argData);
+	            //console.log(newData);
+	            //console.log(argData);
          }
-         console.log(inText);
-         console.log(argData.indexOf(inText));
+         //console.log(inText);
+         //console.log(argData.indexOf(inText));
 
 
          var color = d3.scale.linear()
@@ -1849,7 +1849,7 @@
                   .on("dblclick", function(d) {
                      var id = d[0].word;
                      var source = d[0].source;
-                     console.log(id + " " + source);
+                     //console.log(id + " " + source);
                      streamGraph(id, src)
                   })
                   .on("mouseout", function() {
