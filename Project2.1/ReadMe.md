@@ -23,7 +23,8 @@ Preprocessing in various phases as explained below:
    
 ![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/preprocessing2.png)    
 
-### Indexing
+3. **Indexing** : To make processing the faster, we have implemented an index for all the words. The Index has been implemented using elasticlunr.js. for searching relationships we make use of this index.
+![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/index.png)
 
 ## Visualization:
 The preproceesed data is presented in three ways:
