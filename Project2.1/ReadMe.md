@@ -15,6 +15,8 @@ Preprocessing in various phases as explained below:
     
 ![ScreenShot](https://github.com/RoshanRShetty/RoshanRShetty.github.io/tree/master/Project2.1/Images/preprocessing1.png)
 
+![ScreenShot](http://roshanrshetty.github.io/Project1/finding2.png)
+
 
 ## Visualization:
 ### Wordle
