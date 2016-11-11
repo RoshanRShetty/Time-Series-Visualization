@@ -51,6 +51,7 @@ A wordle(word cloud) is used to show all the main words asit is an effective way
 ![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/Screen Shot 2016-11-11 at 1.56.20 PM.png)
 ![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/Screen Shot 2016-11-11 at 1.57.54 PM.png)
 ![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/Screen Shot 2016-11-11 at 1.58.20 PM.png)
+
 ### Force Directed Graph
 A force directed graph is used to show the relationships between the nodes.
 ####Main Features of the Force Directed Graph Implemented:
