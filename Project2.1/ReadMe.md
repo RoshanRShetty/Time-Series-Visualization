@@ -36,15 +36,19 @@ A wordle(word cloud) is used to show all the main words asit is an effective way
 - Hovering over a word highlights other words related to it in the Wordle.
 - The slider can be used to get the wordle for the corresponding month.
 - The wordle for a specified time range can be generated based on the range specified by the use.
-![ScreenShot](http://roshanrshetty.github.io/Project2.1/Wordle.PNG)
-### Time Series Visualization using Stacked Graph
-- A stream graph is used as they indicate the relationships in the structure of data. They are used to represent the frequency of words over the period of time in this visualization.
+- ![ScreenShot](http://roshanrshetty.github.io/Project2.1/Wordle.PNG)
+### Time Series Visualization using Stream Graph
+- A stream graph is used to represent the frequency of words over the period of time in this visualization.
 - Stream graphs are uniue, such that data is appended on top of existing data, with the y-value of the area under the curve at x being the actual value of the data, so data with a larger area underneath the curve means more frequent, and data with a smaller area underneath the curve means less frequent.
 - The graph uses many ticks that span the width of the visualization, in order to help the reader understand values in the chart.
-- Implementation with various categories is shown below
-![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/stacked graph.PNG)
-![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/stacked graph.PNG)
-![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/stacked graph.PNG)
+- To append data to the chart, simply double-click the text on the word cloud.
+- The user may hover over the desired stream to highlight the stream, a tooltip will appear showing the word.
+- The color of the stream corresponds to the category of word from the word cloud
+- To remove the data from the stream, the user can double-click on either the desired stream or double-click on the word in the word cloud to remove it.
+- Implementation with various categories is shown below.
+![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/Screen Shot 2016-11-11 at 1.56.20 PM.png)
+![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/Screen Shot 2016-11-11 at 1.57.54 PM.png)
+![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/Screen Shot 2016-11-11 at 1.58.20 PM.png)
 ### Force Directed Graph
 A force directed graph is used to show the relationships between the nodes.
 ####Main Features of the Force Directed Graph Implemented:
