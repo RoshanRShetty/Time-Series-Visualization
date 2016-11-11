@@ -60,8 +60,8 @@ A force directed graph is used to show the relationships between the nodes.
 
 ## Findings:
 
-1. **Various Clusters Among Words Can Be Identified From The Relationship Graph** : The Force Directed graphs allows us to see patterns or clusters among words. These clusters can be used for 'Topic Analysis'
+1. **Various Clusters Among Words Can Be Identified From The Relationship Graph** : The Force Directed graphs allows us to see patterns or clusters among words. These clusters can be used for 'Topic Analysis'![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/corelation.PNG)
+2. **Presidential Elections and Candidates Are Visible From the Stream Graph** : In this example, you can see how John McCain as well as Barack Obama were mentioned frequently during the election cycle ![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/Screen Shot 2016-11-11 at 2.40.36 PM.png) ![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/Screen Shot 2016-11-11 at 2.41.14 PM.png)
 
-![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/corelation.PNG)
 
 
