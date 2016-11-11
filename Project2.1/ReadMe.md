@@ -13,7 +13,7 @@ Preprocessing in various phases as explained below:
     - keep a counter for each word, that increments when the same word appears again.
     - Then we allow the use to download the same processed data as a .csv file using the 'FrequencyCounter - huffington.html' or 'FrequencyCounter.html' pages.
     
-![ScreenShot](https://github.com/RoshanRShetty/RoshanRShetty.github.io/tree/master/Project2.1/Images/preprocessing1.png)
+![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/preprocessing1.png)
 
 ![ScreenShot](http://roshanrshetty.github.io/Project1/finding2.png)
 
