@@ -30,7 +30,7 @@ Preprocessing in various phases as explained below:
 The preproceesed data is presented in three ways:
 ### Wordle
 A wordle(word cloud) is used to show all the main words asit is an effective way to visualize text with out any text overlapping.
-####Main Features of the Dynamic Wordle Implemented:
+#### Main Features of the Dynamic Wordle Implemented:
 - Words grouped according to categories.
 - Words size is directly proportional to the frequency of the words.   
 - Hovering over a word highlights other words related to it in the Wordle.
@@ -38,7 +38,12 @@ A wordle(word cloud) is used to show all the main words asit is an effective way
 - The wordle for a specified time range can be generated based on the range specified by the use.
 ![ScreenShot](http://roshanrshetty.github.io/Project2.1/Wordle.PNG)
 ### Time Series Visualization using Stacked Graph
-A stacked graph is used as they indicate the relationships in the structure of data. They are used to represent the relation between words over the period of time in this Visualization
+- A stream graph is used as they indicate the relationships in the structure of data. They are used to represent the frequency of words over the period of time in this visualization.
+- Stream graphs are uniue, such that data is appended on top of existing data, with the y-value of the area under the curve at x being the actual value of the data, so data with a larger area underneath the curve means more frequent, and data with a smaller area underneath the curve means less frequent.
+- The graph uses many ticks that span the width of the visualization, in order to help the reader understand values in the chart.
+- Implementation with various categories is shown below
+![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/stacked graph.PNG)
+![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/stacked graph.PNG)
 ![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/stacked graph.PNG)
 ### Force Directed Graph
 A force directed graph is used to show the relationships between the nodes.
