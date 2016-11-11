@@ -1,5 +1,11 @@
 #Projext 2: Text and Geo Spatial Visualization
 
+Please click to watch the overview video.
+
+[![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/main.PNG)](http://roshanrshetty.github.io/Project2.1/Images/report.mp4)
+
+**Visualization Link:** http://roshanrshetty.github.io
+
 ## Data Preprocessing:
 
 The data sets used for the visualization were from the 'WikiNews' and 'Huffington Post' websites.
