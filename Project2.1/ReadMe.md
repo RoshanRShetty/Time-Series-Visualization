@@ -23,14 +23,24 @@ Preprocessing in various phases as explained below:
    
 ![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/preprocessing2.png)    
 
+### Indexing
 
 ## Visualization:
-
-### Indexing
+The preproceesed data is presented in three ways:
 ### Wordle
+A wordle(word cloud) is used to show all the main words asit is an effective way to visualize text with out any text overlapping.
+#Main Features of the Dynamic Wordle Implemented:
+- Words grouped according to categories.
+- Words size is directly proportional to the frequency of the words.   
+- Hovering over a word highlights other words related to it in the Wordle.
+- The slider can be used to get the wordle for the corresponding month.
+- The wordle for a specified time range can be generated based on the range specified by the use.
+### Time Series Visualization using Stacked Graph
+A stacked graph is used as they indicate the relationships in the structure of data. They are used to represent the relation between words over the period of time in this Visualization
 
 ### Force Directed Graph
 A force directed graph is used to show the relationships between the nodes.
-
+#Main Features of the Force Directed Graph Implemented:
+- The relationships between words for the selected categories and time intervals are implemented.
 
 ## Findings:
