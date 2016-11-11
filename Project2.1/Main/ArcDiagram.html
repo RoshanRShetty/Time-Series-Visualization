@@ -101,6 +101,13 @@ var tooltip = svg.append("text").attr("x",50).attr("y",100);
       .style("fill", function(d) { return fill(d.group); })
       .style("stroke", function(d) { return d3.rgb(fill(d.group)).darker(); })
       .call(force.drag);
+  
+  d3.selectAll("circle")
+        .append("title")
+      .text(function(d){
+       // console.log(d.name);
+            return d.name.split(" ").join("_");
+      });
 
   force
       .nodes(testGraph.nodes)
@@ -118,26 +125,26 @@ var tooltip = svg.append("text").attr("x",50).attr("y",100);
         .attr("y2", function(d) { return d.target.y; });
   }
 
- d3.selectAll(".circle")
-      .on("mouseover",function(d){
-        var hi = d3.select(this).attr("id");
+//  d3.selectAll(".circle")
+//       .on("mouseover",function(d){
+//         var hi = d3.select(this).attr("id");
 
-        console.log(hi);
+//         console.log(hi);
 
 
-        var mouse = d3.mouse(svg12.node()).map(function(d) {
-              return parseInt(d);
-              });
-              tooltip.attr("x",d3.mouse(this)[0]) 
-              .attr("y",d3.mouse(this)[1])
-              .classed('hidden',false)
-              .text(hi);
+//         var mouse = d3.mouse(svg12.node()).map(function(d) {
+//               return parseInt(d);
+//               });
+//               tooltip.attr("x",d3.mouse(this)[0]) 
+//               .attr("y",d3.mouse(this)[1])
+//               .classed('hidden',false)
+//               .text(hi);
             
-      })
-      .on("mouseout",function(d){
-              tooltip.classed('hidden',true);
-              d3.selectAll(".circle").style("stroke-opacity", 1);
-          });
+//       })
+//       .on("mouseout",function(d){
+//               tooltip.classed('hidden',true);
+//               d3.selectAll(".circle").style("stroke-opacity", 1);
+//           });
 
 
 </script>
