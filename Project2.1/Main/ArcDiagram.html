@@ -8,6 +8,22 @@ circle {
 line {
   stroke: #999;
 }
+#tooltip-container {
+        position: absolute;
+        background-color: #fff;
+        color: #000;
+        padding: 10px;
+        border: 1px solid;
+        display: none;
+      }
+      .tooltip_key {
+        font-weight: bold;
+      }
+      .tooltip_value {
+        margin-left: 20px;
+        float: right;
+      }
+
 
 </style>
 <body>
@@ -50,8 +66,13 @@ var arcData;
 
 
 
+var color = d3.scale.linear()
+            .domain([1,2,3,4])
+            .range(["#0047ab","#1adb13","#cb25df","#222"])
 
-var fill = d3.scale.category20();
+var fill = color;
+
+//var fill = d3.scale.category20();
 
 var force = d3.layout.force()
     .gravity(.05)
@@ -97,6 +118,26 @@ var tooltip = svg.append("text").attr("x",50).attr("y",100);
         .attr("y2", function(d) { return d.target.y; });
   }
 
+ d3.selectAll(".circle")
+      .on("mouseover",function(d){
+        var hi = d3.select(this).attr("id");
+
+        console.log(hi);
+
+
+        var mouse = d3.mouse(svg12.node()).map(function(d) {
+              return parseInt(d);
+              });
+              tooltip.attr("x",d3.mouse(this)[0]) 
+              .attr("y",d3.mouse(this)[1])
+              .classed('hidden',false)
+              .text(hi);
+            
+      })
+      .on("mouseout",function(d){
+              tooltip.classed('hidden',true);
+              d3.selectAll(".circle").style("stroke-opacity", 1);
+          });
 
 
 </script>
