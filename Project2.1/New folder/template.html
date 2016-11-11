@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<title>Data Visualization</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<style>
+        body {
+            font-family:"Lucida Grande","Droid Sans",Arial,Helvetica,sans-serif;
+        }
+        .legend {
+            border: 1px solid #555555;
+            border-radius: 5px 5px 5px 5px;
+            font-size: 0.8em;
+            margin: 10px;
+            padding: 8px;
+        }
+        .bld {
+            font-weight: bold;
+        }
+
+
+        #header{
+
+            width: 1300px;
+            height: 75px;
+              margin: auto;
+          /*border: 3px solid #73AD21;*/
+          float: left;
+
+
+        }
+
+        #div1{
+            width: 150px;
+            height: 400px;
+              margin: auto;
+          /*border: 3px solid #73AD21;*/
+          float: left;
+        }
+
+        #wordle_div{
+            width: 1150px;
+            height: 400px;
+              margin: auto;
+          /*border: 3px solid #73AD21;*/
+          float: left;
+        }
+
+        #slider{
+            width: 1150px;
+            height: 35px;
+              margin: auto;
+          /*border: 3px solid #73AD21;*/
+          float: left;
+        }
+
+
+
+        .ticks {
+          font: 10px sans-serif;
+      }
+
+      .track,
+      .track-inset,
+      .track-overlay {
+          stroke-linecap: round;
+      }
+
+      .track {
+        stroke: #000;
+        stroke-opacity: 0.3;
+        stroke-width: 10px;
+      }
+
+      .track-inset {
+        stroke: #ddd;
+        stroke-width: 8px;
+      }
+
+      .track-overlay {
+        pointer-events: stroke;
+        stroke-width: 50px;
+        cursor: crosshair;
+      }
+
+      .handle {
+        fill: #fff;
+        stroke: #000;
+        stroke-opacity: 0.5;
+        stroke-width: 1.25px;
+      }
+    </style>
+
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+<script type="text/javascript" src="https://d3js.org/d3.v3.min.js"> </script>
+    <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+    <script src="d3.layout.cloud.js"></script>
+    <script src="elasticlunr.js"></script>
+
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-container w3-top w3-black w3-large w3-padding" style="z-index:4">
+  <button class="w3-btn w3-hide-large w3-padding-0 w3-hover-text-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+  <span class="w3-center">Data Visualization</span>
+</div>
+
+<!-- Sidenav/menu -->
+<nav class="w3-sidenav w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidenav"><br>
+  
+  <div class="w3-container">
+  <h5>Dashboard</h5>
+  </div>
+  <a href="#" class="w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+  <h5><b><i>Data Set</i> </b></h5></center>
+  <table>
+  <tr>
+  <td>
+  <INPUT TYPE="radio" NAME="radio"  VALUE="1" CHECKED   onClick="processPerson()">Huffington Post </INPUT><br>
+  </td>
+  <td>
+  <INPUT TYPE="radio" NAME="radio"  VALUE="2"       onClick="processLocation()">Wikinews</INPUT><br>
+  </td>
+  </tr>
+  </table>
+  <br>
+  <br>
+  <h5><b><i>Categories</i> </b></h5></center>
+   <INPUT TYPE="radio" NAME="radio"  VALUE="1" CHECKED   onClick="processPerson()">Persons </INPUT><br>
+    <INPUT TYPE="radio" NAME="radio"  VALUE="2"       onClick="processLocation()">Location </INPUT><br>
+    <INPUT TYPE="radio" NAME="radio"  VALUE="3"       onClick="processOrg()">Organization </INPUT><br>
+    <INPUT TYPE="radio" NAME="radio"  VALUE="4"       onClick="processMis()">Misscellaneous </INPUT><br>
+
+ <h5><b>Search</b></h5></center>
+    <table>
+<tr>
+<td>
+  <INPUT TYPE="radio" NAME="radio"  VALUE="1" CHECKED   onClick="processPerson()">Slider </INPUT><br>
+</td>
+<td>
+    <INPUT TYPE="radio" NAME="radio"  VALUE="2"       onClick="TextBoxes()">Range</INPUT><br>
+</td>
+</tr>
+</table>
+<div class="w3-container" id="textboxes">
+
+</div>
+</nav>
+
+
+<!-- Overlay effect when opening sidenav on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <center><h2><b><i>Project 2</i> </b></h2></center>
+  </header>
+
+  <div id="wordle_div"> 
+
+ <div id="slider"> </div>
+
+ </div>
+<script type="text/javascript">
+
+
+    // Variables for Wordle --------------------------
+      var wordleWidth = 1050;
+      var wordleHeight = 350;
+
+      //initializing a scale to scale the frequencies of the words
+        var wordSizeScale = d3.scale.linear().range([15,90]);
+        wordSizeScale.domain([0,2000]);
+
+        //initializing variable to hold valueof the word selected from the wordle
+        var wordID;
+
+        // var color = d3.scale.linear()
+      //       .domain([0,1,2,3,4,5,6,10,15,20,100])
+      //       .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
+
+
+            //"#a1d99b",#74c476,#41ab5d,#238b45,#005a32
+
+            //"#c7e9c0","#a1d99b","#74c476","#41ab5d","#238b45","#006d2c","#00441b"
+
+           // "#f7fcf5","#e5f5e0","#c7e9c0","#a1d99b","#74c476","#41ab5d","#238b45","#006d2c","#00441b"
+
+           //"#00f97c","#00e06f","#00c763","#00ae56","#00954a","#007c3e","#006331","#004a25","#003118","#00180c"
+
+           //"#cb25df","#d03ae2","#d550e5","#da66e8","#df7ceb","#e592ef","#eaa7f2","#efbdf5","#f4d3f8","#f9e9fb"
+
+           
+
+
+
+
+
+
+
+
+//"#e8fbe7","#d1f7cf","#baf4b8","#a3f0a0","#8ced89","#75e971","#5ee559","#47e242","#30de2a"
+
+
+            var color1 = d3.scale.linear()
+          .domain([0,1,2,3,4,5,6,10,15,20,100])
+          .range(["#e5ecf6","#ccdaee","#b2c7e5","#99b5dd","#7fa3d5","#6690cc","#4c7ec4","#326bbb","#1959b3","#0047ab"]);
+      var color2 = d3.scale.linear()
+          .domain([0,1,2,3,4,5,6,10,15,20,100])
+            .range(["#e8fbe7","#d1f7cf","#baf4b8","#a3f0a0","#8ced89","#75e971","#5ee559","#47e242","#30de2a","#1adb13"]);
+
+      var color3 = d3.scale.linear()
+          .domain([0,1,2,3,4,5,6,10,15,20,100])
+          .range(["#f9e9fb","#f4d3f8","#efbdf5","#eaa7f2","#e592ef","#df7ceb","#da66e8","#d550e5","#d03ae2","#cb25df"]);
+      var color4 = d3.scale.linear()
+          .domain([0,1,2,3,4,5,6,10,15,20,100])
+          .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"])
+
+
+
+
+      var allData = [];
+      var parseData = [];
+
+      var personsInBlog = new Map();  
+      var locationsInBlog = new Map();
+      var orgInBlog = new Map();    
+      var misInBlog = new Map();
+      
+      var persons =[];
+      var top50Persons = [];
+
+      var locations = [];
+      var top50Locations = [];
+
+      var org = [];
+      var top50Org = [];
+
+      var mis = [];
+      var top50Mis = [];
+
+      var toPlotAllwords = [];
+      var top50All = [];
+
+      var personAlreadyPlotted = "NO";
+      var locationAlreadyPlotted = "NO";
+      var orgAlreadyPlotted = "NO";
+      var misAlreadyPlotted = "NO";
+      var allWordsAlreadyPlotted = "NO";
+
+      var svg;
+
+      var allPersons = new Map();
+      var allLocations = new Map();
+      var allOrg = new Map();
+      var allMis = new Map();
+
+      var isBlogGoodForIndexing = "NO";
+
+      //Creating an Index for whole data.
+      var index = elasticlunr();
+
+      //setting fields of the index
+      index.addField('words');
+      index.setRef('id');
+      index.DocumentStore = false;
+
+
+      
+
+      //creating blogId's
+      var blogId;
+
+      //initializing allWordsInABlog
+      var allWordsInABlog;
+
+      //initializing isBlogAlready Processed
+      var blogAlreadyIndexed = [];
+
+      var dataInOneBlog = [];
+
+      var words = "";
+
+
+      var searchList = [];
+
+      var searchWord;
+
+      var inBlogs = [];
+
+      var Threshold;
+
+      var result = [];
+
+      var count;
+
+      var top50 = [];
+
+      var allWords = new Map();
+
+
+      var allWordsInRelationShip = [];
+
+      var words1 = "";
+
+
+      var dateRangeBlogAlreadyIndexed = [];
+
+      var dateRangeWordsInOneBlog;
+
+      var dateRangeIndex;
+
+      var relationShip = [];
+
+      var useForRelationship = new Map();
+
+      var tempArray = [];
+
+      var tempObj = {};
+
+      var testArray = [];
+
+      var alreadySelected;
+
+      var allitems = "NO";
+    
+
+
+      // variables to parse date
+
+      parseDate = d3.time.format("%Y-%m-%d").parse;
+
+
+    //variables for slider
+
+      var sliderDate;
+      var parseDate2 = d3.time.format("%b-%Y");
+      var parseDate3 = d3.time.format("%m-%Y");
+      var parseDate4 = d3.time.format("%m-%Y").parse;
+
+
+
+</script>  
+
+  
+  <!-- Footer -->
+  <footer class="w3-container w3-padding-16 w3-light-grey">
+    <h4>Project By</h4>
+    <p>Roshan, Jyotsna Andrew</p>
+  </footer>
+ 
+  <!-- End page content -->
+</div>
+
+<script>
+// Get the Sidenav
+var mySidenav = document.getElementById("mySidenav");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidenav, and add overlay effect
+function w3_open() {
+    if (mySidenav.style.display === 'block') {
+        mySidenav.style.display = 'none';
+        overlayBg.style.display = "none";
+    } else {
+        mySidenav.style.display = 'block';
+        overlayBg.style.display = "block";
+    }
+}
+
+// Close the sidenav with the close button
+function w3_close() {
+    mySidenav.style.display = "none";
+    overlayBg.style.display = "none";
+}
+function  TextBoxes(){
+  var input1 = document.createElement("input");
+  var input2 = document.createElement("input");
+  var submit = document.createElement("button");
+//Assign different attributes to the element.
+input1.setAttribute("type", "text");
+input1.setAttribute("value", "");
+input1.setAttribute("name", "Test Name");
+input1.setAttribute("style", "width:100px");
+
+//Assign different attributes to the element.
+input2.setAttribute("type", "text");
+input2.setAttribute("value", "");
+input2.setAttribute("name", "Test Name");
+input2.setAttribute("style", "width:100px");
+
+//submit.setAttribute("type", type);
+//submit.setAttribute("value", type);
+//submit.setAttribute("name", type);
+//submit.setAttribute("onclick", );
+
+var foo = document.getElementById("textboxes");
+
+//Append the element in page (in span).
+foo.appendChild(input1);
+foo.appendChild(input2);
+//foo.appendChild(submit);
+
+}
+</script>
+
+</body>
+</html>
+
