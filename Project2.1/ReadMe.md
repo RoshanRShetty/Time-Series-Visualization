@@ -2,6 +2,10 @@
 
 ## Data Preprocessing:
 
+The data sets used for the visualization were from the 'WikiNews' and 'Huffington Post' websites.
+The same approach was used for both the dataset for preprocessing.
+
+Preprocessing in various phases as explained below:
 
 
 ## Visualization:
