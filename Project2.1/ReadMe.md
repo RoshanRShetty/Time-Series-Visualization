@@ -7,6 +7,8 @@ The same approach was used for both the dataset for preprocessing.
 
 Preprocessing in various phases as explained below:
 
+1. **Getting Frequency Count For Every Word** : 
+
 
 ## Visualization:
 ### Wordle
