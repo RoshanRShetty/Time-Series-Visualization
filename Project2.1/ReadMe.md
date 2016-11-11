@@ -7,7 +7,7 @@ The same approach was used for both the dataset for preprocessing.
 
 Preprocessing in various phases as explained below:
 
-1. **Getting Frequency Count For Every Word** : 
+1. **Getting Frequency Count For Every Word** : In this phase, we read all the records avaiable in the datasets, parse the extract words, keep a counter for each word, that increments when the same word appears again. Then we allow the use to download the same processed data as a .csv file using the 'FrequencyCounter - huffington.html' or 'FrequencyCounter.html' pages.
 
 
 ## Visualization:
