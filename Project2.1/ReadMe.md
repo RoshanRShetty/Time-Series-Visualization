@@ -30,6 +30,8 @@ Preprocessing in various phases as explained below:
 The preproceesed data is presented in three ways:
 ### Wordle
 A wordle(word cloud) is used to show all the main words asit is an effective way to visualize text with out any text overlapping.
+![ScreenShot](http://roshanrshetty.github.io/Project2.1/Images/wordle.png)
+
 #### Main Features of the Dynamic Wordle Implemented:
 - Words grouped according to categories.
 - Words size is directly proportional to the frequency of the words.   
