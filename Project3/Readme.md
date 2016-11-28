@@ -18,10 +18,12 @@ Work Accomplished:
                 - Found Datasets for Unemployment Rate and population
                 - Link - http://www.fec.gov/pubrec/fe2014/federalelections2014.shtml  , http://www.presidency.ucsb.edu/showelection.php?year=2012 
                 
-2. Andrew Salopek -
-                - working on county data for 2012 elections
-                - County Data across US 2012
-                - COunty Data across US 2008
+2. Andrew Salopek<br>
+                - working on county data for 2012 elections<br>
+                - County Data across US 2012<br>
+                - County Data across US 2008<br>
+                - LINK TO HARVARD ELECTION DATA (CONCERNS ALL MEMBERS):  http://guides.library.harvard.edu/hks/campaigns_elections
+              
                 
 3. Supra Jyotsna Jampa -
                 - Found Data sets for previous elections, countywise data.
