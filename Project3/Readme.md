@@ -21,6 +21,7 @@ Work Accomplished:
 2. Andrew Salopek -
                 - working on county data for 2012 elections
                 - County Data across US 2012
+                - COunty Data across US 2008
                 
 3. Supra Jyotsna Jampa -
                 - Found Data sets for previous elections, countywise data.
