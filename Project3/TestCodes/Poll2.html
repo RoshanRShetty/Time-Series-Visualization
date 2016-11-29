@@ -134,6 +134,7 @@
 		var allDates = new Map();
 		var path;
 		var isChartAlreadyDrawn = "NO";
+		var isBarAlreadyDrawn = "NO";
 		var g1;
 		var arc;
 		var pie;
@@ -232,6 +233,9 @@
 				})//end of OnlyUSPolls.forEach()
 
 
+
+				
+
 				var temp = allDates["10/10/2016"]
 
 				
@@ -239,23 +243,13 @@
 						
 						setTimeout(function (){
 
+								drawBarChart(d)
 								drawPieChart(d)
 								callback();					
 							
 						},2000)
 						
 					})
-
-						
-							
-
-					
-
-
-				
-
-
-				
 
 
 			}) //end of d3.csv
@@ -271,10 +265,61 @@
 			}
 
 
-			function drawBarChart(_data)
+			function drawBarChart(theData)
 			{
+				var totalRectangleWidth = 250;
+				var trumpRectWidth = (theData.rawpoll_trump * 2)
+				var clintonRectWidth = (theData.rawpoll_clinton * 2);
+				var rectTrump;
+				var rectClinton;
+				var mapcolor;
+
+				console.log("t" + trumpRectWidth)
+				console.log("c" + clintonRectWidth)
+
+				if (trumpRectWidth > clintonRectWidth)
+					mapcolor = "red"
+				else if(trumpRectWidth < clintonRectWidth)
+					mapcolor = "blue"
+				else
+					mapcolor = "rgb(213,222,217)"
 				
 
+
+				if(isBarAlreadyDrawn === "NO")
+				{
+					rectTrump = chartSVG.append("rect")
+											.transition()
+											.attr("class","rectTrump")
+											.attr("x", 10)
+											.attr("y", 40)
+											.attr("height", 20)
+											.attr("width",trumpRectWidth)
+											.style("fill","red")
+											.duration(750);
+											
+
+					rectClinton = chartSVG.append("rect")
+											.transition()
+											.attr("class","rectClinton")
+											.attr("x", (trumpRectWidth+12))
+											.attr("y", 40)
+											//.attr("transform","rotate(180)")
+											.attr("height", 20)
+											.attr("width",(totalRectangleWidth - trumpRectWidth))
+											.style("fill","blue")
+											.duration(750);
+
+					d3.selectAll(".map").transition().style("fill",mapcolor).duration(1000)
+
+					isBarAlreadyDrawn = "YES"
+				}
+				else
+				{
+					d3.selectAll(".rectTrump").transition().attr("width",trumpRectWidth).duration(1000);
+					d3.selectAll(".rectClinton").transition().attr("x", (trumpRectWidth + 12)).attr("width",(totalRectangleWidth- trumpRectWidth)).duration(1000);
+					d3.selectAll(".map").transition().style("fill",mapcolor).duration(1000);
+				}
 
 			} // end of fucntion drawBarChart(_data)
 
@@ -335,7 +380,7 @@
 		        	g1.selectAll(".piePath").data(pie(formattedData))
 		        		.transition()
 		        		.attr('d',arc)
-		        		.duration(750)
+		        		.duration(1500)
 		        		.attrTween("d", arcTween);
 
 
