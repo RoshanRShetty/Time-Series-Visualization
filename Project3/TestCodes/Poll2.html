@@ -1,0 +1,376 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<meta charset="utf-8">
+		<script type="text/javascript" src="../d3/d3.v3.min.js"> </script>
+		<script type="text/javascript" src="../d3/async.js"> </script>
+		
+		
+			<style type="text/css">
+
+				/* On mouse hover, lighten state color */
+				path:hover {
+					fill-opacity: .7;
+				}
+				body { font: 12px Arial;}
+
+				path { 
+				    stroke: black;
+				    stroke-width: 1;
+				    fill: none;
+				}
+
+
+
+				.axis path,
+				.axis line {
+				    fill: none;
+				    stroke: grey;
+				    stroke-width: 1;
+				    shape-rendering: crispEdges;
+				}
+
+				html, body { height: 100%; width: 100%; margin: 0; }
+
+				#titleContainer{
+					width: 100%;
+					height: 10%;
+					float: left;
+					border: 1px solid #555555;
+				}
+
+
+				#bodyContainer{
+					width: 100%;
+					height: 80%;
+					float: left;
+					border: 1px solid #555555;
+				}
+
+				#leftMenu{
+					width: 20%;
+					height: 100%;					
+					float: left;
+					border: 1px solid #555555;
+				}
+
+				#svgContainer{
+					width: 79%;
+					height: 100%;					
+					float: right;
+					border: 1px solid #555555;
+				}
+
+				#footerContainer{
+					width: 100%;
+					height: 10%;
+					float: left;
+					border: 1px solid #555555;
+				}
+
+				
+
+				.overlay {
+  					fill: none;
+ 					 pointer-events: all;
+				}
+
+				.focus circle {
+				  	fill: none;
+				  	stroke: black;
+				}
+
+				.axis path,
+				.axis line, 
+				.axis1 path,
+				.axis1 line {
+				  fill: none;
+				  stroke: #E6E7E8;
+				  shape-rendering: crispEdges;
+				}
+
+				.xaxis1 path {
+				  display: none;
+				}
+
+				.brush .extent {
+				  stroke: #FFF;
+				  shape-rendering: crispEdges;
+				}
+
+
+
+				.arc text {
+				  font: 10px sans-serif;
+				  text-anchor: middle;
+				}
+
+				.arc path {
+				  stroke: #fff;
+				}
+
+
+
+			</style>
+	</head>
+	<body>
+		<div id="titleContainer"> Title here</div>
+		<div id="bodyContainer">
+			<div id = "leftMenu"> Menu Options here</div>
+			<div id = "svgContainer"> </div>
+		</div>
+		<div id="footerContainer"> Footer here</div>
+		
+
+		<script type="text/javascript">
+
+		//Global Variables
+
+		var allData;
+		var onlyUSPolls = [];
+		var endDateIsPresent = [];
+		var allDates = new Map();
+		var path;
+		var isChartAlreadyDrawn = "NO";
+		var g1;
+		var arc;
+		var pie;
+
+		//Setting properties for the svgContainer
+
+		
+		var mapSVG = d3.select("#svgContainer")
+							.append("svg")
+								.attr("class","mapSVG")
+								.attr("width", "70%")
+								.attr("height", "100%");
+
+		var chartSVG = d3.select("#svgContainer")
+							.append("svg")
+								.attr("class","chartSVG")
+								.attr("width", "30%")
+								.attr("height", "100%");				
+
+									
+
+
+			
+		// Code for SVG..........................................................
+		
+			//Width and height of map
+			var width = 428;
+			var height = 469;
+			var allStatesJsonData;
+			var map;
+			var stateColor;
+
+			
+			
+			// D3 Projection
+			var projection = d3.geo.albersUsa()
+							   .translate([330, 210])    // translate to center of screen
+							   .scale([900]);          // scale things down so see entire US
+			        
+			// Define path generator
+			var path = d3.geo.path()               // path generator that will convert GeoJSON to SVG paths
+					  	 .projection(projection);  // tell path generator to use albersUsa projection
+
+					
+			// Define linear scale for output
+			var color = d3.scale.linear()
+						  .range(["rgb(213,222,217)","rgb(69,173,168)","rgb(84,36,55)","rgb(217,91,67)"]);
+
+
+			// Load GeoJSON data and merge with states data
+			d3.json("us-states.json", function(error, json) {	
+				allStatesJsonData = json;
+				// Bind the data to the SVG and create one path per GeoJSON feature
+				 map = mapSVG.selectAll("path")
+							.data(allStatesJsonData.features)
+							.enter()
+							.append("path")
+								.attr("class","map")
+								.attr("id", function(d){ return d.properties.name.split(' ').join('_');})	
+								.attr("d", path)
+								.style("stroke", "#fff")
+								.style("stroke-width", "1")
+								.style("fill", function(d) {		
+									return "rgb(213,222,217)";
+								})
+			})
+
+			//Loading the poll data
+
+			d3.csv("../Data/presidential_polls.csv", function(error,_data){
+
+				allData = _data;
+
+				allData.forEach(function(d){
+
+					if (d.state === "U.S.")
+					{
+						onlyUSPolls.push(d)
+					}
+				})// end of allData.forEach()
+
+
+				onlyUSPolls.forEach(function(d){
+
+					if(endDateIsPresent.indexOf(d.enddate) === -1)
+					{
+						endDateIsPresent.push(d.enddate)
+
+						allDates[d.enddate] = [d]
+					}
+					else
+					{
+						allDates[d.enddate].push(d);
+					}
+
+				})//end of OnlyUSPolls.forEach()
+
+
+				var temp = allDates["10/10/2016"]
+
+				
+					async.eachSeries(temp, function(d,callback){
+						
+						setTimeout(function (){
+
+								drawPieChart(d)
+								callback();					
+							
+						},2000)
+						
+					})
+
+						
+							
+
+					
+
+
+				
+
+
+				
+
+
+			}) //end of d3.csv
+
+
+			
+			function getColor(theValue)
+			{
+				if(theValue === "Trump")
+					return "red"
+				else
+					return "#3800ff"
+			}
+
+
+			function drawBarChart(_data)
+			{
+				
+
+
+			} // end of fucntion drawBarChart(_data)
+
+
+
+			function drawPieChart(_data)
+			{
+
+				//d3.select(".piechart").remove();
+
+				var formattedData = [
+										{ legend: "Trump", count: _data.rawpoll_trump},
+										{ legend: "Clinton", count: _data.rawpoll_clinton}
+									];	
+			
+				var radius = 80;
+
+		        arc = d3.svg.arc()
+		          .innerRadius(50)
+		          .outerRadius(radius);
+
+		        pie = d3.layout.pie()
+		          .value(function(d) { return d.count; })
+		          .sort(null);
+
+
+		        if (isChartAlreadyDrawn === "NO")
+		        {
+		        	g1 = chartSVG.append('g')
+		       			.attr("class","piechart")
+		          		.attr('transform', 'translate(' + 100 +
+		            	',' + 150+ ')');
+
+		        	path = g1.selectAll('path')
+		          			.data(pie(formattedData))
+		         			.enter()
+		          			.append('path')
+		          				.attr("class","piePath")
+		          				.attr('d', arc)
+		          				.style('fill', function(d) {
+		          	     				 return getColor(d.data.legend);
+		          				})
+		          				.each(function(d) { this._current = d; })
+		          			.append("title")
+		          				.text(function(d){ return (d.data.legend);})
+
+		          	 // remove data not being used
+  							g1.datum(formattedData).selectAll("path")
+   							 .data(pie).exit().remove();
+
+
+		          	isChartAlreadyDrawn = "YES"
+
+		        }
+		        else
+		        {
+		        	
+		        	g1.selectAll(".piePath").data(pie(formattedData))
+		        		.transition()
+		        		.attr('d',arc)
+		        		.duration(750)
+		        		.attrTween("d", arcTween);
+
+
+		        	// Store the displayed angles in _current.
+					// Then, interpolate from _current to the new angles.
+					// During the transition, _current is updated in-place by d3.interpolate.
+					function arcTween(a) {
+					  var i = d3.interpolate(this._current, a);
+					  this._current = i(0);
+					  return function(t) {
+					    return arc(i(t));
+					  };
+					}
+
+
+
+
+
+
+		        }
+
+		        
+
+			}// end of fucntion drawPieChart(_data)
+
+
+
+
+
+
+		</script>
+	</body>
+</html>
+
+
+
+
+
