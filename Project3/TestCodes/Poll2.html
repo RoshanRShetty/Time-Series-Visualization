@@ -270,12 +270,13 @@
 				var totalRectangleWidth = 250;
 				var trumpRectWidth = (theData.rawpoll_trump * 2)
 				var clintonRectWidth = (theData.rawpoll_clinton * 2);
+				var leftWidth = ((250 - (trumpRectWidth + clintonRectWidth)) / 2 )
 				var rectTrump;
 				var rectClinton;
 				var mapcolor;
 
-				console.log("t" + trumpRectWidth)
-				console.log("c" + clintonRectWidth)
+				trumpRectWidth = trumpRectWidth + leftWidth;
+				clintonRectWidth = clintonRectWidth + leftWidth;
 
 				if (trumpRectWidth > clintonRectWidth)
 					mapcolor = "red"
