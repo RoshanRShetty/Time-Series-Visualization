@@ -63,6 +63,36 @@
 					border: 1px solid #555555;
 				}
 
+				#mapContainer{
+					width: 65%;
+					height: 100%;					
+					float: left;
+					border: 1px solid #555555;
+				}
+
+				#forMap{
+					width: 100%;
+					height: 80%;					
+					float: left;
+					border: 1px solid #555555;
+				}
+
+				#forGraph{
+					width: 100%;
+					height: 20%;					
+					float: left;
+					border: 1px solid #555555;
+				}
+
+				#graphContainer{
+					width: 34%;
+					height: 100%;					
+					float: right;
+					border: 1px solid #555555;
+				}
+
+
+
 				#footerContainer{
 					width: 100%;
 					height: 10%;
@@ -119,7 +149,17 @@
 		<div id="titleContainer"> Title here</div>
 		<div id="bodyContainer">
 			<div id = "leftMenu"> Menu Options here</div>
-			<div id = "svgContainer"> </div>
+			<div id = "svgContainer">
+
+				<div id ="mapContainer"> 
+
+					<div id = "forMap"> </div>
+					<div id = "forGraph"> </div>
+
+				</div>
+				<div id = "graphContainer"> </div>
+
+			 </div>
 		</div>
 		<div id="footerContainer"> Footer here</div>
 		
@@ -142,17 +182,27 @@
 		//Setting properties for the svgContainer
 
 		
-		var mapSVG = d3.select("#svgContainer")
+		var mapSVG = d3.select("#forMap")
 							.append("svg")
 								.attr("class","mapSVG")
-								.attr("width", "70%")
+								.attr("width", "100%")
 								.attr("height", "100%");
 
-		var chartSVG = d3.select("#svgContainer")
+
+		
+
+		var chartSVG = d3.select("#graphContainer")
 							.append("svg")
 								.attr("class","chartSVG")
-								.attr("width", "30%")
-								.attr("height", "100%");				
+								.attr("width", "100%")
+								.attr("height", "100%");	
+
+
+		var barChartSVG = d3.select("#forGraph")
+							.append("svg")
+								.attr("class","barChartSVG")
+								.attr("width", "100%")
+								.attr("height", "100%");			
 
 									
 
@@ -171,8 +221,8 @@
 			
 			// D3 Projection
 			var projection = d3.geo.albersUsa()
-							   .translate([330, 210])    // translate to center of screen
-							   .scale([900]);          // scale things down so see entire US
+							   .translate([330, 190])    // translate to center of screen
+							   .scale([750]);          // scale things down so see entire US
 			        
 			// Define path generator
 			var path = d3.geo.path()               // path generator that will convert GeoJSON to SVG paths
@@ -247,7 +297,7 @@
 								drawPieChart(d)
 								callback();					
 							
-						},2000)
+						},1500)
 						
 					})
 
@@ -267,10 +317,10 @@
 
 			function drawBarChart(theData)
 			{
-				var totalRectangleWidth = 250;
-				var trumpRectWidth = (theData.rawpoll_trump * 2)
-				var clintonRectWidth = (theData.rawpoll_clinton * 2);
-				var leftWidth = ((250 - (trumpRectWidth + clintonRectWidth)) / 2 )
+				var totalRectangleWidth = 600;
+				var trumpRectWidth = ((theData.rawpoll_trump / 100) * totalRectangleWidth )
+				var clintonRectWidth = ((theData.rawpoll_clinton / 100) * totalRectangleWidth )
+				var leftWidth = ((totalRectangleWidth - (trumpRectWidth + clintonRectWidth)) / 2 )
 				var rectTrump;
 				var rectClinton;
 				var mapcolor;
@@ -290,7 +340,7 @@
 
 				if(isBarAlreadyDrawn === "NO")
 				{
-					rectTrump = chartSVG.append("rect")
+					rectTrump = barChartSVG.append("rect")
 											.transition()
 											.attr("class","rectTrump")
 											.attr("x", 10)
@@ -301,7 +351,7 @@
 											.duration(750);
 											
 
-					rectClinton = chartSVG.append("rect")
+					rectClinton = barChartSVG.append("rect")
 											.transition()
 											.attr("class","rectClinton")
 											.attr("x", (trumpRectWidth+12))
@@ -337,10 +387,10 @@
 										{ legend: "Clinton", count: _data.rawpoll_clinton}
 									];	
 			
-				var radius = 80;
+				var radius = 120;
 
 		        arc = d3.svg.arc()
-		          .innerRadius(50)
+		          .innerRadius(80)
 		          .outerRadius(radius);
 
 		        pie = d3.layout.pie()
@@ -352,7 +402,7 @@
 		        {
 		        	g1 = chartSVG.append('g')
 		       			.attr("class","piechart")
-		          		.attr('transform', 'translate(' + 100 +
+		          		.attr('transform', 'translate(' + 150 +
 		            	',' + 150+ ')');
 
 		        	path = g1.selectAll('path')
