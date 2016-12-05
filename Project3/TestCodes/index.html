@@ -52,10 +52,13 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script src="http://d3js.org/d3.geo.tile.v0.min.js"></script>
+<script type="text/javascript" src="d3/async.js"></script>
 <script>
 
 
     var test;
+
+    var allYear = [2004,2008,2012];
 
     var width = 960,
             height = 500,
@@ -87,7 +90,7 @@
     var dataAll = {};
     var arrData = [];
     var totalCount = 0;
-    d3.csv("../Data/county.csv", function(error, data) {
+    d3.csv("Data/county.csv", function(error, data) {
         if (error) throw error;
         totalCount = 0;
         data.forEach(function(d){
@@ -117,7 +120,7 @@
 
     stateCodes = {};
 
-    d3.csv("../Data/state-data.csv", function(error, data) {
+    d3.csv("Data/state-data.csv", function(error, data) {
         if (error) throw error;
         data.forEach(function(d){
             if(stateCodes[d.ID]==undefined)
@@ -129,7 +132,7 @@
     });
 
 
-    d3.json("../Data/us.json", function (error, us) {
+    d3.json("Data/us.json", function (error, us) {
         g.append("g")
             .attr("id", "counties")
             .selectAll("path")
@@ -160,6 +163,18 @@
             .attr("d", path);
 
     });
+
+
+    async.eachSeries(allYear, function(eachYear,callback){
+
+            setTimeout(function(){
+
+                changeYear(eachYear)
+                callback();
+
+            },1500)
+
+    })
 
     function changeYear(a) {
         selectedYear = a;
@@ -558,15 +573,15 @@
 
     bool = 0;
     function countyState() {
-        if(bool == 1) {
+        if(bool == 0) {
             g.selectAll("path")
                 .classed("active", 1);
-            bool = 0;
+            bool = 1;
         }
         else {
             g.selectAll("path")
                 .classed("active", 0);
-            bool = 1;
+            bool = 0;
         }
     }
 
@@ -584,8 +599,11 @@ Total Votes: <input name="Total" id="totalbox" type="text" />
 <button onclick="reset()">Reset</button><br>
 
 Year <input name="Year" id="yearbox" type="text" />
-<input name="buttonYear" onclick="changeYear(document.getElementById('yearbox').value)" type="button" value="Greater than" />
+<input name="buttonYear" onclick="changeYear(document.getElementById('yearbox').value)" type="button" value="GO" />
 
+
+<br>
+<button onclick="countyState()">Show County</button>
 <table id="table"></table>
 <div id="box"></div>
 </body>
