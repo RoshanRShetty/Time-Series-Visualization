@@ -172,12 +172,15 @@
 		var onlyUSPolls = [];
 		var endDateIsPresent = [];
 		var allDates = new Map();
+		var allStates = new Map();
 		var path;
 		var isChartAlreadyDrawn = "NO";
 		var isBarAlreadyDrawn = "NO";
 		var g1;
 		var arc;
 		var pie;
+		var statesUsed = [];
+		var statesUnused = [];
 
 		//Setting properties for the svgContainer
 
@@ -187,6 +190,9 @@
 								.attr("class","mapSVG")
 								.attr("width", "100%")
 								.attr("height", "100%");
+
+
+			mapSVG.append("text").attr("id","datetext").attr("x",250).attr("y",20).text("").style("font-size",20)
 
 
 		
@@ -243,7 +249,9 @@
 							.enter()
 							.append("path")
 								.attr("class","map")
-								.attr("id", function(d){ return d.properties.name.split(' ').join('_');})	
+								.attr("id", function(d){ 
+									statesUsed.push(d.properties.name.split(' ').join('_'))
+									return d.properties.name.split(' ').join('_');})	
 								.attr("d", path)
 								.style("stroke", "#fff")
 								.style("stroke-width", "1")
@@ -260,49 +268,232 @@
 
 				allData.forEach(function(d){
 
-					if (d.state === "U.S.")
+					if(allStates[d.state.split(" ").join("_")] === undefined)
 					{
-						onlyUSPolls.push(d)
-					}
-				})// end of allData.forEach()
+						allStates[d.state.split(" ").join("_")] = new Map()
 
 
-				onlyUSPolls.forEach(function(d){
+						if (allStates[d.state.split(" ").join("_")][d.enddate] === undefined )
+						{
 
-					if(endDateIsPresent.indexOf(d.enddate) === -1)
-					{
-						endDateIsPresent.push(d.enddate)
+							allStates[d.state.split(" ").join("_")][d.enddate] = [d]
 
-						allDates[d.enddate] = [d]
+						}
+						else
+						{
+							allStates[d.state.split(" ").join("_")][d.enddate].push(d)
+						}
+						
+
 					}
 					else
 					{
-						allDates[d.enddate].push(d);
+						//allStates[d.state.split(" ").join("_")].push(d)
+						if (allStates[d.state.split(" ").join("_")][d.enddate] === undefined )
+						{
+
+							allStates[d.state.split(" ").join("_")][d.enddate] = [d]
+
+						}
+						else
+						{
+							allStates[d.state.split(" ").join("_")][d.enddate].push(d)
+						}
+
 					}
 
-				})//end of OnlyUSPolls.forEach()
+				})// end of allData.forEach()
+
+				//sortAccordingToDates(allStates)
+				colorByDate(allStates)
+
+
+				// onlyUSPolls.forEach(function(d){
+
+				// 	if(endDateIsPresent.indexOf(d.enddate) === -1)
+				// 	{
+				// 		endDateIsPresent.push(d.enddate)
+
+				// 		allDates[d.enddate] = [d]
+				// 	}
+				// 	else
+				// 	{
+				// 		allDates[d.enddate].push(d);
+				// 	}
+
+				// })//end of OnlyUSPolls.forEach()
 
 
 
 				
 
-				var temp = allDates["10/10/2016"]
+				// var temp = allDates["10/10/2016"]
 
 				
-					async.eachSeries(temp, function(d,callback){
+				// 	async.eachSeries(temp, function(d,callback){
 						
-						setTimeout(function (){
+				// 		setTimeout(function (){
 
-								drawBarChart(d)
-								drawPieChart(d)
-								callback();					
+				// 				drawBarChart(d)
+				// 				drawPieChart(d)
+				// 				callback();					
 							
-						},1500)
+				// 		},1500)
 						
-					})
+				// 	})
 
 
 			}) //end of d3.csv
+
+
+			function colorByDate(theStates)
+			{
+				var dates = ["10/1/2016","10/2/2016","10/3/2016","10/4/2016","10/5/2016","10/6/2016","10/7/2016","10/9/2016","10/10/2016","10/11/2016"
+							, "10/12/2016","10/13/2016","10/14/2016","10/15/2016","10/16/2016","10/17/2016","10/18/2016","10/19/2016","10/20/2016","10/21/2016"
+							,"10/22/2016","10/23/2016","10/24/2016","10/25/2016","10/26/2016","10/27/2016","10/28/2016","10/29/2016","10/30/2016","10/31/2016"
+				]
+
+				async.eachSeries(dates, function(date,callback){
+
+					d3.selectAll("#datetext").transition().text(date).duration(1000)
+
+					setTimeout(function()
+					{
+						console.log(date)
+
+						Object.keys(allStates).forEach(function(key){
+
+							colorStates(date,key)
+							//drawBarChart(date)
+						})
+						//drawBarChart(date)
+						callback();
+					
+					},1500)
+
+				
+					
+				}) // end of aynch
+
+
+
+
+			}
+
+
+
+
+			function colorStates(date,key)
+			{
+								var trumpAvg = 0
+								var clintonAvg = 0
+
+
+							try{
+
+								allStates[key][date].forEach(function (d){
+
+									
+									//console.log("key " + key + "date " + date)
+
+
+
+									//console.log(d.rawpoll_trump)
+
+									trumpAvg = trumpAvg + parseInt(d.rawpoll_trump)
+									clintonAvg = clintonAvg + parseInt(d.rawpoll_clinton)
+								})
+
+								d3.selectAll(".map").style("fill","rgb(213,222,217)")
+
+								drawBarChart(trumpAvg/allStates[key][date].length, clintonAvg/allStates[key][date].length )
+
+								if (trumpAvg/allStates[key][date].length > clintonAvg/allStates[key][date].length )
+								{
+									try
+									{
+										//d3.selectAll(".map").style("fill","rgb(213,222,217)")
+										d3.selectAll("#" + key.split(" ").join("_")).transition().style("fill","red").duration(1000)
+
+										// statesUsed.forEach(function(state){
+
+											
+										// 	if (key.split(" ").join("_") === state)
+										// 	{
+												
+										// 		d3.selectAll("#" + key.split(" ").join("_")).transition().style("fill","red").duration(1000)
+
+										// 	}
+										// 	else
+										// 	{
+										// 		statesUnused.push(state);
+										// 	}
+										// })
+
+
+										// statesUnused.forEach(function(unusedState){
+
+										// 	d3.selectAll("#" + unusedState).transition().style("fill","rgb(213,222,217)").duration(1000)
+
+										// })
+
+										// statesUnused.splice(0);
+
+									}catch (error)
+									{
+										return;
+
+									}
+
+								//callback();
+
+									
+								}
+								else
+								{
+
+									try
+									{
+										//d3.selectAll(".map").style("fill","rgb(213,222,217)")
+
+										d3.selectAll("#" + key.split(" ").join("_")).transition().style("fill","blue").duration(1000)
+
+										// statesUnused.forEach(function(state){
+
+										// 	if (key.split(" ").join("_") === state)
+										// 	{
+										// 		d3.selectAll("#" + key.split(" ").join("_")).transition().style("fill","blue").duration(1000)
+										// 	}
+										// 	else
+										// 	{
+										// 		d3.selectAll("#" + key.split(" ").join("_")).transition().style("fill","rgb(213,222,217)").duration(1000)
+										// 	}
+										// })
+
+
+									}catch (error)
+									{
+										return;
+
+									}
+
+								//callback();
+									
+
+								}
+
+								
+
+							} catch (error)
+							{	
+
+								return;
+
+							}
+			}
+
+
+			
 
 
 			
@@ -315,16 +506,17 @@
 			}
 
 
-			function drawBarChart(theData)
+			function drawBarChart(trumpAvg,clintonAvg)
 			{
 				var totalRectangleWidth = 600;
-				var trumpRectWidth = ((theData.rawpoll_trump / 100) * totalRectangleWidth )
-				var clintonRectWidth = ((theData.rawpoll_clinton / 100) * totalRectangleWidth )
-				var leftWidth = ((totalRectangleWidth - (trumpRectWidth + clintonRectWidth)) / 2 )
+				var trumpRectWidth = ((trumpAvg / 100) * totalRectangleWidth )
+				var clintonRectWidth = ((clintonAvg / 100) * totalRectangleWidth )
+				var leftWidth = ((totalRectangleWidth - (trumpRectWidth + clintonRectWidth)) / 2 ) 
 				var rectTrump;
 				var rectClinton;
 				var mapcolor;
 
+				//totalRectangleWidth =  (trumpRectWidth + clintonRectWidth);
 				trumpRectWidth = trumpRectWidth + leftWidth;
 				clintonRectWidth = clintonRectWidth + leftWidth;
 
@@ -348,7 +540,11 @@
 											.attr("height", 20)
 											.attr("width",trumpRectWidth)
 											.style("fill","red")
-											.duration(750);
+											.duration(750)
+
+					barChartSVG.append("text").attr("class","trumpText").attr("x",trumpRectWidth - 65).attr("y",55).style("fill","white")
+											.text("Trump: " + trumpAvg + "%" )
+											
 											
 
 					rectClinton = barChartSVG.append("rect")
@@ -362,7 +558,10 @@
 											.style("fill","blue")
 											.duration(750);
 
-					d3.selectAll(".map").transition().style("fill",mapcolor).duration(1000)
+					//d3.selectAll(".map").transition().style("fill",mapcolor).duration(1000)
+
+					barChartSVG.append("text").attr("class","clintonText").attr("x",trumpRectWidth+14).attr("y",55).style("fill","white")
+											.text("Clinton: " + clintonAvg + "%" )
 
 					isBarAlreadyDrawn = "YES"
 				}
@@ -370,8 +569,13 @@
 				{
 					d3.selectAll(".rectTrump").transition().attr("width",trumpRectWidth).duration(1000);
 					d3.selectAll(".rectClinton").transition().attr("x", (trumpRectWidth + 12)).attr("width",(totalRectangleWidth- trumpRectWidth)).duration(1000);
-					d3.selectAll(".map").transition().style("fill",mapcolor).duration(1000);
+					//d3.selectAll(".map").transition().style("fill",mapcolor).duration(1000);
+					d3.selectAll(".trumpText").transition().attr("x", trumpRectWidth - 65).text("Trump: " + trumpAvg + "%" ).duration(1000);
+					d3.selectAll(".clintonText").transition().attr("x",trumpRectWidth+14).text("Clinton: " + clintonAvg + "%" ).duration(1000)
+
 				}
+
+				
 
 			} // end of fucntion drawBarChart(_data)
 
