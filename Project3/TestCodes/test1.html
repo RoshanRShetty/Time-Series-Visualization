@@ -155,7 +155,7 @@ input:checked + .slider:before {
     dataAll = {};
 
 
-    d3.csv("Data/county2012.csv", function(error, data) {
+    d3.csv("../Data/county2012.csv", function(error, data) {
         if (error) { throw error;}
         data.forEach(function(d){
             if(data2012[d.FIPS]==undefined)
@@ -171,7 +171,7 @@ input:checked + .slider:before {
        
     });
 
-    d3.csv("Data/county2008.csv", function(error, data) {
+    d3.csv("../Data/county2008.csv", function(error, data) {
         if (error) throw error;
         data.forEach(function(d){
             if(data2008[d.FIPS]==undefined)
@@ -188,7 +188,7 @@ input:checked + .slider:before {
     });
 
 
-    d3.csv("Data/county2004.csv", function(error, data) {
+    d3.csv("../Data/county2004.csv", function(error, data) {
         
      
         if (error) throw error;
@@ -252,7 +252,7 @@ input:checked + .slider:before {
 
     stateCodes = {};
 
-    d3.csv("Data/state-data.csv", function(error, data) {
+    d3.csv("../Data/state-data.csv", function(error, data) {
         if (error) throw error;
         data.forEach(function(d){
             if(stateCodes[d.ID]==undefined)
@@ -268,7 +268,7 @@ input:checked + .slider:before {
     });
 
 
-    d3.json("Data/us.json", function (error, us) {
+    d3.json("../Data/us.json", function (error, us) {
 
         test = us;
 
