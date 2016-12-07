@@ -67,9 +67,9 @@
 </style>
 <body>
 <div id="slider"></div>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://d3js.org/topojson.v1.min.js"></script>
-<script src="http://d3js.org/d3.geo.tile.v0.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="https://d3js.org/topojson.v1.min.js"></script>
+<script src="https://d3js.org/d3.geo.tile.v0.min.js"></script>
 <script src="../d3/async.js"></script>
 <script src="../d3/d3.slider.js"></script>
 <link rel="stylesheet" type="text/css" href="../d3/d3.slider.css" media="screen" />
@@ -395,7 +395,7 @@
 
 
 
-    d3.csv("Data/county.csv", function(error, data) {
+    d3.csv("../Data/county.csv", function(error, data) {
         if (error) throw error;
         totalCount = 0;
         data.forEach(function(d){
@@ -426,7 +426,7 @@
     stateCodes = {};
 
 
-    d3.csv("Data/state-data.csv", function(error, data) {
+    d3.csv("../Data/state-data.csv", function(error, data) {
         if (error) throw error;
         data.forEach(function(d){
             if(stateCodes[d.ID]==undefined)
@@ -438,7 +438,7 @@
     });
 
 
-    d3.json("Data/us.json", function (error, us) {
+    d3.json("../Data/us.json", function (error, us) {
         g.append("g")
             .attr("id", "counties")
             .selectAll("path")
