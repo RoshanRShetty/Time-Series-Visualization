@@ -89,23 +89,25 @@ d3.slider = function module() {
         displayValue = d3.format(",.0f")(value);
       }
       
-      dragger.append("text")
-      .attr("x", 0)
-      .attr("y", -15)
-      .attr("text-anchor", "middle")
-      .attr("class", "draggertext")
-      .text(displayValue);
+      // dragger.append("text")
+      // .attr("x", 0)
+      // .attr("y", -15)
+      // .attr("text-anchor", "middle")
+      // .attr("class", "draggertext")
+      // .text(displayValue);
 
       dragger.append("circle")
       .attr("class", "dragger-outer")
       .attr("r", 10)
+          .attr("opacity", 0)
       .attr("transform", function(d) {
         return "translate(0,6)";
       });
-      
+
       dragger.append("circle")
       .attr("class", "dragger-inner")
       .attr("r", 4)
+          .attr("opacity", 0)
       .attr("transform", function(d) {
         return "translate(0,6)";
       });
@@ -129,11 +131,19 @@ d3.slider = function module() {
   }
 
   slider.click = function() {
+    d3.selectAll(".dragger-inner")
+        .style("opacity", 1);
+    d3.selectAll(".dragger-outer")
+        .style("opacity", 1)
     var pos = d3.event.offsetX || d3.event.layerX;
     slider.move(pos);
   }
 
   slider.drag = function() {
+      d3.selectAll(".dragger-inner")
+          .style("opacity", 1);
+      d3.selectAll(".dragger-outer")
+          .style("opacity", 1)
     var pos = d3.event.x;
     slider.move(pos+margin.left);
   }
