@@ -65,18 +65,16 @@
     }
 
 </style>
-<body>
+<body onload="changeYear(2004)">
 <div id="slider"></div>
-<script src="https://d3js.org/d3.v3.min.js"></script>
-<script src="https://d3js.org/topojson.v1.min.js"></script>
-<script src="https://d3js.org/d3.geo.tile.v0.min.js"></script>
-<script src="../d3/async.js"></script>
-<script src="../d3/d3.slider.js"></script>
-<link rel="stylesheet" type="text/css" href="../d3/d3.slider.css" media="screen" />
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="http://d3js.org/d3.geo.tile.v0.min.js"></script>
+<script src="d3/async.js"></script>
+<script src="d3/d3.slider.js"></script>
+<link rel="stylesheet" type="text/css" href="d3/d3.slider.css" media="screen" />
+<script src="d3/d3.slider.js"></script>
 <script>
-
-
-
 
 
     var allYear = [2004,2008,2012];
@@ -395,7 +393,7 @@
 
 
 
-    d3.csv("../Data/county.csv", function(error, data) {
+    d3.csv("Data/county.csv", function(error, data) {
         if (error) throw error;
         totalCount = 0;
         data.forEach(function(d){
@@ -426,7 +424,7 @@
     stateCodes = {};
 
 
-    d3.csv("../Data/state-data.csv", function(error, data) {
+    d3.csv("Data/state-data.csv", function(error, data) {
         if (error) throw error;
         data.forEach(function(d){
             if(stateCodes[d.ID]==undefined)
@@ -438,7 +436,7 @@
     });
 
 
-    d3.json("../Data/us.json", function (error, us) {
+    d3.json("Data/us.json", function (error, us) {
         g.append("g")
             .attr("id", "counties")
             .selectAll("path")
@@ -467,8 +465,9 @@
             }))
             .attr("id", "state-borders")
             .attr("d", path);
+        selectedYear=2004;
+        changeYear(selectedYear)
     });
-    d3.select('#slider').call(slider);
 
     function changeYear(a) {
         selectedYear = a;
@@ -623,6 +622,7 @@
     listData = [];
 
     function margin(a,x){
+        document.getElementById('totalbox').value = '';
         listData.splice(0);
         var count = 0.0;
         g.selectAll(".county-boundary")
@@ -751,7 +751,10 @@
 
     }
 
+    var startSig = 0;
     function reset(){
+        document.getElementById('pumpbox').value = '';
+        document.getElementById('totalbox').value = '';
         clicked();
         listData.splice(0);
         clickedState = null;
@@ -780,6 +783,7 @@
     }
 
     function total(a,x) {
+        document.getElementById('pumpbox').value = '';
         listData.splice(0);
         g.selectAll(".county-boundary")
             .style("fill", function(d) {
@@ -921,11 +925,14 @@
             document.getElementById('cbox').disabled = false;
         }
     };
+    changeYear(2004);
+    d3.select('#slider').call(slider);
 
 
 
 
 </script>
+<div id="slider"></div>
 <br>
 Margin(%): <input name="Pump" id="pumpbox" type="text" />
 <input name="buttonPump" onclick="margin(document.getElementById('pumpbox').value,1)" type="button" value="Greater than" />
