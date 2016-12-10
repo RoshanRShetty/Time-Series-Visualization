@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <title>Simpe Single Axis Zoom</title>
-<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script type="text/javascript" src="../d3/async.js"> </script>
 <style>
 .axis path, .axis line {
@@ -233,8 +233,8 @@
     
         circle.enter()
           .append("svg:circle")
-            .attr("class", "points" + idAppender)
-            .attr("id",function(d){return d["County"].split(" ").join("_") + idAppender;})
+            .attr("class", "points")
+            .attr("id",function(d){return d["County"].split(" ").join("_");})
             .style("fill", function(d){
               if(d["Party"] === "Republican")
               {
