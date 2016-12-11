@@ -182,6 +182,7 @@
 		var statesUsed = [];
 		var statesUnused = [];
 		var counter = 0;
+		
 
 		//Setting properties for the svgContainer
 
@@ -343,8 +344,8 @@
 			function drawSmallMap(date)
 			{
 				counter = counter + 1;
-				var sMap =d3.select("#graphContainer").append("svg").attr("class",date).attr("width",70).attr("height",70)//.append("text").attr("x",10)
-							.attr("y",20).text(date);
+				var sMap =d3.select("#graphContainer").append("svg").attr("class",date).attr("width",70).attr("height",70)//.append("title").text(date)//.append("text").attr("x",10)
+							.attr("y",20).text(date).style("font-size","5px");
 
 				// D3 Projection
 				var projection = d3.geo.albersUsa()
@@ -379,6 +380,14 @@
 									.style("fill", function(d) {		
 										return "rgb(213,222,217)";
 									})
+									.on("dblclick", function()
+										{
+											Object.keys(allStates).forEach(function(key){
+
+												d3.selectAll(".map").style("fill","rgb(213,222,217)");							
+												colorStates(date,key)
+						})
+										});
 				})
 			}
 
