@@ -514,7 +514,7 @@ Total Votes: <input name="Total" id="totalbox" type="text" />
 
 
 
-    d3.csv("Data/county.csv", function(error, data) {
+    d3.csv("../Data/county.csv", function(error, data) {
         if (error) throw error;
         totalCount = 0;
         data.forEach(function(d){
@@ -545,7 +545,7 @@ Total Votes: <input name="Total" id="totalbox" type="text" />
     stateCodes = {};
 
 
-    d3.csv("Data/state-data.csv", function(error, data) {
+    d3.csv("../Data/state-data.csv", function(error, data) {
         if (error) throw error;
         data.forEach(function(d){
             if(stateCodes[d.ID]==undefined)
@@ -557,7 +557,7 @@ Total Votes: <input name="Total" id="totalbox" type="text" />
     });
 
 
-    d3.csv("Data/county2012.csv", function(error, data) {
+    d3.csv("../Data/county2012.csv", function(error, data) {
         if (error) { throw error;}
         data.forEach(function(d){
             if(data2012[d.FIPS]==undefined)
@@ -573,7 +573,7 @@ Total Votes: <input name="Total" id="totalbox" type="text" />
        
     });
 
-    d3.csv("Data/county2008.csv", function(error, data) {
+    d3.csv("../Data/county2008.csv", function(error, data) {
         if (error) throw error;
         data.forEach(function(d){
             if(data2008[d.FIPS]==undefined)
@@ -591,7 +591,7 @@ Total Votes: <input name="Total" id="totalbox" type="text" />
 
     var dataCount;
 
-    d3.csv("Data/county2004.csv", function(error, data) {
+    d3.csv("../Data/county2004.csv", function(error, data) {
         
      
         if (error) throw error;
@@ -655,22 +655,13 @@ Total Votes: <input name="Total" id="totalbox" type="text" />
 
     stateCodes = {};
 
-    d3.csv("Data/state-data.csv", function(error, data) {
-        if (error) throw error;
-        data.forEach(function(d){
-            if(stateCodes[d.ID]==undefined)
-                stateCodes[d.ID] = [];
-            stateCodes[d.ID] = { "id": d.ID,
-                                "code": d.Code,
-                                "name": d.Name };
-        });
-
+  
 
 
 
     });
 
-    d3.json("Data/us.json", function (error, us) {
+    d3.json("../Data/us.json", function (error, us) {
         g.append("g")
             .attr("id", "counties")
             .selectAll("path")
