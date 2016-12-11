@@ -204,7 +204,7 @@ Total Votes: <input name="Total" id="totalbox" type="text" />
 <div class ="divider"> </div> 
 
 <label class="switch">
-<input type="checkbox" id="toggleBtn"  onclick="toggle(this)">
+<input type="checkbox" id="toggleBtn"  onclick="toggle(dataAll)">
   <div class="slider round"></div>
 </label>
 
@@ -1187,7 +1187,7 @@ Total Votes: <input name="Total" id="totalbox" type="text" />
                 .on("click", clicked);
     }
 
-function toggle(){    
+function toggle(data){    
 
     if(button === 0){
 //if( document.getElementById('toggleBtn').checked=== true){
