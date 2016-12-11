@@ -5,8 +5,9 @@
 }
 
 .d3slider-rect-range {
-  fill: #777;
-  stroke: none;
+  fill: white;
+  stroke: black;
+  stroke-width: 1;
 }
 
 .d3slider-rect-value {
