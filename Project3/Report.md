@@ -64,7 +64,7 @@ We have used the follwing data fo this visualization
 
  The mini maps provides user with snapshots of the visualization over time. By double clicking on the mini map, the user can also load the vislauzation for the selected time.
  
- ![ScreenShot](http://roshanrshetty.github.io/Project3/Images/minimap.PNG)
+ ![ScreenShot](http://roshanrshetty.github.io/Project3/Images/minimaps.PNG)
  
 #### 8. Bubble Chart
 
