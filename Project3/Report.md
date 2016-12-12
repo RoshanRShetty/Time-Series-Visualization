@@ -51,6 +51,7 @@ We have used the follwing data fo this visualization
    - The Size of the circle represents the total number of voters in the county.
    
  The zooming features enables the user to view intricate details of the plots which are usually hidden in the over - all scatter plot.
+  ![ScreenShot](http://roshanrshetty.github.io/Project3/Images/scatterplot.PNG)
 
 #### 5. Time Series
 
