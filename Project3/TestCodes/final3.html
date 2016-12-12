@@ -117,8 +117,9 @@ ul.tab li a:focus, .active {
 <head>
 <script type="text/javascript" src="../d3/d3.v3.min.js"> </script>
     <script type="text/javascript" src="../d3/async.js"> </script>
+  <link rel="stylesheet" href="../Data/bubble_chart.css">
 
-  <script src="Data/tooltip.js"></script>
+  <script src="../Data/tooltip.js"></script>
 </head>
 <body>
 
@@ -1271,7 +1272,7 @@ function addCommas(nStr) {
 }
 
 // Load the data.
-d3.csv('Data/gates_money.csv', display);
+d3.csv('../Data/gates_money.csv', display);
 
 // setup the buttons.
 setupButtons();
