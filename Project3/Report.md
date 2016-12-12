@@ -27,11 +27,11 @@ We have used the follwing data fo this visualization
 
 ### Features
 
-1. Different Tabs for Different Visualization
+#### 1. Different Tabs for Different Visualization
 
   We have implemented separate tabs for different visualizations, which not only helps the user to analyze but also reduces cognittive load.
 
-2. Slider
+#### 2. Slider
 
   The Slider enables the user to select visualization for different years. The slider implemented is a range slider, which enables the user to select between years.
 
@@ -48,6 +48,7 @@ We have used the follwing data fo this visualization
    - The Y-Axis represents the win margin.
    - The Color of the circles indicate the winning party.
    - The Size of the circle represents the total number of voters in the county.
+ The 
 
 5. 
     
