@@ -342,16 +342,18 @@ ul.tab li a:focus, .active {
         allRData2004 = data;
 
         allRData2004.forEach(function (d) {
+         try{
+             if (allFIPS[d["county"].split(" ").join("_")] === undefined) {
+                   allFIPS[d["county"].split(" ").join("_")] = d["fips"]
+               }
 
-            if (allFIPS[d["county"].split(" ").join("_")] === undefined) {
-                allFIPS[d["county"].split(" ").join("_")] = d["fips"]
-            }
+               if (allDetails2004[d["fips"]] === undefined) {
 
-            if (allDetails2004[d["fips"]] === undefined) {
-
-                allDetails2004[d["fips"]] = d
-            }
-
+                   allDetails2004[d["fips"]] = d
+               }
+         }catch(error){
+             return;
+         }
         })
 
     }) // end of d3.csv
@@ -362,15 +364,17 @@ ul.tab li a:focus, .active {
 
         allRData2008 = data;
         allRData2008.forEach(function (d) {
-
+         try{
             if (allFIPS[d["county"].split(" ").join("_")] === undefined) {
-                allFIPS[d["county"].split(" ").join("_")] = d["fips"]
-            }
+                  allFIPS[d["county"].split(" ").join("_")] = d["fips"]
+              }
 
-            if (allDetails2008[d["fips"]] === undefined) {
-
-                allDetails2008[d["fips"]] = d
-            }
+              if (allDetails2008[d["fips"]] === undefined) {
+                  allDetails2008[d["fips"]] = d
+              }
+         }catch(error){
+           return;
+         }
         })
 
 
@@ -383,15 +387,19 @@ ul.tab li a:focus, .active {
 
         allRData2012 = data;
         allRData2012.forEach(function (d) {
+         try{
+             if (allFIPS[d["county"].split(" ").join("_")] === undefined) {
+                   allFIPS[d["county"].split(" ").join("_")] = d["fips"]
+               }
 
-            if (allFIPS[d["county"].split(" ").join("_")] === undefined) {
-                allFIPS[d["county"].split(" ").join("_")] = d["fips"]
-            }
+               if (allDetails2012[d["fips"]] === undefined) {
 
-            if (allDetails2012[d["fips"]] === undefined) {
-
-                allDetails2012[d["fips"]] = d
-            }
+                   allDetails2012[d["fips"]] = d
+               }
+         }catch(error){
+              return;
+         }
+            
         })
     })// end of d3.csv
 
