@@ -76,8 +76,10 @@ Data from multiple files had to be combined to get data for all 4 dimensions rep
 ![ScreenShot](http://roshanrshetty.github.io/Project3/Images/total.png)
 3. Naturally, the more densely populated counties were majority democrat. Counties containing L.A., San Francisco, Portland, Seattle, Denver, Miami, Detroit, Atlanta, Cleveland, Washington DC, New York, and Boston were comfortably democrat with large win margins.
 ![ScreenShot](http://roshanrshetty.github.io/Project3/Images/largecounties.png)
-
-
+4. Over the last three elections only few counties of the overall counties have voted for different parties while most of have not changed their decision.
+![ScreenShot](http://roshanrshetty.github.io/Project3/Images/mainMap.PNG)
+5. During the 2008 elections  most of the counties that have voted for Republicans in 2004 elections have changed to Democrats.
+![ScreenShot](http://roshanrshetty.github.io/Project3/Images/2008Changes.PNG)
 
 
 ### Work Distribution:
