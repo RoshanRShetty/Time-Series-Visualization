@@ -1,5 +1,5 @@
 ## Project 3: Presidential Election Visualization
-[![ScreenShot](http://roshanrshetty.github.io/Project3/Images/main.png)](http://roshanrshetty.github.io/Project3/Video/main.mp4)
+[![ScreenShot](http://roshanrshetty.github.io/Project3/Images/main.PNG)](http://roshanrshetty.github.io/Project3/Video/main.mp4)
 
 **Visualization Link:** http://roshanrshetty.github.io
 
@@ -68,8 +68,10 @@ Data from multiple files had to be combined to get data for all 4 dimensions rep
 
 ### Findings
 1. Various rivers have a larger number of democratic counties along their path, namely the Mississippi, Ohio, and Rio Grande rivers. There also seems to be a larger concentration of democratic counties in major ports and bays like New Orleans, Miami, San Francisco, and New York
-![ScreenShot](http://roshanrshetty.github.io/Project3/Images/noriver.png)
-![ScreenShot](http://roshanrshetty.github.io/Project3/Images/river.png)
+![ScreenShot](http://roshanrshetty.github.io/Project3/Images/noriver.png)![ScreenShot](http://roshanrshetty.github.io/Project3/Images/river.png)
+2. In the midwest, the counties voted very republican. With a win margin threshold of 50%+, midwestern republican counties dominated. These counties are also lightly populated, with roughly the same results when a total voter threshold was 5,000 or less. 
+![ScreenShot](http://roshanrshetty.github.io/Project3/Images/margin.png)
+![ScreenShot](http://roshanrshetty.github.io/Project3/Images/total.png)
 
 
 
