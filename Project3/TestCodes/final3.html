@@ -205,17 +205,17 @@ ul.tab li a:focus, .active {
 
 </style>
 <head>
-<script type="text/javascript" src="d3/d3.v3.min.js"> </script>
-    <script type="text/javascript" src="d3/async.js"> </script>
+<script type="text/javascript" src="../d3/d3.v3.min.js"> </script>
+    <script type="text/javascript" src="../d3/async.js"> </script>
 
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="https://d3js.org/topojson.v1.min.js"></script>
 <script src="https://d3js.org/d3.geo.tile.v0.min.js"></script>
-<script src="d3/d3.sliderCSS.js"></script>
-<link rel="stylesheet" type="text/css" href="d3/d3.slider.css" media="screen" />
+<script src="../d3/d3.sliderCSS.js"></script>
+<link rel="stylesheet" type="text/css" href="../d3/d3.slider.css" media="screen" />
 
 
-  <script src="Data/tooltip.js"></script>
+  <script src="../Data/tooltip.js"></script>
 </head>
 <body>
 
@@ -335,7 +335,7 @@ ul.tab li a:focus, .active {
         .append("svg").attr("width", window.innerWidth).attr("height", window.innerHeight);
 
 
-    d3.csv("Data/CountUmp2004.csv", function (error, data) {
+    d3.csv("../Data/CountUmp2004.csv", function (error, data) {
         if (error)
             return;
 
@@ -356,7 +356,7 @@ ul.tab li a:focus, .active {
 
     }) // end of d3.csv
 
-    d3.csv("Data/CountUmp2008.csv", function (error, data) {
+    d3.csv("../Data/CountUmp2008.csv", function (error, data) {
         if (error)
             return;
 
@@ -377,7 +377,7 @@ ul.tab li a:focus, .active {
     })// end of d3.csv
 
 
-    d3.csv("Data/CountUmp2012.csv", function (error, data) {
+    d3.csv("../Data/CountUmp2012.csv", function (error, data) {
         if (error)
             return;
 
@@ -428,7 +428,7 @@ ul.tab li a:focus, .active {
 
         ex_chart = example().zoom(true);
 
-        d3.csv("Data/CountUmp" + year + ".csv", function (error, _data) {
+        d3.csv("../Data/CountUmp" + year + ".csv", function (error, _data) {
 
             allRData = _data;
 
@@ -1260,7 +1260,7 @@ ul.tab li a:focus, .active {
     }
 
 
-    d3.csv("Data/county.csv", function (error, data) {
+    d3.csv("../Data/county.csv", function (error, data) {
         if (error) throw error;
         totalCount = 0;
         data.forEach(function (d) {
@@ -1291,7 +1291,7 @@ ul.tab li a:focus, .active {
     stateCodes = {};
 
 
-    d3.csv("Data/state-data.csv", function (error, data) {
+    d3.csv("../Data/state-data.csv", function (error, data) {
         if (error) throw error;
         data.forEach(function (d) {
             if (stateCodes[d.ID] == undefined)
@@ -1305,7 +1305,7 @@ ul.tab li a:focus, .active {
     });
 
 
-    d3.json("Data/us.json", function (error, us) {
+    d3.json("../Data/us.json", function (error, us) {
         g.append("g")
             .attr("id", "counties")
             .selectAll("path")
@@ -1969,7 +1969,7 @@ Total Votes: <input name="Total" id="totalbox" type="text"/>
 
 
       // Load GeoJSON data and merge with states data
-      d3.json("Data/us-states.json", function(error, json) {
+      d3.json("us-states.json", function(error, json) {
         allStatesJsonData = json;
         // Bind the data to the SVG and create one path per GeoJSON feature
          map = mapSVG.selectAll("path")
@@ -1990,7 +1990,7 @@ Total Votes: <input name="Total" id="totalbox" type="text"/>
 
       //Loading the poll data
 
-      d3.csv("Data/presidential_polls.csv", function(error,_data){
+      d3.csv("../Data/presidential_polls.csv", function(error,_data){
 
         allData = _data;
 
@@ -2092,7 +2092,7 @@ Total Votes: <input name="Total" id="totalbox" type="text"/>
 
 
         // Load GeoJSON data and merge with states data
-        d3.json("Data/us-states.json", function(error, json) {
+        d3.json("us-states.json", function(error, json) {
           allStatesJsonData = json;
           // Bind the data to the SVG and create one path per GeoJSON feature
             sMap.selectAll("path")
@@ -3000,7 +3000,7 @@ function addCommas(nStr) {
 }
 
 // Load the data.
-d3.csv('Data/gates_money.csv', display);
+d3.csv('../Data/gates_money.csv', display);
 
 // setup the buttons.
 setupButtons();
