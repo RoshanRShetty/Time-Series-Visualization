@@ -423,7 +423,7 @@ ul.tab li a:focus, .active {
                   try
                   {
                     d3.selectAll("#" + key.split(" ").join("_")).transition().style("fill","red").duration(1000);
-                    console.log("#" + key.split(" ").join("_") + "_small" + counter)
+                    //console.log("#" + key.split(" ").join("_") + "_small" + counter)
                     d3.selectAll("#" + key.split(" ").join("_") + counter).transition().style("fill","red").duration(1000);
 
                   }catch (error)
