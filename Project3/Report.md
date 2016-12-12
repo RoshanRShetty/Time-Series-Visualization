@@ -1,5 +1,5 @@
 ## Project 3: Presidential Election Visualization
-[![ScreenShot](http://roshanrshetty.github.io/Project3/Images/main.png)](http://roshanrshetty.github.io/Project3/Video/main.mp4)
+[![ScreenShot](http://roshanrshetty.github.io/Project3/Images/main.png)](http://roshanrshetty.github.io/Project3/video/video.mp4)
 
 **Visualization Link:** http://roshanrshetty.github.io
 
