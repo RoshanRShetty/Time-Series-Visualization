@@ -72,7 +72,7 @@ We have used the follwing data fo this visualization
 #### 8. Bubble Chart
 
   The Bubble Chart enables the user to view groupings in the data. These grouping help us understand the voting pattern. we can also use filters on these bubbles to view intricate details otherwise hidden by the visualization.
-
+ ![ScreenShot](http://roshanrshetty.github.io/Project3/Images/split.PNG)
 
 
 ### Findings
