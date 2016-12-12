@@ -135,9 +135,9 @@ input:checked + .slider:before {
 
 </style>
 <body>
-<script src="https://d3js.org/d3.v3.min.js"></script>
-<script src="https://d3js.org/topojson.v1.min.js"></script>
-<script src="https://d3js.org/d3.geo.tile.v0.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="http://d3js.org/d3.geo.tile.v0.min.js"></script>
 <label class="switch">
 <input type="checkbox" onclick="toggle(this)">
   <div class="slider round"></div>
@@ -213,10 +213,10 @@ input:checked + .slider:before {
                                         "count": 0};
 
 
-            data2012[d.FIPS] = { "name": d.county,
+            data2012[d.fips] = { "name": d.county,
                                 "state": d.State,
                                 "fips": d.fips,
-                                "state_fips" : d.State_FIPS,
+                                "state_fips" : d.State_fips,
                                 "party" : d.party,
                                 "total" : d.total,
                                 "unemp": d.unemployment };
@@ -249,10 +249,10 @@ input:checked + .slider:before {
             if(data2008[d.fips]==undefined)
                 data2008[d.fips] = [];
 
-            data2008[d.fips] = { "name": d.ounty,
+            data2008[d.fips] = { "name": d.county,
                                 "state": d.State,
                                 "fips": d.fips,
-                                "state_fips" : d.State_FIPS,
+                                "state_fips" : d.State_fips,
                                 "party" : d.party,
                                 "total" : d.total,
                                 "unemp": d.unemployment };
@@ -290,12 +290,12 @@ input:checked + .slider:before {
        
             if(data2004[d.fips]==undefined)
                 data2004[d.fips] = [];
-            //console.log(d.FIPS);
+            //console.log(d.fips);
 
             data2004[d.fips] = {"name": d.county,
                                 "state": d.State,
                                 "fips": d.fips,
-                                "state_fips" : d.State_FIPS,
+                                "state_fips" : d.State_fips,
                                 "party" : d.party,
                                 "total" : d.total,
                                 "unemp": d.unemployment };
@@ -344,17 +344,17 @@ input:checked + .slider:before {
                 catch(error){
                     return;
                 }
-                dataCounty[d.fips]= { "name": d.county,
+                dataCounty[d.fips]= { "name": d.County,
                                   "state": d.State,
                                   "fips":d.fips,
-                                  "state_fips":d.State_FIPS,
+                                  "state_fips":d.State_fips,
                                   "value": value,
-                                  "FParty": data2004[d.FIPS].party,
-                                  "EParty" : data2008[d.FIPS].party,
-                                  "TParty" : data2012[d.FIPS].party,
-                                  "Funemp" : data2004[d.FIPS].unemp,
-                                  "Eunemp" : data2008[d.FIPS].unemp,
-                                  "Tunemp" : data2012[d.FIPS].unemp };
+                                  "FParty": data2004[d.fips].party,
+                                  "EParty" : data2008[d.fips].party,
+                                  "TParty" : data2012[d.fips].party,
+                                  "Funemp" : data2004[d.fips].unemp,
+                                  "Eunemp" : data2008[d.fips].unemp,
+                                  "Tunemp" : data2012[d.fips].unemp };
 
                                     
                     
@@ -362,17 +362,17 @@ input:checked + .slider:before {
 
                  if (value != "dem" && value != "rep"){
 
-                        changingCounty[d.fips]= { "name": d.county,
+                        changingCounty[d.fips]= { "name": d.County,
                                       "state": d.State,
                                       "fips":d.fips,
-                                      "state_fips":d.State_FIPS,
+                                      "state_fips":d.State_fips,
                                       "value": value,
-                                      "FParty": data2004[d.FIPS].party,
-                                      "EParty" : data2008[d.FIPS].party,
-                                      "TParty" : data2012[d.FIPS].party,
-                                      "Funemp" : data2004[d.FIPS].unemp,
-                                      "Eunemp" : data2008[d.FIPS].unemp,
-                                      "Tunemp" : data2012[d.FIPS].unemp };
+                                      "FParty": data2004[d.fips].party,
+                                      "EParty" : data2008[d.fips].party,
+                                      "TParty" : data2012[d.fips].party,
+                                      "Funemp" : data2004[d.fips].unemp,
+                                      "Eunemp" : data2008[d.fips].unemp,
+                                      "Tunemp" : data2012[d.fips].unemp };
                     } 
                 
                      // if(changingCounty[d.id].FParty != changingCounty[d.id].EParty){
