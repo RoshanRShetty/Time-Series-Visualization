@@ -1,5 +1,5 @@
 ## Project 3: Presidential Election Visualization
-[![ScreenShot](http://roshanrshetty.github.io/Project3/Images/main.png)](http://roshanrshetty.github.io/Project1/Project1.mp4)
+[![ScreenShot](http://roshanrshetty.github.io/Project1/Project1.PNG)](http://roshanrshetty.github.io/Project1/Project1.mp4)
 
 **Visualization Link:** http://roshanrshetty.github.io
 
@@ -14,7 +14,16 @@ We have used the follwing data fo this visualization
 
 ### Data Preprocessing
 
-Data from multiple files had to be combined to get data for all 4 dimensions represented by the scatter plot. VLOOKUP was used to perform this.
+- For Map
+
+- For Scatterplot
+
+    Data from multiple files had to be combined to get data for all 4 dimensions represented by the scatter plot. VLOOKUP was used to perform this.
+
+- For Bubble Chart
+
+- For 
+
 
 ### Features
 
@@ -63,11 +72,12 @@ Data from multiple files had to be combined to get data for all 4 dimensions rep
 #### 8. Bubble Chart
 
   The Bubble Chart enables the user to view groupings in the data. These grouping help us understand the voting pattern. we can also use filters on these bubbles to view intricate details otherwise hidden by the visualization.
- ![ScreenShot](http://roshanrshetty.github.io/Project3/Images/split.PNG)
+
 
 
 ### Findings
-![ScreenShot](http://roshanrshetty.github.io/Project3/Images/river.png)
+1. Various rivers have a larger number of democratic counties along their path, namely the Mississippi, Ohio, and Rio Grande rivers. There also seems to be a larger concentration of democratic counties in major ports and bays like New Orleans, Miami, San Francisco, and New York
+![ScreenShot](http://roshanrshetty.github.io/Project3/Images/noriver.png)
 ![ScreenShot](http://roshanrshetty.github.io/Project3/Images/river.png)
 
 
