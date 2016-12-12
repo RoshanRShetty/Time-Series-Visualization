@@ -204,6 +204,8 @@ d3.slider = function module() {
     svg.selectAll(".dragger").select("text")
         .text(displayValue)
         .style("font", "bold 12px arial,sans-serif");
+    temp(displayValue);
+    d3.selectAll("circle.points").attr("display","block");
     changeYear(+displayValue);
 
     if (range) { 
