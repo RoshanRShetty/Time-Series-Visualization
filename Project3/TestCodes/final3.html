@@ -335,16 +335,17 @@ ul.tab li a:focus, .active {
         .append("svg").attr("width", window.innerWidth).attr("height", window.innerHeight);
 
 
-    d3.csv("../Data/CountUmp2004.csv", function (error, data) {
+    d3.csv("Data/CountUmp2004.csv", function (error, data) {
         if (error)
             return;
 
         allRData2004 = data;
 
         allRData2004.forEach(function (d) {
+            var yuh = d["county"].split(" ").join("_");
 
-            if (allFIPS[d["county"].split(" ").join("_")] === undefined) {
-                allFIPS[d["county"].split(" ").join("_")] = d["fips"]
+            if (allFIPS[yuh] === undefined) {
+                allFIPS[yuh)] = d["fips"]
             }
 
             if (allDetails2004[d["fips"]] === undefined) {
@@ -356,15 +357,16 @@ ul.tab li a:focus, .active {
 
     }) // end of d3.csv
 
-    d3.csv("../Data/CountUmp2008.csv", function (error, data) {
+    d3.csv("Data/CountUmp2008.csv", function (error, data) {
         if (error)
             return;
 
         allRData2008 = data;
         allRData2008.forEach(function (d) {
+            var yuh = d["county"].split(" ").join("_");
 
-            if (allFIPS[d["county"].split(" ").join("_")] === undefined) {
-                allFIPS[d["county"].split(" ").join("_")] = d["fips"]
+            if (allFIPS[yuh] === undefined) {
+                allFIPS[yuh] = d["fips"]
             }
 
             if (allDetails2008[d["fips"]] === undefined) {
@@ -377,15 +379,16 @@ ul.tab li a:focus, .active {
     })// end of d3.csv
 
 
-    d3.csv("../Data/CountUmp2012.csv", function (error, data) {
+    d3.csv("Data/CountUmp2012.csv", function (error, data) {
         if (error)
             return;
 
         allRData2012 = data;
         allRData2012.forEach(function (d) {
+            var yuh = d["county"].split(" ").join("_");
 
-            if (allFIPS[d["county"].split(" ").join("_")] === undefined) {
-                allFIPS[d["county"].split(" ").join("_")] = d["fips"]
+            if (allFIPS[yuh] === undefined) {
+                allFIPS[yuh] = d["fips"]
             }
 
             if (allDetails2012[d["fips"]] === undefined) {
@@ -428,7 +431,7 @@ ul.tab li a:focus, .active {
 
         ex_chart = example().zoom(true);
 
-        d3.csv("../Data/CountUmp" + year + ".csv", function (error, _data) {
+        d3.csv("Data/CountUmp" + year + ".csv", function (error, _data) {
 
             allRData = _data;
 
@@ -464,10 +467,11 @@ ul.tab li a:focus, .active {
             tempData.forEach(function (d) {
 
                 console.log(d["county"] + " " + year)
+                var yuh = d["county"].split(" ").join("_");
 
-                if (allDetails[d["county"].split(" ").join("_")][year] === undefined) {
+                if (allDetails[yuh][year] === undefined) {
                     allyears[year] = d;
-                    allDetails[d["county"].split(" ").join("_")] = allyears
+                    allDetails[yuh] = allyears
                 }
 
 
