@@ -3093,7 +3093,7 @@ setupButtons();
     var path = d3.geo.path()
             .projection(projection);
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#ChangingCounty").append("svg")
             .attr("width", width)
             .attr("height", height);
 
@@ -3105,7 +3105,7 @@ setupButtons();
 
     var g = svg.append("g");
 
-    var div = d3.select("body").append("div")
+    var div = d3.select("#ChangingCounty").append("div")
             .attr("class", "tooltip")
             .style("opacity", 0);
 
