@@ -1,4 +1,4 @@
-State,State_FIPS,county,fips,Dvote,Rvote,Ovote,total,Dpercent,Rpercent,Opercent,Winner,Difference,Party,unemployment
+State,State_FIPS,county,fips,Dvote,Rvote,Ovote,total,Dpercent,Rpercent,Opercent,Winner,difference,party,unemployment
 CA,6,Imperial,6025,"25,136","12,777",652,38565,65.18,33.13,1.69,Obama,32.05,Democrat,27.4
 AZ,4,Yuma,4027,"18,059","23,352",662,42073,42.92,55.5,1.57,Romney,12.58,Republican,23.9
 CA,6,Colusa,6011,"2,314","3,601",119,6034,38.35,59.68,1.97,Romney,21.33,Republican,20.7
