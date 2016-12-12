@@ -203,35 +203,35 @@ input:checked + .slider:before {
     d3.csv("../Data/CountUmp2012.csv", function(error, data) {
         if (error) { throw error;}
         data.forEach(function(d){
-            if(data2012[d.FIPS]==undefined)
-                data2012[d.FIPS] = [];
+            if(data2012[d.fips]==undefined)
+                data2012[d.fips] = [];
 
-            if(counter[d.FIPS]==undefined)
-                counter[d.FIPS] = { "rep": 0,
+            if(counter[d.fips]==undefined)
+                counter[d.fips] = { "rep": 0,
                                         "dem": 0,
                                         "oth": 0,
                                         "count": 0};
 
 
-            data2012[d.FIPS] = { "name": d.County,
+            data2012[d.FIPS] = { "name": d.county,
                                 "state": d.State,
-                                "fips": d.FIPS,
+                                "fips": d.fips,
                                 "state_fips" : d.State_FIPS,
-                                "party" : d.Party,
-                                "total" : d.Total,
+                                "party" : d.party,
+                                "total" : d.total,
                                 "unemp": d.unemployment };
              try{                   
 
-            if(data2012[d.FIPS].party === "Republican"){
-                counter[d.FIPS].rep = counter[d.FIPS].rep + 1;
+            if(data2012[d.fips].party === "Republican"){
+                counter[d.fips].rep = counter[d.fips].rep + 1;
              } 
              else 
-             if(data2012[d.FIPS].party === "Democrat"){
-                counter[d.FIPS].dem = counter[d.FIPS].dem +1;
+             if(data2012[d.fips].party === "Democrat"){
+                counter[d.fips].dem = counter[d.fips].dem +1;
              } 
              else 
-             if(data2012[d.FIPS].party === "Others"){
-                counter[d.FIPS].oth = counter[d.FIPS].oth +1;
+             if(data2012[d.fips].party === "Others"){
+                counter[d.fips].oth = counter[d.fips].oth +1;
              }  
 
              }
@@ -246,28 +246,28 @@ input:checked + .slider:before {
     d3.csv("../Data/CountUmp2008.csv", function(error, data) {
         if (error) throw error;
         data.forEach(function(d){
-            if(data2008[d.FIPS]==undefined)
-                data2008[d.FIPS] = [];
+            if(data2008[d.fips]==undefined)
+                data2008[d.fips] = [];
 
-            data2008[d.FIPS] = { "name": d.County,
+            data2008[d.fips] = { "name": d.ounty,
                                 "state": d.State,
-                                "fips": d.FIPS,
+                                "fips": d.fips,
                                 "state_fips" : d.State_FIPS,
-                                "party" : d.Party,
-                                "total" : d.Total,
+                                "party" : d.party,
+                                "total" : d.total,
                                 "unemp": d.unemployment };
 
             try{
-            if(data2008[d.FIPS].party === "Republican"){
-                counter[d.FIPS].rep = counter[d.FIPS].rep +1;
+            if(data2008[d.fips].party === "Republican"){
+                counter[d.fips].rep = counter[d.fips].rep +1;
              } 
              else 
-             if(data2008[d.FIPS].party === "Democrat"){
-                counter[d.FIPS].dem = counter[d.FIPS].dem +1;
+             if(data2008[d.fips].party === "Democrat"){
+                counter[d.fips].dem = counter[d.fips].dem +1;
              } 
              else 
-             if(data2008[d.FIPS].party === "Others"){
-                counter[d.FIPS].oth = counter[d.FIPS].oth +1;
+             if(data2008[d.fips].party === "Others"){
+                counter[d.fips].oth = counter[d.fips].oth +1;
              } 
             } catch(error){ return; }                  
                   
@@ -288,29 +288,29 @@ input:checked + .slider:before {
             counterOthers = 0;
             var counterLocal =0;
        
-            if(data2004[d.FIPS]==undefined)
-                data2004[d.FIPS] = [];
+            if(data2004[d.fips]==undefined)
+                data2004[d.fips] = [];
             //console.log(d.FIPS);
 
-            data2004[d.FIPS] = {"name": d.County,
+            data2004[d.fips] = {"name": d.county,
                                 "state": d.State,
-                                "fips": d.FIPS,
+                                "fips": d.fips,
                                 "state_fips" : d.State_FIPS,
-                                "party" : d.Party,
-                                "total" : d.Total,
+                                "party" : d.prty,
+                                "total" : d.ttal,
                                 "unemp": d.unemployment };
 
              try{                   
-             if(data2004[d.FIPS].party === "Republican"){
-                counter[d.FIPS].rep = counter[d.FIPS].rep +1;
+             if(data2004[d.fips].party === "Republican"){
+                counter[d.fips].rep = counter[d.fips].rep +1;
              } 
              else 
-             if(data2004[d.FIPS].party === "Democrat"){
-                counter[d.FIPS].dem = counter[d.FIPS].dem +1;
+             if(data2004[d.fips].party === "Democrat"){
+                counter[d.fips].dem = counter[d.fips].dem +1;
              } 
              else 
-             if(data2004[d.FIPS].party === "Others"){
-                counter[d.FIPS].oth = counter[d.FIPS].oth +1;
+             if(data2004[d.fips].party === "Others"){
+                counter[d.fips].oth = counter[d.fips].oth +1;
              } 
             } catch(error){ return; }                  
                   
@@ -320,10 +320,10 @@ input:checked + .slider:before {
             dataAll = data;
 
                 try{
-                if(data2004[d.FIPS].party === "Democrat" && data2008[d.FIPS].party === "Democrat" && data2012[d.FIPS].party === "Democrat"){
+                if(data2004[d.fips].party === "Democrat" && data2008[d.fips].party === "Democrat" && data2012[d.fips].party === "Democrat"){
                     counterDem = counterDem +1;
                 }
-                else if (data2004[d.FIPS].party === "Republican" &&  data2008[d.FIPS].party === "Republican" && data2012[d.FIPS].party === "Republican") {
+                else if (data2004[d.fips].party === "Republican" &&  data2008[d.fips].party === "Republican" && data2012[d.fips].party === "Republican") {
                     counterRep = counterRep + 1;
                 }
                 else {
@@ -344,9 +344,9 @@ input:checked + .slider:before {
                 catch(error){
                     return;
                 }
-                dataCounty[d.FIPS]= { "name": d.County,
+                dataCounty[d.fips]= { "name": d.cunty,
                                   "state": d.State,
-                                  "fips":d.FIPS,
+                                  "fips":d.fips,
                                   "state_fips":d.State_FIPS,
                                   "value": value,
                                   "FParty": data2004[d.FIPS].party,
@@ -362,9 +362,9 @@ input:checked + .slider:before {
 
                  if (value != "dem" && value != "rep"){
 
-                        changingCounty[d.FIPS]= { "name": d.County,
+                        changingCounty[d.fips]= { "name": d.county,
                                       "state": d.State,
-                                      "fips":d.FIPS,
+                                      "fips":d.fips,
                                       "state_fips":d.State_FIPS,
                                       "value": value,
                                       "FParty": data2004[d.FIPS].party,
