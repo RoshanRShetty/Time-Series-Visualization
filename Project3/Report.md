@@ -18,7 +18,7 @@ We have used the follwing data fo this visualization
 
 - For Scatterplot
 
-Data from multiple files had to be combined to get data for all 4 dimensions represented by the scatter plot. VLOOKUP was used to perform this.
+    Data from multiple files had to be combined to get data for all 4 dimensions represented by the scatter plot. VLOOKUP was used to perform this.
 
 - For Bubble Chart
 
