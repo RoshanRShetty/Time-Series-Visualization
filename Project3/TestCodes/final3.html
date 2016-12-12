@@ -335,7 +335,7 @@ ul.tab li a:focus, .active {
         .append("svg").attr("width", window.innerWidth).attr("height", window.innerHeight);
 
 
-    d3.csv("Data/CountUmp2004.csv", function (error, data) {
+    d3.csv("../Data/CountUmp2004.csv", function (error, data) {
         if (error)
             return;
 
@@ -357,7 +357,7 @@ ul.tab li a:focus, .active {
 
     }) // end of d3.csv
 
-    d3.csv("Data/CountUmp2008.csv", function (error, data) {
+    d3.csv("../Data/CountUmp2008.csv", function (error, data) {
         if (error)
             return;
 
@@ -379,7 +379,7 @@ ul.tab li a:focus, .active {
     })// end of d3.csv
 
 
-    d3.csv("Data/CountUmp2012.csv", function (error, data) {
+    d3.csv("../Data/CountUmp2012.csv", function (error, data) {
         if (error)
             return;
 
@@ -431,7 +431,7 @@ ul.tab li a:focus, .active {
 
         ex_chart = example().zoom(true);
 
-        d3.csv("Data/CountUmp" + year + ".csv", function (error, _data) {
+        d3.csv("../Data/CountUmp" + year + ".csv", function (error, _data) {
 
             allRData = _data;
 
