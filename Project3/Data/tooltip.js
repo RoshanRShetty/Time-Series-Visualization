@@ -81,12 +81,3 @@ function floatingTooltip(tooltipId, width) {
     updatePosition: updatePosition
   };
 }
-
-
-
-Regards,
-Naimisha Manikonda
-Graduate student
-Texas Tech University
-Tx-79415
-
