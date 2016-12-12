@@ -317,7 +317,7 @@ ul.tab li a:focus, .active {
 
         async.eachSeries(dates, function(date,callback){
 
-          d3.selectAll("#datetext").transition().text(date).duration(1000)
+          //d3.selectAll("#datetext").transition().text(date).duration(1000)
           drawSmallMap(date)
 
           setTimeout(function()
@@ -330,6 +330,8 @@ ul.tab li a:focus, .active {
               
               colorStates(date,key)
             })
+            
+            d3.selectAll("#datetext").transition().text(date).duration(1000)
 
             if(isdblClicked === "NO")           
               callback();
