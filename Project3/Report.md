@@ -40,6 +40,7 @@ We have used the follwing data fo this visualization
 #### 3. Country Map
 
   we have used the country map for United States of America for our visualization. We have implemented both county-wise and state-wise visualization to present intricate details in an efficient manner.
+  ![ScreenShot](http://roshanrshetty.github.io/Project3/Images/country.PNG)
 
 #### 4. Zoomable Scatter Plot
 
@@ -56,6 +57,7 @@ We have used the follwing data fo this visualization
 #### 5. Time Series
 
   The Time Series enables the user to view changes in voting patterns over the years.
+  ![ScreenShot](http://roshanrshetty.github.io/Project3/Images/timeseries.PNG)
   
 #### 6. Animated Head to Head Bar
   The animated Head to Head Bar is a good way to visualize the battle for votes over time.
