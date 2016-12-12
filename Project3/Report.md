@@ -74,6 +74,9 @@ Data from multiple files had to be combined to get data for all 4 dimensions rep
 2. In the midwest, the counties voted very republican. With a win margin threshold of 50%+, midwestern republican counties dominated. These counties are also lightly populated, with roughly the same results when a total voter threshold was 5,000 or less. 
 ![ScreenShot](http://roshanrshetty.github.io/Project3/Images/margin.png)
 ![ScreenShot](http://roshanrshetty.github.io/Project3/Images/total.png)
+3. Naturally, the more densely populated counties were majority democrat. Counties containing L.A., San Francisco, Portland, Seattle, Denver, Miami, Detroit, Atlanta, Cleveland, Washington DC, New York, and Boston were comfortably democrat with large win margins.
+![ScreenShot](http://roshanrshetty.github.io/Project3/Images/largecounties.png)
+
 
 
 
