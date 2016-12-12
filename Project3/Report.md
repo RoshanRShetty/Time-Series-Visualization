@@ -1,5 +1,5 @@
 ## Project 3: Presidential Election Visualization
-[![ScreenShot](http://roshanrshetty.github.io/Project3/Images/main.PNG)](http://roshanrshetty.github.io/Project3/Video/main.mp4)
+[![ScreenShot](http://roshanrshetty.github.io/Project3/Images/main.png)](http://roshanrshetty.github.io/Project3/Video/main.mp4)
 
 **Visualization Link:** http://roshanrshetty.github.io
 
@@ -63,7 +63,9 @@ Data from multiple files had to be combined to get data for all 4 dimensions rep
 #### 8. Bubble Chart
 
   The Bubble Chart enables the user to view groupings in the data. These grouping help us understand the voting pattern. we can also use filters on these bubbles to view intricate details otherwise hidden by the visualization.
-
+  
+![ScreenShot](http://roshanrshetty.github.io/Project3/Images/chart.PNG)
+![ScreenShot](http://roshanrshetty.github.io/Project3/Images/split.PNG)
 
 
 ### Findings
