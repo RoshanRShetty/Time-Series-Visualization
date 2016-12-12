@@ -87,9 +87,9 @@ Data from multiple files had to be combined to get data for all 4 dimensions rep
   - Findings
   
 2. Andrew Salopek 
-  - Corelation between county votes to national results, predictive analysis.
-  - Countywise voting distribution
-  - Time Series
+  - Collected county-level data for 2004, 2008, 2012 presidential elections
+  - Collected county-level unemployment data for 2004, 2008, 2012
+  - Time Series of voting patterns over years
   - Findings
   
 3. Supra Jyotsna Jampa
