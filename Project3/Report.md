@@ -35,6 +35,7 @@ We have used the follwing data fo this visualization
 
   The Slider enables the user to select visualization for different years. The slider implemented is a range slider, which enables the user to select between years.
 
+![ScreenShot](http://roshanrshetty.github.io/Project3/Images/slider.PNG)
 
 #### 3. Country Map
 
