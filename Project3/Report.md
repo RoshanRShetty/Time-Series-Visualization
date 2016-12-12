@@ -64,7 +64,7 @@ Data from multiple files had to be combined to get data for all 4 dimensions rep
 
   The Bubble Chart enables the user to view groupings in the data. These grouping help us understand the voting pattern. we can also use filters on these bubbles to view intricate details otherwise hidden by the visualization.
 
-
+![ScreenShot](http://roshanrshetty.github.io/Project3/Images/split.PNG)
 
 ### Findings
 1. Various rivers have a larger number of democratic counties along their path, namely the Mississippi, Ohio, and Rio Grande rivers. There also seems to be a larger concentration of democratic counties in major ports and bays like New Orleans, Miami, San Francisco, and New York
