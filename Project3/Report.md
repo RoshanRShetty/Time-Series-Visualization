@@ -1,5 +1,5 @@
 ## Project 3: Presidential Election Visualization
-[![ScreenShot](http://roshanrshetty.github.io/Project1/Project1.PNG)](http://roshanrshetty.github.io/Project3/Video/main.mp4)
+[![ScreenShot](http://roshanrshetty.github.io/Project3/Images/main.PNG)](http://roshanrshetty.github.io/Project3/Video/main.mp4)
 
 **Visualization Link:** http://roshanrshetty.github.io
 
@@ -14,16 +14,7 @@ We have used the follwing data fo this visualization
 
 ### Data Preprocessing
 
-- For Map
-
-- For Scatterplot
-
-    Data from multiple files had to be combined to get data for all 4 dimensions represented by the scatter plot. VLOOKUP was used to perform this.
-
-- For Bubble Chart
-
-- For 
-
+Data from multiple files had to be combined to get data for all 4 dimensions represented by the scatter plot. VLOOKUP was used to perform this.
 
 ### Features
 
