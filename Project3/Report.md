@@ -76,8 +76,8 @@ We have used the follwing data fo this visualization
 
 
 ### Findings
-
-![ScreenShot](RoshanRShetty.github.io/Project3/Images/rivers.gif)
+![ScreenShot](http://roshanrshetty.github.io/Project3/Images/river.png)
+![ScreenShot](http://roshanrshetty.github.io/Project3/Images/river.png)
 
 
 
