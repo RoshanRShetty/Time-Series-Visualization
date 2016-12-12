@@ -29,25 +29,25 @@ We have used the follwing data fo this visualization
 
 1. Different Tabs for Different Visualization
 
-We have implemented separate tabs for different visualizations, which not only helps the user to analyze but also reduces cognittive load.
+  We have implemented separate tabs for different visualizations, which not only helps the user to analyze but also reduces cognittive load.
 
 2. Slider
 
-The Slider enables the user to select visualization for different years. The slider implemented is a range slider, which enables the user to select between years.
+  The Slider enables the user to select visualization for different years. The slider implemented is a range slider, which enables the user to select between years.
 
 
 3. Country Map
 
-we have used the country map for United States of America for our visualization. We have implemented both county-wise and state-wise visualization to present intricate details in an efficient manner.
+  we have used the country map for United States of America for our visualization. We have implemented both county-wise and state-wise visualization to present intricate details in an efficient manner.
 
 4. Zoomable Scatter Plot
 
-To display cluster information,we have also implemented a 2-axis zoomable scatterplot. This scatter plots displays a 4-dimensional data as described below:
+  To display cluster information,we have also implemented a 2-axis zoomable scatterplot. This scatter plots displays a 4-dimensional data as described below:
 
-  - The X-Axis represents unemployment rate.
-  - The Y-Axis represents the win margin.
-  - The Color of the circles indicate the winning party.
-  - The Size of the circle represents the total number of voters in the county.
+   - The X-Axis represents unemployment rate.
+   - The Y-Axis represents the win margin.
+   - The Color of the circles indicate the winning party.
+   - The Size of the circle represents the total number of voters in the county.
 
 5. 
     
