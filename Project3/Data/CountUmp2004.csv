@@ -1,4 +1,4 @@
-State,County,FIPS,State_FIPS,Dvote,Rvote,Ovote,Dpercent,Rpercent,Opercent,Total,Winner,Difference,Party,unemployment
+State,county,fips,State_FIPS,Dvote,Rvote,Ovote,Dpercent,Rpercent,Opercent,total,Winner,Difference,Party,unemployment
 CA,Imperial County,6025,6,"17,964","15,890",420,52.4,46.4,1.2,34274,Kerry,6,Democrat,17
 AZ,Yuma County,4027,4,"16,032","22,184",249,41.7,57.7,0.6,38465,Bush,16,Republican,15.8
 NM,Luna County,35029,35,"3,340","4,164",89,44,54.8,1.2,7593,Bush,10.8,Republican,15.5
