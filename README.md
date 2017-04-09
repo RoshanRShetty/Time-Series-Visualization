@@ -5,7 +5,7 @@ Please click to watch the overview video.
 
 [![ScreenShot](http://roshanrshetty.github.io/Project1/Project1.PNG)](http://roshanrshetty.github.io/Project1/Project1.mp4)
 
-**Visualization Link:** http://roshanrshetty.github.io
+**Visualization Link:** https://roshanrshetty.github.io/Project1/presentation%20layer/project1.1.html
 
 ### Data Description
 
